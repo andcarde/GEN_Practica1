@@ -2,5 +2,5 @@ package model.fitness;
 
 public interface Fitness {
 
-	Double getValue();
+	Double getValue(Input input);
 }
