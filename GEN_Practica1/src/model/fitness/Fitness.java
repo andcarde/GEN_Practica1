@@ -1,4 +1,4 @@
-package fitness;
+package model.fitness;
 
 public interface Fitness {
 
