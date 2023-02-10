@@ -1,5 +1,10 @@
 package model;
 
+import java.util.List;
+import java.util.Map;
+
+import model.fitness.Fitness;
+
 public class Controller {
 
 	private final Integer GENERATION_AMOUNT;
@@ -14,6 +19,15 @@ public class Controller {
 			cruce();
 			mutation();
 			evaluate();
+		}
+	}
+	
+	public Map<Chromosome, Double> evaluate(List<Chromosome> population, Fitness function1) {
+		for (Chromosome chromosome : population ) {
+			for (int i = 0; i < chromosome.getGenAmount(); i++) {
+				Double value = chromosome.translate();
+				
+			}
 		}
 	}
 }
