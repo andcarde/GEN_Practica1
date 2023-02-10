@@ -1,17 +1,22 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import model.chromosome.Chromosome;
+import model.chromosome.ChromosomeFunction1;
 import model.fitness.Fitness;
 
 public class Controller {
 
 	private final Integer GENERATION_AMOUNT;
 	private final Integer POBLATION_AMOUNT;
+	private final double ERROR_AMOUNT;
 	private final SelectionType SELECTION_TYPE;
+	private List<Chromosome> population;
 	
-	public run() {
+	public void run() {
 		initilize();
 		evaluate();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
@@ -22,12 +27,18 @@ public class Controller {
 		}
 	}
 	
-	public Map<Chromosome, Double> evaluate(List<Chromosome> population, Fitness function1) {
+	private void initilize() {
+		population = new ArrayList<Chromosome>();
+		for (int i = 0; i < POBLATION_AMOUNT; i++) {
+			Chromosome aux = new ChromosomeFunction1(ERROR_AMOUNT);
+			population.add(aux);
+		}
+		
+	}
+
+	public Map<Chromosome, Double> evaluate() {
 		for (Chromosome chromosome : population ) {
-			for (int i = 0; i < chromosome.getGenAmount(); i++) {
-				Double value = chromosome.translate();
-				
-			}
+				Double value = chromosome.getFitness();
 		}
 	}
 }
