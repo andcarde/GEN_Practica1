@@ -12,5 +12,6 @@ public abstract class Chromosome<T> {
 	public abstract int tamGen(double err, double min, double max);
 	protected abstract double getValor();
 	public double getFitness() { return getValor();}
+	public abstract void mutate(double tasaMutacion);
 
 }

@@ -25,9 +25,14 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> {
 		for(int i = 0; i < totalSize; i++) chromosome[i] = this.rand.nextBoolean();
 	}
 	
-	private double getPhenotype(double genotype) {
-		return -1;
-		//TODO
+	private double getPhenotype(int genotypeNumber) {
+		int ini = 0, value = 0, exp = geneSize[genotypeNumber]-1;
+		if (genotypeNumber > 0) ini = geneSize[genotypeNumber-1]; //Busca el inicio del chromosoma donde empieza el gen
+		for (int i = ini; i < geneSize[genotypeNumber]; i++) {
+			value += Math.pow(Boolean.compare(chromosome[i], false), exp); //Eleva, de izquierda a derecha, el binario al exponente de su posición 
+			exp--;
+		}
+		return value;
 	}
 
 	@Override
@@ -39,6 +44,14 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> {
 	@Override
 	public int tamGen(double err, double min, double max) {
 		return (int) (Math.log10(((max - min) / err) + 1) / Math.log10(2));
+	}
+
+	@Override
+	protected void mutate(double tasaMutacion) {
+		for (int i=0; i< chromosome.length; i++) {
+			if (rand.nextDouble() < tasaMutacion) 
+				chromosome[i] = rand.nextBoolean();
+		}		
 	}
 
 }
