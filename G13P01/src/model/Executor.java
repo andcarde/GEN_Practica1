@@ -70,8 +70,8 @@ public class Executor {
 	}
 
 	public Chromosome evaluate() {
-		Chromosome bestChr = null;
-		for (Chromosome chromosome : population ) {
+		ChromosomeI bestChr = null;
+		for (ChromosomeI chromosome : population ) {
 				double value = chromosome.getFitness();
 				if (bestChr == null || value > bestChr.getFitness())
 					bestChr = chromosome;
