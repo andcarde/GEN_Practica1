@@ -10,8 +10,8 @@ import model.random.RandomGenerator;
 
 public class UniformCrossover extends Crossover {
 
-	public UniformCrossover(InterpreterI interpreter) {
-		super(interpreter);
+	public UniformCrossover(InterpreterI interpreter, Double crossProbability) {
+		super(interpreter, crossProbability);
 	}
 	
 	@Override

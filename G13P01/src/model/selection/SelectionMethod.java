@@ -6,5 +6,5 @@ import model.chromosome.ChromosomeI;
 
 public interface SelectionMethod {
 
-	List<ChromosomeI> select(List<ChromosomeI> population);
+	List<ChromosomeI> act(List<ChromosomeI> population);
 }

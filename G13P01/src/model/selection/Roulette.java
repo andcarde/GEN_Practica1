@@ -11,7 +11,7 @@ import model.random.RandomGenerator;
 public class Roulette implements SelectionMethod {
 
 	@Override
-	public List<ChromosomeI> select(List<ChromosomeI> population) {
+	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selection = new ArrayList<>();
 		PopulationTable table = new PopulationTable(population);
 		List<Double> accumulated = table.getAccumulated();

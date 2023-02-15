@@ -10,8 +10,8 @@ import model.random.RandomGenerator;
 
 public class OnePointCrossover extends Crossover {	
 	
-	public OnePointCrossover(InterpreterI interpreter) {
-		super(interpreter);
+	public OnePointCrossover(InterpreterI interpreter, Double crossProbability) {
+		super(interpreter, crossProbability);
 	}
 	
 	@Override
