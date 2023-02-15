@@ -1,12 +1,18 @@
 package model.chromosome;
 
+import java.util.List;
 import java.util.Random;
 
-public class ChromosomeFunction1 extends Chromosome<Boolean> {
+public class ChromosomeFunction1 extends Chromosome<Boolean> implements ChromosomeI {
 	
+	private InterpreterI interpreter;
 	
 	public ChromosomeFunction1(double errValue) {
 		init(errValue);
+	}
+
+	public ChromosomeFunction1(InterpreterI interpreter, List<Boolean> chromosome2) {
+		this.interpreter = interpreter;
 	}
 
 	private void init(double errValue) {
@@ -47,11 +53,37 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> {
 	}
 
 	@Override
-	protected void mutate(double tasaMutacion) {
+	public void mutate(double tasaMutacion) {
 		for (int i=0; i< chromosome.length; i++) {
 			if (rand.nextDouble() < tasaMutacion) 
 				chromosome[i] = rand.nextBoolean();
 		}		
+	}
+
+	@Override
+	public Integer getSize() {
+		return totalSize;
+	}
+
+	@Override
+	public Boolean getElement(Integer i) {
+		return chromosome[i];
+	}
+
+	@Override
+	public InterpreterI getInterpreter() {
+		return interpreter;
+	}
+
+	@Override
+	public void invertElement(int i) {
+		chromosome[i] = !chromosome[i];
+		
+	}
+
+	@Override
+	public Double getValue() {
+		return getValor();
 	}
 
 }

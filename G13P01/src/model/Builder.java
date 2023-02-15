@@ -3,8 +3,7 @@ package model;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.security.auth.login.Configuration;
-
+import model.crossover.Crossover;
 import model.crossover.OnePointCrossover;
 import model.crossover.UniformCrossover;
 import model.fitness.Fitness;

@@ -7,4 +7,5 @@ public interface ChromosomeI {
 	InterpreterI getInterpreter();
 	void invertElement(int i);
 	Double getValue();
+	double getFitness();
 }

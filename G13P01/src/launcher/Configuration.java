@@ -4,17 +4,6 @@ public class Configuration {
 
 	// Somos el grupo 13
 	
-	POPULATION_AMOUNT = 100;
-	GENERATION_AMOUNT = 100;
-	CRUCE_PROBABILITY = 0.6
-	MUTATION_PROBABILITY = 0.05
-	PRESICION = 0.001
-	SELECTION_METHOD = SelectionType.;
-	CRCE_METHOD = ;
-	MUTATION_METHOD = ;
-	ELITISM_PROBABILITY = ;
-	D_VALUE_FUNCTION4 = ;
-	
 	private Map map
 	
 	public Configuration() {

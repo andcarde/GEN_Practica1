@@ -16,7 +16,7 @@ public class Interpreter implements InterpreterI {
 		this.genLengths = genLengths;
 	}
 	
-	Map<String, Object> translate(ChromosomeI chromosome) {
+	public Map<String, Object> translate(ChromosomeI chromosome) {
 		Map<String, Object> map = new HashMap<>();
 		Integer genNumber = 0;
 		Integer genLimit = this.genLengths.get(genNumber);

@@ -3,7 +3,7 @@ package model.crossover;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Chromosome;
+import model.chromosome.ChromosomeFunction1;
 import model.chromosome.ChromosomeI;
 import model.chromosome.InterpreterI;
 import model.random.RandomGenerator;
@@ -15,8 +15,8 @@ public class UniformCrossover extends Crossover {
 	}
 	
 	@Override
-	public List<Chromosome> cross(ChromosomeI parent1, ChromosomeI parent2) {
-		List<Chromosome> sons = new ArrayList<>();
+	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
+		List<ChromosomeI> sons = new ArrayList<>();
 		Integer size = parent1.getSize();
 		List<Boolean> chromosome1 = new ArrayList<>();
 		List<Boolean> chromosome2 = new ArrayList<>();
@@ -26,8 +26,8 @@ public class UniformCrossover extends Crossover {
 			else
 				chromosome2.add(parent2.getElement(i));
 		}
-		sons.add(new Chromosome(this.interpreter, chromosome1));
-		sons.add(new Chromosome(this.interpreter, chromosome2));
+		sons.add(new ChromosomeFunction1(this.interpreter, chromosome1));
+		sons.add(new ChromosomeFunction1(this.interpreter, chromosome2));
 		return sons;
 	}
 }

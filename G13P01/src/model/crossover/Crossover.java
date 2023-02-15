@@ -3,7 +3,6 @@ package model.crossover;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.chromosome.InterpreterI;
 import model.random.RandomGenerator;
@@ -41,5 +40,5 @@ public abstract class Crossover implements CrossoverI {
 		return newborns;
 	}
 	
-	public abstract List<Chromosome> cross(ChromosomeI parent1, ChromosomeI parent2);
+	public abstract List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2);
 }
