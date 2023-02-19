@@ -6,7 +6,6 @@ public abstract class Chromosome<T> {
 	protected T[] chromosome;
 	protected int[] geneSize;
 	protected double[] min, max;
-	protected Random rand;
 	protected int totalSize;
 	
 	public abstract int tamGen(double err, double min, double max);

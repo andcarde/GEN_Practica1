@@ -3,6 +3,8 @@ package model.chromosome;
 import java.util.List;
 import java.util.Random;
 
+import model.random.RandomGenerator;
+
 public class ChromosomeFunction1 extends Chromosome<Boolean> implements ChromosomeI {
 	
 	private InterpreterI interpreter;
@@ -16,7 +18,6 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> implements Chromoso
 	}
 
 	private void init(double errValue) {
-		rand = new Random();
 		geneSize = new int[2];
 		min = new double[2];
 		max = new double[2];
@@ -28,7 +29,7 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> implements Chromoso
 		this.geneSize[1] = tamGen(errValue, min[1], max[1]);
 		totalSize = geneSize[0] + geneSize[1];
 		chromosome = new Boolean[totalSize];
-		for(int i = 0; i < totalSize; i++) chromosome[i] = this.rand.nextBoolean();
+		for(int i = 0; i < totalSize; i++) chromosome[i] = RandomGenerator.createAleatoryBoolean();
 	}
 	
 	private double getPhenotype(int genotypeNumber) {
@@ -55,8 +56,8 @@ public class ChromosomeFunction1 extends Chromosome<Boolean> implements Chromoso
 	@Override
 	public void mutate(double tasaMutacion) {
 		for (int i=0; i< chromosome.length; i++) {
-			if (rand.nextDouble() < tasaMutacion) 
-				chromosome[i] = rand.nextBoolean();
+			if (RandomGenerator.createAleatoryBoolean(tasaMutacion)) 
+				chromosome[i] = RandomGenerator.createAleatoryBoolean();
 		}		
 	}
 
