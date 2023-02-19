@@ -1,6 +1,7 @@
 package graphic;
 
 import java.awt.EventQueue;
+import java.awt.LayoutManager;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -12,6 +13,11 @@ import javax.swing.JSpinner;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicComboBoxUI.ComboBoxLayoutManager;
+
+import org.math.plot.Plot2DPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
@@ -122,10 +128,16 @@ public class Window extends JFrame {
 		comboBox_2.setBounds(12, 123, 90, 18);
 		panel.add(comboBox_2);
 		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(222, 221, 218));
-		panel_1.setBounds(228, 12, 345, 315);
-		contentPane.add(panel_1);
+		JPanel graphicPanel = new JPanel();
+		graphicPanel.setBackground(new Color(222, 221, 218));
+		graphicPanel.setBounds(228, 12, 430, 315);
+		contentPane.add(graphicPanel);
+		
+		Plot2DPanel plot = new Plot2DPanel();
+		plot.addLegend("SOUTH");
+		plot.setBounds(228, 12, 430, 315);
+		plot.setVisible(false);
+		graphicPanel.add(plot);
 		
 		JTextArea textArea = new JTextArea();
 		textArea.setBounds(228, 350, 345, 15);
