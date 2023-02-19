@@ -1,45 +1,10 @@
 package model.selection;
 
-import java.util.ArrayList;
-import java.util.List;
+public abstract class Tournament implements Selection {
 
-import model.PopulationTable;
-import model.chromosome.ChromosomeI;
-import model.random.RandomGenerator;
-
-public class Tournament implements SelectionMethod {
-
-	@Override
-	public List<ChromosomeI> act(List<ChromosomeI> population) {
-		List<ChromosomeI> selection = new ArrayList<>();
-		PopulationTable table = new PopulationTable(population);		
-		
-		for (int i = 0; i < population.size(); i++) {
-			List<ChromosomeI> candidates = new ArrayList<>();
-			candidates.add(population.get(RandomGenerator.createAleatoryInt(population.size())));
-			candidates.add(population.get(RandomGenerator.createAleatoryInt(population.size())));
-			candidates.add(population.get(RandomGenerator.createAleatoryInt(population.size())));
-			
-			selection.add(getWinner(candidates, RandomGenerator.createAleatoryBoolean(0.5)));
-		}
-		return selection;
-	}
+	protected Integer contestantsAmount;
 	
-	private ChromosomeI getWinner(List<ChromosomeI> candidates, boolean chooseBiggestFitness) {
-		ChromosomeI winner = candidates.get(0);
-		for (int i = 1; i < candidates.size(); i++) {
-			//Si el actual tiene mejor fitness que el mejor, ya sea por tener menor o mayor 
-			//fitness dependiendo del booleano, se actualiza el mejor
-			if ((chooseBiggestFitness && candidates.get(i).getFitness() > winner.getFitness()) 
-					|| (!chooseBiggestFitness && candidates.get(i).getFitness() < winner.getFitness()))
-				winner = candidates.get(i);
-			//Si son iguales, se elige aleatoriamente
-			else if (candidates.get(i).getFitness() == winner.getFitness() && RandomGenerator.createAleatoryBoolean(0.5)) {
-				winner = candidates.get(i);
-			}
-		}
-		
-		return winner;
+	public Tournament(Integer contestantsAmount) {
+		this.contestantsAmount = contestantsAmount;
 	}
-
 }

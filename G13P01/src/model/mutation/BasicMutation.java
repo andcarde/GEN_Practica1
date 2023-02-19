@@ -1,6 +1,9 @@
 package model.mutation;
 
+import java.util.List;
+
 import model.chromosome.ChromosomeI;
+import model.chromosome.GenI;
 import model.random.RandomGenerator;
 
 public class BasicMutation implements MutationI {
@@ -12,10 +15,11 @@ public class BasicMutation implements MutationI {
 	}
 	
 	@Override
-	public ChromosomeI act(ChromosomeI chromosome) {
-		for (int i = 0; i < chromosome.getSize(); i++)
-			if (RandomGenerator.createAleatoryBoolean(mutationProbability))
-				chromosome.invertElement(i);
-		return chromosome;
+	public void act(ChromosomeI chromosome) {
+		List<GenI> genes = chromosome.getGenes();
+		for (GenI gen : genes)
+			for (int i = 0; i < gen.getSize(); i++)
+				if (RandomGenerator.createAleatoryBoolean(mutationProbability))
+					gen.invertElement(i);
 	}
 }

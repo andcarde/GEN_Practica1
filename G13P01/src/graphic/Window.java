@@ -1,29 +1,23 @@
 package graphic;
 
-import java.awt.EventQueue;
-import java.awt.LayoutManager;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import java.awt.Component;
-import javax.swing.Box;
 import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicComboBoxUI.ComboBoxLayoutManager;
 
 import org.math.plot.Plot2DPanel;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 
-public class Window extends JFrame {
+public class Window extends JFrame implements RequestMaker {
 
+	private static final long serialVersionUID = 8815627840243675666L;
+	
 	private JPanel contentPane;
 	private JTextField txtTamPobl;
 	private JLabel lblNmeroDeGeneraciones;
@@ -144,4 +138,88 @@ public class Window extends JFrame {
 		contentPane.add(textArea);
 		
 		}
+
+	@Override
+	public Integer getPopulationAmount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getGenerationAmount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getCrossoverPercentage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMutationPercentage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double getPrecision() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getSelectionMethod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getTournamentMode() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getMutationMethod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getElitismPercentage() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getFitnessFunction() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getContestantsAmount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getChampionProbability() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getFuction4Dimension() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getCrossoverMethod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

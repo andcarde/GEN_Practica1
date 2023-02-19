@@ -1,11 +1,17 @@
 package model.chromosome;
 
+import java.util.List;
+
+import model.MoldI;
+
 public interface ChromosomeI {
 
 	Integer getSize();
 	Boolean getElement(Integer i);
-	InterpreterI getInterpreter();
-	void invertElement(int i);
 	Double getValue();
-	double getFitness();
+	List<GenI> getGenes();
+	void initialize();
+	MoldI getMold();
+	void evaluate();
+	void assimilate(List<Boolean> genome);
 }

@@ -1,45 +1,55 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import model.crossover.Crossover;
-import model.crossover.OnePointCrossover;
-import model.crossover.UniformCrossover;
+import graphic.Request;
+import model.chromosome.Gen;
+import model.crossover.CrossoverBuilder;
+import model.crossover.CrossoverI;
 import model.fitness.Fitness;
-import model.fitness.Function1;
+import model.fitness.FunctionBuilder;
+import model.fitness.Variable;
+import model.mutation.MutationBuilder;
+import model.selection.Selection;
+import model.selection.SelectionBuilder;
 
 public class Builder {
 
-	public static Map<String, Object> build(Option op) {
+	public static Map<String, Object> build(Request request) {
 		Map<String, Object> config = new HashMap<>();
-		config.put("crossover", buildCrossover(op.get("crossover")));
-		config.put("function", buildFunction(op.get("function")));
-		config.put("function", buildFunction(op.get("function")));
-		buildFitness(op.get("fitness"));
+		config.put("generation_amount", request.getGenerationAmount());
+		config.put("population_amount", request.getPopulationAmount());
+		MoldI mold = buildMold(request);
+		config.put("mold", mold);
+		config.put("selection", buildSelection(request));
+		config.put("crossover", buildCrossover(request, mold));
+		config.put("mutation", buildMutation(request));
+		return config;
 	}
 	
-	private static Crossover buildCrossover(String s) {
-		if (s.equals("one_point"))
-			return new OnePointCrossover();
-		if (s.equals("uniform"))
-			return new UniformCrossover();
-		return null;
-		
+	private static MoldI buildMold(Request request) {
+		Fitness function = FunctionBuilder.build(request.getFitnessFunction(),
+				request.getPrecision(), request.getFuction4Dimension());
+		List<Variable> variables = function.getVariables();
+		List<Gen> moldGenes = new ArrayList<>();
+		for (Variable var : variables)
+			moldGenes.add(Gen.build(var));
+		return new Mold(function, moldGenes);
 	}
 	
-	private static Fitness buildFunction(String s) {
-		if (s.equals("f1"))
-			return new Function1();
-		if (s.equals("f2"))
-			return new Function2();
-		if (s.equals("f3"))
-			return new Function3();
-		if (s.equals("f4"))
-			return new Function4();
-		if (s.equals("f5"))
-			return new Function5();
-		return null;
-		
+	private static Selection buildSelection(Request request) {
+		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest());
+	}
+
+	private static CrossoverI buildCrossover(Request request, MoldI mold) {
+		return CrossoverBuilder.build(request.getCrossoverMethod(),
+				request.getCrossoverProbability(), mold);
+	}
+	
+	private static Object buildMutation(Request request) {
+		return MutationBuilder.build(request.getMutationMethod(), request.getMutationProbability());
 	}
 }

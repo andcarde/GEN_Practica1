@@ -1,16 +1,77 @@
 package model.chromosome;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
-public abstract class Chromosome<T> {
-	protected T[] chromosome;
-	protected int[] geneSize;
-	protected double[] min, max;
-	protected int totalSize;
+import model.MoldI;
+import model.fitness.Input;
+
+public class Chromosome implements ChromosomeI {
 	
-	public abstract int tamGen(double err, double min, double max);
-	protected abstract double getValor();
-	public double getFitness() { return getValor();}
-	public abstract void mutate(double tasaMutacion);
+	private Double phenotype;
+	private List<GenI> genes;
+	private MoldI mold;
+	
+	public Chromosome(MoldI mold) {
+		this.mold = mold;
+		List<Gen> moldGenes = mold.getGenes();
+		this.genes = new ArrayList<>();
+		for (Gen gen : moldGenes)
+			this.genes.add(new Gen(gen));
+	}
+	
+	@Override
+	public void evaluate() {
+		Input input = new Input();
+		for (GenI gen : genes)
+			input.put(gen.getName(), gen.getValue());
+		this.phenotype = this.mold.getFunction().getValue(input);
+	}
+	
+	@Override
+	public void initialize() {
+		for (GenI gen : this.genes)
+			gen.initialize();
+	}
 
+	@Override
+	public Integer getSize() {
+		return this.mold.getSize();
+	}
+	
+	@Override
+	public Boolean getElement(Integer i) {
+		Integer accumulated = 0;
+		for (GenI gen : this.genes) {
+			if (i < gen.getSize() + accumulated)
+				return gen.getBit(i - accumulated);
+			accumulated += gen.getSize();
+		}
+		return null;
+	}
+
+	@Override
+	public MoldI getMold() {
+		return this.mold;
+	}
+
+	@Override
+	public Double getValue() {
+		return this.phenotype;
+	}
+
+	@Override
+	public List<GenI> getGenes() {
+		return this.genes;
+	}
+
+	@Override
+	public void assimilate(List<Boolean> genome) {
+		Integer accumulated = 0;
+		for (GenI gen : this.genes) {
+			List<Boolean> bits = genome.subList(accumulated, accumulated + gen.getSize());
+			gen.assimilate(bits);
+			accumulated += gen.getSize();
+		}
+	}
 }

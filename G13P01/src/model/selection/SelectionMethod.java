@@ -1,10 +1,6 @@
 package model.selection;
 
-import java.util.List;
+public enum SelectionMethod {
 
-import model.chromosome.ChromosomeI;
-
-public interface SelectionMethod {
-
-	List<ChromosomeI> act(List<ChromosomeI> population);
+	ROULETTE, UNIVERSAL_STOCHASTIC, TRUNCATION, REMAINS, TOURNAMENT;
 }

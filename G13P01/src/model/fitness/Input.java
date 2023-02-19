@@ -11,7 +11,7 @@ public class Input {
 		this.map = new HashMap<String, Double>();
 	}
 	
-	public void set(String s, Double d) {
+	public void put(String s, Double d) {
 		this.map.put(s, d);
 	}
 

@@ -3,17 +3,17 @@ package model.crossover;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.MoldI;
 import model.chromosome.ChromosomeI;
-import model.chromosome.InterpreterI;
 import model.random.RandomGenerator;
 
 public abstract class Crossover implements CrossoverI {
 
-	protected InterpreterI interpreter;
+	protected MoldI mold;
 	private Double crossProbability;
 	
-	protected Crossover(InterpreterI interpreter, Double crossProbability) {
-		this.interpreter = interpreter;
+	protected Crossover(MoldI mold, Double crossProbability) {
+		this.mold = mold;
 		this.crossProbability = crossProbability;
 	}
 	

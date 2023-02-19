@@ -7,7 +7,7 @@ import model.PopulationTable;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
-public class Stochastic implements SelectionMethod {
+public class UniversalStochastic implements Selection {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

@@ -2,13 +2,12 @@ package model.selection;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import model.PopulationTable;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
-public class Roulette implements SelectionMethod {
+public class Roulette implements Selection {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

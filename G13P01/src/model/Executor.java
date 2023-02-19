@@ -3,89 +3,109 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
-import model.chromosome.ChromosomeFunction1;
+import graphic.Observer;
+import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
-import model.crossover.Crossover;
 import model.crossover.CrossoverI;
-import model.fitness.Fitness;
 import model.mutation.MutationI;
-import model.selection.SelectionMethod;
+import model.selection.Selection;
 
 public class Executor {
 
-	/*
-	private final double MUTATION;
-	private final double ERROR_AMOUNT;
-	private final SelectionType SELECTION_TYPE;
-	private List<Chromosome> population;
-	// Lista de los mejores individuos de cada promociï¿½n
-	private List<Chromosome> tier;
-	*/
+	// MODEL CONSTRAINTS -----------------------------------------------
 	private final Integer GENERATION_AMOUNT;
 	private final Integer POPULATION_AMOUNT;
-	private final double PRECISION;
-	private MutationI mutation;
-	private List<ChromosomeI> population;
-	// Lista de los mejores individuos de cada promociï¿½n
-	private List<Double> generationAverage;
-	private List<Double> generationBest;
-	private ChromosomeI intergenerationBest;
+	private final MoldI mold;
+	private final Selection selection;
 	private final CrossoverI crossover;
-	private final SelectionMethod selection;
+	private final MutationI mutation;
+	// ------------------------------------------------------------------
+	
+	private List<ChromosomeI> population;
+	
+	// MODEL STATISTICS -------------------------------------------------
+	private List<Double> generationAverage;
+	// List of the best individuals of each promotion
+	private List<Double> generationLeaders;
+	private ChromosomeI intergenerationLeader;
+	// ------------------------------------------------------------------
+	
+	private Observer observer;
 	
 	public Executor(Map<String, Object> config) {
 		this.GENERATION_AMOUNT = (Integer) config.get("generation_amount");
 		this.POPULATION_AMOUNT = (Integer) config.get("population_amount");
-		this.mutation = (MutationI) config.get("mutation");
-		this.selection = (SelectionMethod) config.get("selection");
+		this.mold = (MoldI) config.get("mold");
+		this.selection = (Selection) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
-		PRECISION = (double) config.get("precision");	
+		this.mutation = (MutationI) config.get("mutation");
+		
+		this.observer = (Observer) config.get("observer");
+		
+		this.population = new ArrayList<>();
+		this.generationAverage = new ArrayList<>();
+		this.generationLeaders = new ArrayList<>();
+		this.intergenerationLeader = null;
 	}
 	
 	public void run() {
 		initilize();
 		evaluate();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
-			population = selection.act(population);
-			population = crossover.act(population);
-			mutation();
-			evaluation();
+			select();
+			cross();
+			mutate();
+			evaluate();
 		}
 	}
 	
 	private void initilize() {
-		population = new ArrayList<ChromosomeI>();
-		for (int i = 0; i < POPULATION_AMOUNT; i++) {
-			ChromosomeI aux = new ChromosomeFunction1(PRECISION);
-			population.add(aux);
-		}
-	}
-	
-	private void mutation() {
+		for (int i = 0; i < POPULATION_AMOUNT; i++)
+			population.add(new Chromosome(mold));
 		for (ChromosomeI chromosome : population)
-			chromosome = mutation.act(chromosome);
+			chromosome.initialize();
 	}
 	
-	public void evaluation() {
-		ChromosomeI cur_chromosome = evaluate();
-		if (cur_chromosome.getFitness() > intergenerationBest.getFitness())
-			intergenerationBest = cur_chromosome; //Comprobamos si el mejor cromosoma de la generacion es el mejor global
-		generationBest.add(cur_chromosome.getFitness()); //AÃ±adimos el mejor cromosoma de la generacion a la lista
+	private void select() {
+		population = selection.act(population);
+	}
+	
+	private void cross() {
+		population = crossover.act(population);
+	}
+	
+	private void mutate() {
+		for (ChromosomeI chromosome : population)
+			this.mutation.act(chromosome);
 	}
 
-	public ChromosomeI evaluate() {
-		ChromosomeI bestChr = null;
-		double sumFit = 0;
-		for (ChromosomeI chromosome : population ) {
-				double value = chromosome.getFitness();
-				if (bestChr == null || value > bestChr.getFitness())
-					bestChr = chromosome;
-				sumFit += value;
+	private void evaluate() {
+		if (population.size() >= 0) {
+			for (ChromosomeI chromosome : this.population)
+				chromosome.evaluate();
+			ChromosomeI leader = population.get(0);
+			double fitnessSum = leader.getValue();
+			for (int i = 0; i < population.size(); i++) {
+				ChromosomeI chromosome = population.get(i);
+				if (chromosome.getValue() > leader.getValue())
+					leader = chromosome;
+				fitnessSum += chromosome.getValue();
+			}
+			
+			// Calculamos la media de la generación
+			generationAverage.add(fitnessSum / population.size());
+			this.observer.updateGenerationAverage(generationAverage);
+			
+			// Añadimos el mejor cromosoma de la generación a la lista
+			generationLeaders.add(leader.getValue());
+			this.observer.updateGenerationLeaders(generationLeaders);
+			
+			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
+			if (leader.getValue() > intergenerationLeader.getValue()) {
+				intergenerationLeader = leader;
+				this.observer.updateIntergenerationLeader(intergenerationLeader);
+			}
 		}
-		generationAverage.add(sumFit/population.size()); //Calculamos la media de la generacion
-		
-		return bestChr;
 	}
 }

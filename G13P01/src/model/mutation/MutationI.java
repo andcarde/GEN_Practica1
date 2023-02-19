@@ -4,5 +4,5 @@ import model.chromosome.ChromosomeI;
 
 public interface MutationI {
 
-	ChromosomeI act(ChromosomeI chromosome);
+	void act(ChromosomeI chromosome);
 }

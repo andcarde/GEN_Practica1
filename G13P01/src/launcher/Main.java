@@ -1,11 +1,11 @@
 package launcher;
 
-import model.Controller;
+import graphic.Window;
 
 public class Main {
 
 	public static void main(String[] args) {
-		Controller ctrl = new Controller();
+		Window window = new Window();
+		window.setVisible(true);
 	}
-
 }

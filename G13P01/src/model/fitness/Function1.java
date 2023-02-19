@@ -1,15 +1,30 @@
 package model.fitness;
 
-public class Function1 implements Fitness {
+import java.util.ArrayList;
+import java.util.List;
 
-	/* La primera función se llama de calibración porque es simple y por lo tanto debe converger de forma más simple.
-	 * */
+public class Function1 extends Function {
+
+	/* La primera función se llama de calibración porque es simple y
+	 * por lo tanto debe converger de forma más simple.
+	 */
+	
+	public Function1(Double precision) {
+		super(precision);
+	}
 	
 	@Override
 	public Double getValue(Input input) {
-		Double phenotype = 21.5;
-		phenotype += input.get("x1") * Math.sin(4 * Math.PI * input.get("x1"));
-		phenotype += input.get("x2") * Math.sin(20 * Math.PI * input.get("x2"));
-		return phenotype;
+		Double value = 21.5;
+		value += input.get("x1") * Math.sin(4 * Math.PI * input.get("x1"));
+		value += input.get("x2") * Math.sin(20 * Math.PI * input.get("x2"));
+		return value;
+	}
+	
+	@Override
+	public List<Variable> getVariables() {
+		List<Variable> variables = new ArrayList<>();
+		variables.add(new Variable("x1", -3.0, 12.1, this.precision));
+		return variables;
 	}
 }
