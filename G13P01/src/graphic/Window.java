@@ -14,6 +14,7 @@ import javax.swing.Box;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import javax.swing.JComboBox;
+import javax.swing.JTextArea;
 
 public class Window extends JFrame {
 
@@ -120,6 +121,15 @@ public class Window extends JFrame {
 		comboBox_2 = new JComboBox();
 		comboBox_2.setBounds(12, 123, 90, 18);
 		panel.add(comboBox_2);
+		
+		JPanel panel_1 = new JPanel();
+		panel_1.setBackground(new Color(222, 221, 218));
+		panel_1.setBounds(228, 12, 345, 315);
+		contentPane.add(panel_1);
+		
+		JTextArea textArea = new JTextArea();
+		textArea.setBounds(228, 350, 345, 15);
+		contentPane.add(textArea);
 		
 		}
 }
