@@ -27,8 +27,8 @@ public class Window extends JFrame implements RequestMaker {
 	private JPanel contentPane, panel;
 	private JLabel lblNmeroDeGeneraciones, lblNewLabel, lblNewLabel_1, lblCruces;
 	private JTextField txtGeneraciones, txtPrecision, txtTamPobl;
-	private JComboBox comboMutacion, comboSeleccion, comboCruce;
-	private JSpinner spinnerCruces, spinnerMutaciones;
+	private JComboBox comboMutacion, comboSeleccion, comboCruce, comboFuncion;
+	private JSpinner spinnerCruces, spinnerMutaciones, spinnerElitismo;
 	private Controller _ctrl;
 	
 
@@ -55,7 +55,7 @@ public class Window extends JFrame implements RequestMaker {
 		_ctrl = ctrl;
 		setTitle("G13P01");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 700, 438);
+		setBounds(100, 100, 1197, 703);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -97,16 +97,16 @@ public class Window extends JFrame implements RequestMaker {
 		contentPane.add(spinnerMutaciones);
 		
 		JLabel lblPrecision = new JLabel("Precisión");
-		lblPrecision.setBounds(135, 170, 114, 15);
+		lblPrecision.setBounds(22, 284, 114, 15);
 		contentPane.add(lblPrecision);
 		
 		txtPrecision = new JTextField();
-		txtPrecision.setBounds(135, 193, 72, 20);
+		txtPrecision.setBounds(22, 304, 72, 20);
 		contentPane.add(txtPrecision);
 		
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		panel.setBounds(22, 226, 171, 163);
+		panel.setBounds(22, 441, 171, 163);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -117,11 +117,12 @@ public class Window extends JFrame implements RequestMaker {
 		comboSeleccion = new JComboBox();
 		comboSeleccion.addItem("ROULETTE");
 		comboSeleccion.addItem("UNIVERSAL_STOCHASTIC");
-		comboSeleccion.addItem("TOURNAMENT");
+		comboSeleccion.addItem("DETERMINISTIC TOURNAMENT");
+		comboSeleccion.addItem("PROBABILISTIC TOURNAMENT");
 		comboSeleccion.addItem("TRUNCATION");
 		comboSeleccion.addItem("REMAINS");
 
-		comboSeleccion.setBounds(12, 26, 90, 18);
+		comboSeleccion.setBounds(12, 26, 119, 18);
 		panel.add(comboSeleccion);
 		
 		JLabel lblCruce = new JLabel("Cruce");
@@ -131,7 +132,7 @@ public class Window extends JFrame implements RequestMaker {
 		comboCruce = new JComboBox();
 		comboCruce.addItem("ONE_POINT");
 		comboCruce.addItem("UNIFORM");
-		comboCruce.setBounds(12, 74, 90, 18);
+		comboCruce.setBounds(12, 74, 119, 18);
 		panel.add(comboCruce);
 		
 		lblNewLabel_1 = new JLabel("Mutación");
@@ -140,14 +141,14 @@ public class Window extends JFrame implements RequestMaker {
 		
 		comboMutacion = new JComboBox();
 		comboMutacion.addItem("BASIC");
-		comboMutacion.setBounds(12, 123, 90, 18);
+		comboMutacion.setBounds(12, 123, 119, 18);
 		panel.add(comboMutacion);
 		
 		JPanel graphicPanel = new JPanel();
 
 		graphicPanel.setBackground(new Color(222, 221, 218));
 
-		graphicPanel.setBounds(228, 12, 430, 315);
+		graphicPanel.setBounds(287, 41, 835, 450);
 
 		contentPane.add(graphicPanel);
 
@@ -163,7 +164,7 @@ public class Window extends JFrame implements RequestMaker {
 
 		JTextArea textArea = new JTextArea();
 
-		textArea.setBounds(228, 350, 315, 15);
+		textArea.setBounds(300, 554, 559, 34);
 
 		contentPane.add(textArea);
 
@@ -177,9 +178,30 @@ public class Window extends JFrame implements RequestMaker {
 			}
 		});
 
-		btnStart.setBounds(571, 345, 117, 25);
+		btnStart.setBounds(968, 563, 117, 25);
 
 		contentPane.add(btnStart);
+		
+		JLabel lblElitismo = new JLabel("% Elitismo");
+		lblElitismo.setBounds(22, 236, 104, 15);
+		contentPane.add(lblElitismo);
+		
+		spinnerElitismo = new JSpinner();
+		spinnerElitismo.setBounds(22, 252, 72, 20);
+		contentPane.add(spinnerElitismo);
+		
+		JLabel lblFuncion = new JLabel("Función");
+		lblFuncion.setBounds(22, 373, 70, 15);
+		contentPane.add(lblFuncion);
+		
+		comboFuncion = new JComboBox();
+		comboFuncion.addItem("1");
+		comboFuncion.addItem("2");
+		comboFuncion.addItem("3");
+		comboFuncion.addItem("4");
+		
+		comboFuncion.setBounds(22, 392, 119, 18);
+		contentPane.add(comboFuncion);
 		
 		}
 
@@ -238,14 +260,12 @@ public class Window extends JFrame implements RequestMaker {
 
 	@Override
 	public Integer getElitismPercentage() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Integer) spinnerElitismo.getValue();
 	}
 
 	@Override
 	public String getFitnessFunction() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) comboFuncion.getSelectedItem();
 	}
 
 	@Override
