@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.border.LineBorder;
@@ -16,23 +17,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
 public class Window extends JFrame implements RequestMaker {
 
 	private static final long serialVersionUID = 8815627840243675666L;
 	
-	private JPanel contentPane;
-	private JTextField txtTamPobl;
-	private JLabel lblNmeroDeGeneraciones;
-	private JTextField txtGeneraciones, txtPrecision;
-	private JLabel lblCruces;
-	private JPanel panel;
-	private JLabel lblNewLabel;
-	private JComboBox comboCruce;
-	private JLabel lblNewLabel_1;
-	private JComboBox comboMutacion, comboSeleccion;
-	JSpinner spinnerCruces, spinnerMutaciones;
+	private JPanel contentPane, panel;
+	private JLabel lblNmeroDeGeneraciones, lblNewLabel, lblNewLabel_1, lblCruces;
+	private JTextField txtGeneraciones, txtPrecision, txtTamPobl;
+	private JComboBox comboMutacion, comboSeleccion, comboCruce;
+	private JSpinner spinnerCruces, spinnerMutaciones;
+	private Controller _ctrl;
+	
 
 	/**
 	 * Launch the application.
@@ -53,7 +51,8 @@ public class Window extends JFrame implements RequestMaker {
 	/**
 	 * Create the frame.
 	 */
-	public Window() {
+	public Window(Controller ctrl) {
+		_ctrl = ctrl;
 		setTitle("G13P01");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 700, 438);
@@ -174,8 +173,7 @@ public class Window extends JFrame implements RequestMaker {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				
+				start();
 			}
 		});
 
@@ -185,6 +183,14 @@ public class Window extends JFrame implements RequestMaker {
 		
 		}
 
+	private void start() {
+		try {
+			_ctrl.getInstance().execute(new Request(this));
+		} catch (InvalidInputException e) {
+			JOptionPane.showMessageDialog(this,e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+		}
+
+	}
 	@Override
 	public Integer getPopulationAmount() {
 		return Integer.getInteger(txtTamPobl.getText());
