@@ -24,6 +24,7 @@ public class Request {
 	private Integer fuction4Dimension;
 	private TournamentRequest tournamentRequest;
 	
+	//Hay que cambiar lo del tipo de torneos
 	Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.populationAmount = requestMaker.getPopulationAmount();
 		this.generationAmount = requestMaker.getGenerationAmount();

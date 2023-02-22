@@ -11,6 +11,10 @@ import javax.swing.border.LineBorder;
 import org.math.plot.Plot2DPanel;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
 
@@ -21,13 +25,14 @@ public class Window extends JFrame implements RequestMaker {
 	private JPanel contentPane;
 	private JTextField txtTamPobl;
 	private JLabel lblNmeroDeGeneraciones;
-	private JTextField txtGeneraciones;
+	private JTextField txtGeneraciones, txtPrecision;
 	private JLabel lblCruces;
 	private JPanel panel;
 	private JLabel lblNewLabel;
-	private JComboBox comboBox_1;
+	private JComboBox comboCruce;
 	private JLabel lblNewLabel_1;
-	private JComboBox comboBox_2;
+	private JComboBox comboMutacion, comboSeleccion;
+	JSpinner spinnerCruces, spinnerMutaciones;
 
 	/**
 	 * Launch the application.
@@ -80,7 +85,7 @@ public class Window extends JFrame implements RequestMaker {
 		lblCruces.setBounds(22, 121, 114, 15);
 		contentPane.add(lblCruces);
 		
-		JSpinner spinnerCruces = new JSpinner();
+		spinnerCruces = new JSpinner();
 		spinnerCruces.setBounds(22, 135, 72, 20);
 		contentPane.add(spinnerCruces);
 		
@@ -88,9 +93,17 @@ public class Window extends JFrame implements RequestMaker {
 		lblMutaciones.setBounds(12, 170, 114, 15);
 		contentPane.add(lblMutaciones);
 		
-		JSpinner spinnerMutaciones = new JSpinner();
+		spinnerMutaciones = new JSpinner();
 		spinnerMutaciones.setBounds(22, 193, 72, 20);
 		contentPane.add(spinnerMutaciones);
+		
+		JLabel lblPrecision = new JLabel("Precisión");
+		lblPrecision.setBounds(135, 170, 114, 15);
+		contentPane.add(lblPrecision);
+		
+		txtPrecision = new JTextField();
+		txtPrecision.setBounds(135, 193, 72, 20);
+		contentPane.add(txtPrecision);
 		
 		panel = new JPanel();
 		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
@@ -102,77 +115,107 @@ public class Window extends JFrame implements RequestMaker {
 		lblNewLabel.setBounds(12, 8, 70, 15);
 		panel.add(lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(12, 26, 90, 18);
-		panel.add(comboBox);
+		comboSeleccion = new JComboBox();
+		comboSeleccion.addItem("ROULETTE");
+		comboSeleccion.addItem("UNIVERSAL_STOCHASTIC");
+		comboSeleccion.addItem("TOURNAMENT");
+		comboSeleccion.addItem("TRUNCATION");
+		comboSeleccion.addItem("REMAINS");
+
+		comboSeleccion.setBounds(12, 26, 90, 18);
+		panel.add(comboSeleccion);
 		
 		JLabel lblCruce = new JLabel("Cruce");
 		lblCruce.setBounds(12, 58, 70, 15);
 		panel.add(lblCruce);
 		
-		comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(12, 74, 90, 18);
-		panel.add(comboBox_1);
+		comboCruce = new JComboBox();
+		comboCruce.addItem("ONE_POINT");
+		comboCruce.addItem("UNIFORM");
+		comboCruce.setBounds(12, 74, 90, 18);
+		panel.add(comboCruce);
 		
 		lblNewLabel_1 = new JLabel("Mutación");
 		lblNewLabel_1.setBounds(12, 106, 70, 15);
 		panel.add(lblNewLabel_1);
 		
-		comboBox_2 = new JComboBox();
-		comboBox_2.setBounds(12, 123, 90, 18);
-		panel.add(comboBox_2);
+		comboMutacion = new JComboBox();
+		comboMutacion.addItem("BASIC");
+		comboMutacion.setBounds(12, 123, 90, 18);
+		panel.add(comboMutacion);
 		
 		JPanel graphicPanel = new JPanel();
+
 		graphicPanel.setBackground(new Color(222, 221, 218));
+
 		graphicPanel.setBounds(228, 12, 430, 315);
+
 		contentPane.add(graphicPanel);
-		
+
 		Plot2DPanel plot = new Plot2DPanel();
+
 		plot.addLegend("SOUTH");
+
 		plot.setBounds(228, 12, 430, 315);
+
 		plot.setVisible(false);
+
 		graphicPanel.add(plot);
-		
+
 		JTextArea textArea = new JTextArea();
-		textArea.setBounds(228, 350, 345, 15);
+
+		textArea.setBounds(228, 350, 315, 15);
+
 		contentPane.add(textArea);
+
+		JButton btnStart = new JButton("Empezar");
+
+		btnStart.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+
+		btnStart.setBounds(571, 345, 117, 25);
+
+		contentPane.add(btnStart);
 		
 		}
 
 	@Override
 	public Integer getPopulationAmount() {
-		// TODO Auto-generated method stub
-		return null;
+		return Integer.getInteger(txtTamPobl.getText());
 	}
 
 	@Override
 	public Integer getGenerationAmount() {
-		// TODO Auto-generated method stub
-		return null;
+		return Integer.getInteger(txtGeneraciones.getText());
+
 	}
 
 	@Override
 	public Integer getCrossoverPercentage() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Integer) spinnerCruces.getValue();
+
 	}
 
 	@Override
 	public Integer getMutationPercentage() {
-		// TODO Auto-generated method stub
-		return null;
+		return (Integer) spinnerMutaciones.getValue();
+
 	}
 
 	@Override
 	public Double getPrecision() {
-		// TODO Auto-generated method stub
-		return null;
+		return Double.valueOf(txtPrecision.getText());
 	}
 
 	@Override
 	public String getSelectionMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) comboSeleccion.getSelectedItem();
 	}
 
 	@Override
@@ -183,8 +226,8 @@ public class Window extends JFrame implements RequestMaker {
 
 	@Override
 	public String getMutationMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) comboMutacion.getSelectedItem();
+
 	}
 
 	@Override
@@ -219,7 +262,7 @@ public class Window extends JFrame implements RequestMaker {
 
 	@Override
 	public String getCrossoverMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) comboCruce.getSelectedItem();
+
 	}
 }
