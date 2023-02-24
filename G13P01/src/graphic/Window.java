@@ -69,7 +69,7 @@ public class Window extends JFrame implements RequestMaker {
 		lblTamaoDePoblacin.setBounds(12, 12, 151, 15);
 		contentPane.add(lblTamaoDePoblacin);
 		
-		txtTamPobl = new JTextField();
+		txtTamPobl = new JTextField("100");
 		txtTamPobl.setBounds(22, 32, 114, 19);
 		contentPane.add(txtTamPobl);
 		txtTamPobl.setColumns(10);
@@ -78,7 +78,7 @@ public class Window extends JFrame implements RequestMaker {
 		lblNmeroDeGeneraciones.setBounds(12, 67, 191, 15);
 		contentPane.add(lblNmeroDeGeneraciones);
 		
-		txtGeneraciones = new JTextField();
+		txtGeneraciones = new JTextField("100");
 		txtGeneraciones.setBounds(22, 90, 114, 19);
 		contentPane.add(txtGeneraciones);
 		txtGeneraciones.setColumns(10);
@@ -103,7 +103,7 @@ public class Window extends JFrame implements RequestMaker {
 		lblPrecision.setBounds(22, 284, 114, 15);
 		contentPane.add(lblPrecision);
 		
-		txtPrecision = new JTextField();
+		txtPrecision = new JTextField("0.001");
 		txtPrecision.setBounds(22, 304, 72, 20);
 		contentPane.add(txtPrecision);
 		

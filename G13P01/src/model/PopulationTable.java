@@ -32,8 +32,8 @@ public class PopulationTable {
 		for (int i = 0; i < populationAmount; i++) {
 			actualPunctuation = this.fitness.get(i) / this.fitnessSumatory;
 			accumulatedPunctuation += actualPunctuation;
-			this.punctuation.set(i, actualPunctuation);
-			this.accumulated.set(i, accumulatedPunctuation);
+			this.punctuation.add(actualPunctuation);
+			this.accumulated.add(accumulatedPunctuation);
 		}
 	}
 	
