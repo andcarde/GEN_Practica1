@@ -94,6 +94,7 @@ public class Executor {
 				if (chromosome.getValue() > leader.getValue())
 					leader = chromosome;
 			}
+			positivizeFitness();
 		}
 	}
 
@@ -109,6 +110,7 @@ public class Executor {
 					leader = chromosome;
 				fitnessSum += chromosome.getValue();
 			}
+			positivizeFitness();
 			
 			// Calculamos la media de la generaci�n
 			generationAverage[generation] = fitnessSum / population.size();
@@ -130,6 +132,17 @@ public class Executor {
 		}
 	}
 	
+	private void positivizeFitness() {
+		double toSum = 0.0;
+		for (ChromosomeI chromosome : this.population) {
+			if (chromosome.getValue() < toSum)
+				toSum = chromosome.getValue();
+		}
+		toSum *= -1;
+		for (ChromosomeI chromosome : this.population)
+			chromosome.displace(toSum);
+	}
+
 	public double[] getGenerationAverage() { return generationAverage; }
 	public double[] getGenerationLeaders() { return generationLeaders; }
 	public double[] getAbsoluteLeaders() { return generationsAbsoluteLeaders; }

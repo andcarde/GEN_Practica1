@@ -96,4 +96,9 @@ public class Chromosome implements ChromosomeI {
 	public ChromosomeI copy() {
 		return new Chromosome(this);
 	}
+
+	@Override
+	public void displace(double toSum) {
+		this.phenotype += toSum;
+	}
 }
