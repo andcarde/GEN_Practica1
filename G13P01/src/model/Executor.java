@@ -107,7 +107,7 @@ public class Executor {
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
 				if (chromosome.getValue() > leader.getValue())
-					leader = chromosome;
+					leader = chromosome.copy();
 				fitnessSum += chromosome.getValue();
 			}
 			positivizeFitness();
@@ -123,15 +123,18 @@ public class Executor {
 			
 			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
 			if (this.intergenerationLeader == null)
-				intergenerationLeader = leader;
+				intergenerationLeader = leader.copy();
 			//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			else if (leader.getValue() > intergenerationLeader.getValue()) {
-				intergenerationLeader = leader;
+				intergenerationLeader = leader.copy();
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
 			//Se añade el lider absoluto del momento
-			generationsAbsoluteLeaders[generation] = leader.getValue();
+			if (generation < 1 || generationsAbsoluteLeaders[generation-1] < leader.getValue()) {
+				generationsAbsoluteLeaders[generation] = leader.getValue();
+			}
+			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
 		}
 	}
 	
