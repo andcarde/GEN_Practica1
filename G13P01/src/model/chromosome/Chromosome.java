@@ -86,8 +86,14 @@ public class Chromosome implements ChromosomeI {
 	@Override
 	public String getGenesToString() {
 		String g = "";
-		for (GenI gen : genes) {
-			g.concat(gen.getName() + ": " + gen.getValue() + ", ");
+		if (genes.isEmpty())
+			g = "There are no genes";
+		else {
+			for (int i = 0; i < genes.size(); i++) {
+				if (i == 0)
+					g.concat(", ");
+				g.concat(genes.get(i).getName() + ": " + genes.get(i).getValue());
+			}
 		}
 		return g;
 	}

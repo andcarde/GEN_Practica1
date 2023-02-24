@@ -112,22 +112,22 @@ public class Executor {
 			}
 			positivizeFitness();
 			
-			// Calculamos la media de la generaciÔøΩn
+			// Calculamos la media de la generaciÛn
 			generationAverage[generation] = fitnessSum / population.size();
 			//this.observer.updateGenerationAverage(generationAverage);
 			
-			// AÔøΩadimos el mejor cromosoma de la generaciÔøΩn a la lista
+			// AÒadimos el mejor cromosoma de la generaciÛn a la lista
 			generationLeaders[generation] = leader.getValue();
 			
 			//this.observer.updateGenerationLeaders(generationLeaders);
 			
 			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
-			if (leader.getValue() > intergenerationLeader.getValue()) {
+			if (intergenerationLeader == null || leader.getValue() > intergenerationLeader.getValue()) {
 				intergenerationLeader = leader;
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
-			//Se a√±ade el lider absoluto del momento
+			//Se aÒade el lider absoluto del momento
 			generationsAbsoluteLeaders[generation] = leader.getValue();
 		}
 	}
@@ -148,7 +148,8 @@ public class Executor {
 	public double[] getAbsoluteLeaders() { return generationsAbsoluteLeaders; }
 
 	public String getBestChromosomeToString() {
-		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue() + " con los par√°metros: " + intergenerationLeader.getGenesToString();
+		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
+			+ " con los par·metros: " + intergenerationLeader.getGenesToString();
 	}
 
 	
