@@ -47,9 +47,9 @@ public class Executor {
 		this.observer = (Observer) config.get("observer");
 		
 		this.population = new ArrayList<>();
-		this.generationAverage = new double[POPULATION_AMOUNT];
-		this.generationLeaders = new double[POPULATION_AMOUNT];
-		generationsAbsoluteLeaders = new double[POPULATION_AMOUNT];
+		this.generationAverage = new double[GENERATION_AMOUNT];
+		this.generationLeaders = new double[GENERATION_AMOUNT];
+		generationsAbsoluteLeaders = new double[GENERATION_AMOUNT];
 		this.intergenerationLeader = null;
 	}
 	
