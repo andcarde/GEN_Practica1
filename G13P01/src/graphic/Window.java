@@ -11,7 +11,10 @@ import javax.swing.border.LineBorder;
 
 import org.math.plot.Plot2DPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -159,11 +162,13 @@ public class Window extends JFrame implements RequestMaker {
 
 		plot.addLegend("SOUTH");
 
-		plot.setBounds(228, 12, 430, 315);
 
-		plot.setVisible(false);
 
 		graphicPanel.add(plot);
+		plot.setBounds(228, 12, 430, 315);
+		plot.setPreferredSize(new Dimension(835, 450));
+		
+		plot.setVisible(false);
 
 		textValue = new JTextArea();
 
@@ -211,7 +216,6 @@ public class Window extends JFrame implements RequestMaker {
 
 	private void start() {
 		try {
-			System.out.println(txtTamPobl.getText());
 			gens = new double[getPopulationAmount()];
 			for (int i = 0; i < getPopulationAmount(); i++) {
 				gens[i] = i;
@@ -224,9 +228,15 @@ public class Window extends JFrame implements RequestMaker {
 	
 	public void paintResult(double[] generationAverage, double[] generationLeaders, double[] bestAbsoluteValue,String bestResult) {
 		plot.resetMapData();
+		plot.setVisible(true);
+		plot.removeAllPlots();
+		for (int i = 0; i < generationLeaders.length; i++) {
+			System.out.println(generationLeaders[i]);
+		}
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor valor", Color.blue, gens, generationLeaders);
 		plot.addLinePlot("mejor valor absoluto", Color.red, gens, bestAbsoluteValue);
+		plot.repaint();
 		textValue.setText(bestResult);
 	}
 	@Override
@@ -254,7 +264,6 @@ public class Window extends JFrame implements RequestMaker {
 
 	@Override
 	public Double getPrecision() {
-		System.out.println(txtPrecision.getText());
 		return Double.parseDouble(txtPrecision.getText());
 	}
 
