@@ -122,7 +122,10 @@ public class Executor {
 			//this.observer.updateGenerationLeaders(generationLeaders);
 			
 			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
-			if (intergenerationLeader == null || leader.getValue() > intergenerationLeader.getValue()) {
+			if (this.intergenerationLeader == null)
+				intergenerationLeader = leader;
+			//this.observer.updateIntergenerationLeader(intergenerationLeader);
+			else if (leader.getValue() > intergenerationLeader.getValue()) {
 				intergenerationLeader = leader;
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}

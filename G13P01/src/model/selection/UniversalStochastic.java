@@ -15,7 +15,7 @@ public class UniversalStochastic implements Selection {
 		PopulationTable table = new PopulationTable(population);
 		List<Double> accumulated = table.getAccumulated();
 		
-		double distance = RandomGenerator.createAleatoryInt(1/population.size());
+		double distance = RandomGenerator.createAleatoryDouble() / population.size();
 		for (int i = 0; i < population.size(); i++) {
 			ChromosomeI aux = population.get(getSelected(accumulated, distance));
 			selection.add(aux);

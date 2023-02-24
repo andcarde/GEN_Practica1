@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Function1 extends Function {
 
-	/* La primera funciï¿½n se llama de calibraciï¿½n porque es simple y
-	 * por lo tanto debe converger de forma mï¿½s simple.
+	/* La primera función se llama de calibración porque es simple y
+	 * por lo tanto debe converger de forma más simple.
 	 */
 	
 	public Function1(Double precision) {
