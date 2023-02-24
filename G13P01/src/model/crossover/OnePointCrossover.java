@@ -8,6 +8,8 @@ import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
+// TODO Se debe de hacer más genérico para que el elemento puede ser un Integer o un Double.
+
 public class OnePointCrossover extends Crossover {	
 	
 	public OnePointCrossover(MoldI mold, Double crossProbability) {
@@ -26,12 +28,12 @@ public class OnePointCrossover extends Crossover {
 		Integer cutPoint = RandomGenerator.createAleatoryInt(mold.getSize() - 1) + 1;
 
 		for (int i = 0; i < cutPoint; i++) {
-			genome1.add(parent1.getElement(i));
-			genome2.add(parent2.getElement(i));
+			genome1.add((boolean) parent1.getElement(i));
+			genome2.add((boolean) parent2.getElement(i));
 		}
 		for (int i = cutPoint; i < mold.getSize(); i++) {
-			genome1.add(parent2.getElement(i));
-			genome2.add(parent1.getElement(i));
+			genome1.add((boolean) parent2.getElement(i));
+			genome2.add((boolean) parent1.getElement(i));
 		}
 		
 		son1.assimilate(genome1);

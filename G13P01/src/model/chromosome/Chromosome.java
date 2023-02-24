@@ -20,6 +20,14 @@ public class Chromosome implements ChromosomeI {
 			this.genes.add(new Gen(gen));
 	}
 	
+	private Chromosome(Chromosome chromosome) {
+		this.phenotype = chromosome.phenotype;
+		this.genes = new ArrayList<>();
+		for (GenI gen : chromosome.genes)
+			this.genes.add(new Gen((Gen) gen));
+		this.mold = chromosome.mold;
+	}
+	
 	@Override
 	public void evaluate() {
 		Input input = new Input();
@@ -82,5 +90,10 @@ public class Chromosome implements ChromosomeI {
 			g.concat(gen.getName() + ": " + gen.getValue() + ", ");
 		}
 		return g;
+	}
+
+	@Override
+	public ChromosomeI copy() {
+		return new Chromosome(this);
 	}
 }

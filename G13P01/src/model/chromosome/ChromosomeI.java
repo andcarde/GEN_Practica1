@@ -15,4 +15,5 @@ public interface ChromosomeI {
 	public void evaluate();
 	public void assimilate(List<Boolean> genome);
 	public String getGenesToString();
+	public ChromosomeI copy();
 }
