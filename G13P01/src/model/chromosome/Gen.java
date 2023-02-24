@@ -73,7 +73,7 @@ public class Gen implements GenI {
 
 	@Override
 	public Integer getSize() {
-		return bits.size();
+		return this.size;
 	}
 
 	@Override
