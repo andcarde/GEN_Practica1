@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import graphic.Controller;
 import graphic.Observer;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
@@ -25,9 +26,11 @@ public class Executor {
 	private List<ChromosomeI> population;
 	
 	// MODEL STATISTICS -------------------------------------------------
-	private List<Double> generationAverage;
+	private double[] generationAverage;
 	// List of the best individuals of each promotion
-	private List<Double> generationLeaders;
+	private double[] generationLeaders;
+	// List of the best absolute individuals
+	private double[] generationsAbsoluteLeaders;
 	private ChromosomeI intergenerationLeader;
 	// ------------------------------------------------------------------
 	
@@ -44,19 +47,20 @@ public class Executor {
 		this.observer = (Observer) config.get("observer");
 		
 		this.population = new ArrayList<>();
-		this.generationAverage = new ArrayList<>();
-		this.generationLeaders = new ArrayList<>();
+		this.generationAverage = new double[POPULATION_AMOUNT];
+		this.generationLeaders = new double[POPULATION_AMOUNT];
+		generationsAbsoluteLeaders = new double[POPULATION_AMOUNT];
 		this.intergenerationLeader = null;
 	}
 	
 	public void run() {
 		initilize();
-		evaluate();
+		basicEvaluation();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
 			select();
 			cross();
 			mutate();
-			evaluate();
+			evaluate(i);
 		}
 	}
 	
@@ -79,8 +83,21 @@ public class Executor {
 		for (ChromosomeI chromosome : population)
 			this.mutation.act(chromosome);
 	}
+	
+	private void basicEvaluation() {
+		if (population.size() >= 0) {
+			for (ChromosomeI chromosome : this.population)
+				chromosome.evaluate();
+			ChromosomeI leader = population.get(0);
+			for (int i = 0; i < population.size(); i++) {
+				ChromosomeI chromosome = population.get(i);
+				if (chromosome.getValue() > leader.getValue())
+					leader = chromosome;
+			}
+		}
+	}
 
-	private void evaluate() {
+	private void evaluate(int generation) {
 		if (population.size() >= 0) {
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
@@ -93,19 +110,33 @@ public class Executor {
 				fitnessSum += chromosome.getValue();
 			}
 			
-			// Calculamos la media de la generaciÛn
-			generationAverage.add(fitnessSum / population.size());
-			this.observer.updateGenerationAverage(generationAverage);
+			// Calculamos la media de la generaciÔøΩn
+			generationAverage[generation] = fitnessSum / population.size();
+			//this.observer.updateGenerationAverage(generationAverage);
 			
-			// AÒadimos el mejor cromosoma de la generaciÛn a la lista
-			generationLeaders.add(leader.getValue());
-			this.observer.updateGenerationLeaders(generationLeaders);
+			// AÔøΩadimos el mejor cromosoma de la generaciÔøΩn a la lista
+			generationLeaders[generation] = leader.getValue();
+			
+			//this.observer.updateGenerationLeaders(generationLeaders);
 			
 			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
 			if (leader.getValue() > intergenerationLeader.getValue()) {
 				intergenerationLeader = leader;
-				this.observer.updateIntergenerationLeader(intergenerationLeader);
+				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
+			
+			//Se a√±ade el lider absoluto del momento
+			generationsAbsoluteLeaders[generation] = leader.getValue();
 		}
 	}
+	
+	public double[] getGenerationAverage() { return generationAverage; }
+	public double[] getGenerationLeaders() { return generationLeaders; }
+	public double[] getAbsoluteLeaders() { return generationsAbsoluteLeaders; }
+
+	public String getBestChromosomeToString() {
+		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue() + " con los par√°metros: " + intergenerationLeader.getGenesToString();
+	}
+
+	
 }

@@ -74,4 +74,13 @@ public class Chromosome implements ChromosomeI {
 			accumulated += gen.getSize();
 		}
 	}
+
+	@Override
+	public String getGenesToString() {
+		String g = "";
+		for (GenI gen : genes) {
+			g.concat(gen.getName() + ": " + gen.getValue() + ", ");
+		}
+		return g;
+	}
 }

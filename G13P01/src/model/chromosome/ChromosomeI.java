@@ -6,12 +6,13 @@ import model.MoldI;
 
 public interface ChromosomeI {
 
-	Integer getSize();
-	Boolean getElement(Integer i);
-	Double getValue();
-	List<GenI> getGenes();
-	void initialize();
-	MoldI getMold();
-	void evaluate();
-	void assimilate(List<Boolean> genome);
+	public Integer getSize();
+	public Boolean getElement(Integer i);
+	public Double getValue();
+	public List<GenI> getGenes();
+	public void initialize();
+	public MoldI getMold();
+	public void evaluate();
+	public void assimilate(List<Boolean> genome);
+	public String getGenesToString();
 }

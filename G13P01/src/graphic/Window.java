@@ -14,6 +14,7 @@ import org.math.plot.Plot2DPanel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -30,6 +31,9 @@ public class Window extends JFrame implements RequestMaker {
 	private JComboBox comboMutacion, comboSeleccion, comboCruce, comboFuncion;
 	private JSpinner spinnerCruces, spinnerMutaciones, spinnerElitismo;
 	private Controller _ctrl;
+	private double[] gens;
+	private Plot2DPanel plot;
+	private JTextArea textValue;
 	
 
 	/**
@@ -51,8 +55,7 @@ public class Window extends JFrame implements RequestMaker {
 	/**
 	 * Create the frame.
 	 */
-	public Window(Controller ctrl) {
-		_ctrl = ctrl;
+	public Window() {
 		setTitle("G13P01");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1197, 703);
@@ -152,7 +155,7 @@ public class Window extends JFrame implements RequestMaker {
 
 		contentPane.add(graphicPanel);
 
-		Plot2DPanel plot = new Plot2DPanel();
+		plot = new Plot2DPanel();
 
 		plot.addLegend("SOUTH");
 
@@ -162,11 +165,11 @@ public class Window extends JFrame implements RequestMaker {
 
 		graphicPanel.add(plot);
 
-		JTextArea textArea = new JTextArea();
+		textValue = new JTextArea();
 
-		textArea.setBounds(300, 554, 559, 34);
+		textValue.setBounds(300, 554, 559, 34);
 
-		contentPane.add(textArea);
+		contentPane.add(textValue);
 
 		JButton btnStart = new JButton("Empezar");
 
@@ -203,15 +206,27 @@ public class Window extends JFrame implements RequestMaker {
 		comboFuncion.setBounds(22, 392, 119, 18);
 		contentPane.add(comboFuncion);
 		
-		}
+		
+	}
 
 	private void start() {
 		try {
-			_ctrl.getInstance().execute(new Request(this));
+			gens = new double[getPopulationAmount()];
+			for (int i = 0; i < getPopulationAmount(); i++) {
+				gens[i] = i;
+			}
+			Controller.getInstance().execute(new Request(this));
 		} catch (InvalidInputException e) {
 			JOptionPane.showMessageDialog(this,e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 		}
-
+	}
+	
+	public void paintResult(double[] generationAverage, double[] generationLeaders, double[] bestAbsoluteValue,String bestResult) {
+		plot.resetMapData();
+		plot.addLinePlot("media", Color.green, gens, generationAverage);
+		plot.addLinePlot("mejor valor", Color.blue, gens, generationLeaders);
+		plot.addLinePlot("mejor valor absoluto", Color.red, gens, bestAbsoluteValue);
+		textValue.setText(bestResult);
 	}
 	@Override
 	public Integer getPopulationAmount() {
