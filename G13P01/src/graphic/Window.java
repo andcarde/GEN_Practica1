@@ -11,6 +11,8 @@ import javax.swing.border.LineBorder;
 
 import org.math.plot.Plot2DPanel;
 
+import model.selection.SelectionMethod;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -121,12 +123,12 @@ public class Window extends JFrame implements RequestMaker {
 		panel.add(lblNewLabel);
 		
 		comboSeleccion = new JComboBox();
-		comboSeleccion.addItem("ROULETTE");
-		comboSeleccion.addItem("UNIVERSAL_STOCHASTIC");
-		comboSeleccion.addItem("DETERMINISTIC TOURNAMENT");
-		comboSeleccion.addItem("PROBABILISTIC TOURNAMENT");
-		comboSeleccion.addItem("TRUNCATION");
-		comboSeleccion.addItem("REMAINS");
+		comboSeleccion.addItem(SelectionMethod.ROULETTE);
+		comboSeleccion.addItem(SelectionMethod.UNIVERSAL_STOCHASTIC);
+		comboSeleccion.addItem(SelectionMethod.DETERMINISTIC_TOURNAMENT.name());
+		comboSeleccion.addItem(SelectionMethod.TRUNCATION.name());
+		comboSeleccion.addItem(SelectionMethod.PROBABILISTIC_TOURNAMENT.name());
+		comboSeleccion.addItem(SelectionMethod.REMAINS.name());
 
 		comboSeleccion.setBounds(12, 26, 119, 18);
 		panel.add(comboSeleccion);
