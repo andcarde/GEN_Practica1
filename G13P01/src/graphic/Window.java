@@ -198,10 +198,10 @@ public class Window extends JFrame implements RequestMaker {
 		contentPane.add(lblFuncion);
 		
 		comboFuncion = new JComboBox();
-		comboFuncion.addItem("1");
-		comboFuncion.addItem("2");
-		comboFuncion.addItem("3");
-		comboFuncion.addItem("4");
+		comboFuncion.addItem("FUNCTION1");
+		comboFuncion.addItem("FUNCTION2");
+		comboFuncion.addItem("FUNCTION3");
+		comboFuncion.addItem("FUNCTION4");
 		
 		comboFuncion.setBounds(22, 392, 119, 18);
 		contentPane.add(comboFuncion);
@@ -211,6 +211,7 @@ public class Window extends JFrame implements RequestMaker {
 
 	private void start() {
 		try {
+			System.out.println(txtTamPobl.getText());
 			gens = new double[getPopulationAmount()];
 			for (int i = 0; i < getPopulationAmount(); i++) {
 				gens[i] = i;
@@ -230,12 +231,12 @@ public class Window extends JFrame implements RequestMaker {
 	}
 	@Override
 	public Integer getPopulationAmount() {
-		return Integer.getInteger(txtTamPobl.getText());
+		return Integer.parseInt(txtTamPobl.getText());
 	}
 
 	@Override
 	public Integer getGenerationAmount() {
-		return Integer.getInteger(txtGeneraciones.getText());
+		return Integer.parseInt(txtGeneraciones.getText());
 
 	}
 
@@ -253,7 +254,8 @@ public class Window extends JFrame implements RequestMaker {
 
 	@Override
 	public Double getPrecision() {
-		return Double.valueOf(txtPrecision.getText());
+		System.out.println(txtPrecision.getText());
+		return Double.parseDouble(txtPrecision.getText());
 	}
 
 	@Override

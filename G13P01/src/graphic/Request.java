@@ -54,8 +54,9 @@ public class Request {
 	
 	public List<String> checkValidity() {
 		List<String> errors = new ArrayList<>();
-		if (tournamentRequest.getContestantsAmount() > populationAmount)
+		if (selectionMethod == SelectionMethod.TOURNAMENT && tournamentRequest.getContestantsAmount() > populationAmount) {
 			errors.add("The amount of contestants must be equal or lower than the population amount.");
+		}
 		return errors;
 			
 	}
