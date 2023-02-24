@@ -1,8 +1,5 @@
 package model.selection;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
@@ -14,53 +11,28 @@ public class ProbabilisticTournament extends Tournament {
 		super(contestantsAmount);
 		this.championProbability = championProbability;
 	}
-
-	@Override
-	public List<ChromosomeI> act(List<ChromosomeI> population) {
-		List<ChromosomeI> selected = new ArrayList<>();
-		if (this.contestantsAmount > 0) {
-			List<ChromosomeI> populationCopy = List.copyOf(population);
-			List<ChromosomeI> match;
-			for (int i = 0; i < population.size(); i++) {
-				match = new ArrayList<>();
-				for (int j = 0; j < contestantsAmount; j++) {
-					int randomIndex = RandomGenerator.createAleatoryInt(populationCopy.size());
-					match.add(populationCopy.get(randomIndex));
-					populationCopy.remove(randomIndex);
-				}
-				ChromosomeI winner = match.get(0);
-				for (int j = 1; i < contestantsAmount; i++) {
-					ChromosomeI actual = match.get(j);
-					winner = battle(winner, actual);
-				}
-				if (!selected.contains(winner))
-					selected.add(winner);
-				else
-					selected.add(winner.copy());
-				for (ChromosomeI ch : match)
-					populationCopy.add(ch);
-			}
-		}
-		return selected;
-	}
 	
-	private ChromosomeI battle(ChromosomeI contestant1, ChromosomeI contestant2) {
-		ChromosomeI winner;
+	@Override
+	protected ChromosomeI battle(ChromosomeI contestant1, ChromosomeI contestant2) {
+		ChromosomeI winner = null;
 		if (contestant1.getValue() == contestant2.getValue()) {
 			if (RandomGenerator.createAleatoryDouble() < 0.5)
 				winner = contestant1;
-		}
-			
-		if (this.championProbability <= RandomGenerator.createAleatoryDouble()) {
-			if (contestant1.getValue() < contestant2.getValue())
-				winner = contestant2;
 			else
+				winner =  contestant2;
+		}
+		else if (this.championProbability > RandomGenerator.createAleatoryDouble()) {
+			if (contestant1.getValue() > contestant2.getValue())
 				winner = contestant1;
+			else
+				winner = contestant2;
 		}
 		else {
-			
+			if (contestant1.getValue() < contestant2.getValue())
+				winner = contestant1;
+			else
+				winner = contestant2;
 		}
-			winner = actual;
-		return winner
+		return winner;
 	}
 }
