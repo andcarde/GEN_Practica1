@@ -32,7 +32,7 @@ public class Request {
 		this.mutationProbability = (double)  requestMaker.getMutationPercentage() / 100;
 		this.precision = requestMaker.getPrecision();
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
-		if (this.selectionMethod == SelectionMethod.TOURNAMENT) {
+		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT || this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
 			Integer contestantsAmount = requestMaker.getContestantsAmount();
 			TournamentMode tournamentMode = TournamentMode.valueOf(TournamentMode.class, requestMaker.getTournamentMode());
 			tournamentRequest = new TournamentRequest(tournamentMode, contestantsAmount);
@@ -54,7 +54,7 @@ public class Request {
 	
 	public List<String> checkValidity() {
 		List<String> errors = new ArrayList<>();
-		if (selectionMethod == SelectionMethod.TOURNAMENT && tournamentRequest.getContestantsAmount() > populationAmount) {
+		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT || this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT && tournamentRequest.getContestantsAmount() > populationAmount) {
 			errors.add("The amount of contestants must be equal or lower than the population amount.");
 		}
 		return errors;

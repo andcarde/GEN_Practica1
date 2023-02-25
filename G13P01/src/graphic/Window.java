@@ -123,8 +123,8 @@ public class Window extends JFrame implements RequestMaker {
 		panel.add(lblNewLabel);
 		
 		comboSeleccion = new JComboBox();
-		comboSeleccion.addItem(SelectionMethod.ROULETTE);
-		comboSeleccion.addItem(SelectionMethod.UNIVERSAL_STOCHASTIC);
+		comboSeleccion.addItem(SelectionMethod.ROULETTE.name());
+		comboSeleccion.addItem(SelectionMethod.UNIVERSAL_STOCHASTIC.name());
 		comboSeleccion.addItem(SelectionMethod.DETERMINISTIC_TOURNAMENT.name());
 		comboSeleccion.addItem(SelectionMethod.TRUNCATION.name());
 		comboSeleccion.addItem(SelectionMethod.PROBABILISTIC_TOURNAMENT.name());
