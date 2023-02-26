@@ -6,6 +6,7 @@ import java.util.Map;
 
 import graphic.Observer;
 import model.chromosome.Chromosome;
+import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
 import model.mutation.MutationI;
@@ -60,13 +61,33 @@ public class Executor {
 		initilize();
 		basicEvaluation();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
+			population.sort(new ChromosomeComparator());
+			extractElitism();
 			select();
 			cross();
 			mutate();
+			population.sort(new ChromosomeComparator());
+			insertElitism();
 			evaluate(i);
 		}
 	}
 	
+	private void insertElitism() {
+		for (int i = 0; i < elitism.size(); i++) {
+			population.remove(population.size()-1);
+			population.add(elitism.get(i));
+			population.sort(new ChromosomeComparator());
+		}
+	}
+
+	private void extractElitism() {
+		elitism.clear();
+		for (int i = 0; i < ELITISM_AMOUNT; i++) {
+			elitism.add(population.get(i).copy());
+		}
+		
+	}
+
 	private void initilize() {
 		for (int i = 0; i < POPULATION_AMOUNT; i++)
 			population.add(new Chromosome(mold));
