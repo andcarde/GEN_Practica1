@@ -16,6 +16,7 @@ public class Executor {
 	// MODEL CONSTRAINTS -----------------------------------------------
 	private final Integer GENERATION_AMOUNT;
 	private final Integer POPULATION_AMOUNT;
+	private final Integer ELITISM_AMOUNT;
 	private final MoldI mold;
 	private final Selection selection;
 	private final CrossoverI crossover;
@@ -23,6 +24,7 @@ public class Executor {
 	// ------------------------------------------------------------------
 	
 	private List<ChromosomeI> population;
+	private List<ChromosomeI> elitism;
 	
 	// MODEL STATISTICS -------------------------------------------------
 	private double[] generationAverage;
@@ -38,6 +40,7 @@ public class Executor {
 	public Executor(Map<String, Object> config) {
 		this.GENERATION_AMOUNT = (Integer) config.get("generation_amount");
 		this.POPULATION_AMOUNT = (Integer) config.get("population_amount");
+		this.ELITISM_AMOUNT = (Integer) config.get("elitism_amount") * POPULATION_AMOUNT / 100;
 		this.mold = (MoldI) config.get("mold");
 		this.selection = (Selection) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
@@ -46,6 +49,7 @@ public class Executor {
 		this.observer = (Observer) config.get("observer");
 		
 		this.population = new ArrayList<>();
+		elitism = new ArrayList<>();
 		this.generationAverage = new double[GENERATION_AMOUNT];
 		this.generationLeaders = new double[GENERATION_AMOUNT];
 		generationsAbsoluteLeaders = new double[GENERATION_AMOUNT];

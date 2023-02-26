@@ -22,6 +22,7 @@ public class Builder {
 		Map<String, Object> config = new HashMap<>();
 		config.put("generation_amount", request.getGenerationAmount());
 		config.put("population_amount", request.getPopulationAmount());
+		config.put("elitism_amount", request.getElitismProbability());
 		MoldI mold = buildMold(request);
 		config.put("mold", mold);
 		config.put("selection", buildSelection(request));

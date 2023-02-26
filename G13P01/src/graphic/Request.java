@@ -21,7 +21,7 @@ public class Request {
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
 	private MutationMethod mutationMethod;
-	private Double elitismRate;
+	private Integer elitismRate;
 	private FitnessFunction fitnessFunction;
 	private Integer fuction4Dimension;
 	private TournamentRequest tournamentRequest;
@@ -84,7 +84,7 @@ public class Request {
 		this.crossoverMethod = CrossoverMethod.valueOf(CrossoverMethod.class, requestMaker.getCrossoverMethod());
 		this.mutationMethod = MutationMethod.valueOf(MutationMethod.class, requestMaker.getMutationMethod());
 		try {
-			this.elitismRate = Double.valueOf(requestMaker.getElitismPercentage()) / 100;
+			this.elitismRate = Integer.valueOf(requestMaker.getElitismPercentage());
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The elitism rate must be a rational number.");
 		}
@@ -160,7 +160,7 @@ public class Request {
 		return mutationMethod;
 	}
 
-	public Double getElitismProbability() {
+	public Integer getElitismProbability() {
 		return elitismRate;
 	}
 
