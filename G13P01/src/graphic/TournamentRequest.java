@@ -1,28 +1,20 @@
 package graphic;
 
-import model.selection.TournamentMode;
-
 public class TournamentRequest {
 
 	private Integer contestantsAmount;
-	private TournamentMode tournamentMode;
 	private Double championProbability;
 	
-	public TournamentRequest(TournamentMode tournamentMode, Integer contestantsAmount) {
-		this.tournamentMode = tournamentMode;
+	public TournamentRequest(Integer contestantsAmount) {
 		this.contestantsAmount = contestantsAmount;
 	}
 	
-	public void setChampionProbability(Integer championPercentage) {
-		this.championProbability = (double) championPercentage / 100;
+	public void setChampionProbability(Double championProbability) {
+		this.championProbability = championProbability;
 	}
 
 	public Integer getContestantsAmount() {
 		return this.contestantsAmount;
-	}
-
-	public TournamentMode getTournamentMode() {
-		return this.tournamentMode;
 	}
 
 	public Double getChampionProbability() {

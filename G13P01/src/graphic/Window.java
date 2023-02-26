@@ -11,220 +11,318 @@ import javax.swing.border.LineBorder;
 
 import org.math.plot.Plot2DPanel;
 
+import model.crossover.CrossoverMethod;
+import model.fitness.FitnessFunction;
+import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JTextArea;
 
 public class Window extends JFrame implements RequestMaker {
 
 	private static final long serialVersionUID = 8815627840243675666L;
+	private static final double DEFAULT_PRECISION = 0.001;
+	private static final double DEFAULT_CROSSOVER_RATE = 60;
+	private static final double DEFAULT_MUTATION_RATE = 2;
+	private static final int DEFAULT_POPULATION_AMOUNT = 100;
+	private static final int DEFAULT_GENERATION_AMOUNT = 100;
+	private static final double DEFAULT_ELITISM_RATE = 10;
+	private static final int OUTER_LEFT_MARGIN = 22;
+	private static final int LEFT_MARGIN = 12;
+	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
+	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
+	private static final int DEFAULT_PARAMETER_D = 2;
+	private static final int LABEL_HEIGHT = 20;
+	private static final int LABEL_WIDTH = 150;
+	private static final int TEXT_FIELD_HIGH_SIZE = 20;
+	private static final int TEXT_FIELD_WIDTH = 150;
+	private static final int SPINNER_HIGH_SIZE = 20;
+	private static final int SPINNER_WIDTH = 80;
+	private static final int COMBO_BOX_HEIGHT = 20;
+	private static final int COMBO_BOX_WIDTH = 200;
+	private static final int MAX_WIDTH = OBTAIN_MAX_WIDTH();
+	private static final int PANEL_WIDTH = MAX_WIDTH + 2 * LEFT_MARGIN;
+	private static final int BORDER_THICKNESS = 1;
+	private static final int VERTICAL_MARGIN = 5;
+	private static final int BIG_VERTICAL_MARGIN = 10;
+	private static final int SMALL_VERTICAL_MARGIN = 1;
 	
-	private JPanel contentPane, panel;
-	private JLabel lblNmeroDeGeneraciones, lblNewLabel, lblNewLabel_1, lblCruces;
-	private JTextField txtGeneraciones, txtPrecision, txtTamPobl;
-	private JComboBox comboMutacion, comboSeleccion, comboCruce, comboFuncion;
-	private JSpinner spinnerCruces, spinnerMutaciones, spinnerElitismo;
-	private Controller _ctrl;
+	private static int OBTAIN_MAX_WIDTH() {
+		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
+		Arrays.sort(widthArray);
+		return widthArray[widthArray.length - 1];
+	}
+	
+	class MyPanel extends JPanel {
+		
+		private static final long serialVersionUID = -236885179794726316L;
+		private Integer innerLeftMargin;
+		private Integer height;
+		
+		private MyPanel(LayoutManager layoutManager, Integer innerLeftMargin) {
+			super(layoutManager);
+			this.innerLeftMargin = innerLeftMargin;
+			this.height = 0;
+		}
+		void addHeight(Integer toAdd) {
+			this.height += toAdd;
+		}
+		Integer getMyHeight() {
+			return this.height;
+		}
+		Integer getInnerLeftMargin() {
+			return this.innerLeftMargin;
+		}
+	}
+	
+	private MyPanel contentPane;
+	private JTextField populationAmountTF, generationAmountTF, precisionTF;
+	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner;
+	private JComboBox<String> functionCB;
+	
+	private MyPanel tournamentPanel, probabilisticTournamentPanel, function4Panel;
+	
+	private MyPanel methodPanel;
+	private JTextField contestantsAmountTF, championPercentageTF, fuction4DimensionTF;
+	private JComboBox<String> crossCB, selectionCB, mutationCB;
+	
 	private double[] gens;
 	private Plot2DPanel plot;
 	private JTextArea textValue;
-	
-
-	/**
-	 * Launch the application.
-	 */
-	/*public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Window frame = new Window();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}*/
 
 	/**
 	 * Create the frame.
 	 */
 	public Window() {
-		setTitle("G13P01");
+		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 01>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1197, 703);
-		contentPane = new JPanel();
+		contentPane = new MyPanel(null, Window.OUTER_LEFT_MARGIN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
-		JLabel lblTamaoDePoblacin = new JLabel("Tamaño de Población");
-		lblTamaoDePoblacin.setBounds(12, 12, 151, 15);
-		contentPane.add(lblTamaoDePoblacin);
+		contentPane.addHeight(BIG_VERTICAL_MARGIN);
+		initSettings(contentPane);
+		contentPane.addHeight(BIG_VERTICAL_MARGIN);
+		initFunctionParameters(contentPane);
+		contentPane.addHeight(BIG_VERTICAL_MARGIN);
+		initMethodPanel(contentPane);
+		contentPane.addHeight(BIG_VERTICAL_MARGIN);
+		initTournamentParameters(contentPane);
+		initGraphicPanel();
+		initResultTextArea();
+		initStartButton();
+	}
+	
+	private JLabel createLabel(String name, MyPanel panel) {
+		JLabel label = new JLabel(name);
+		label.setBounds(panel.getInnerLeftMargin(), panel.getMyHeight(),
+				Window.LABEL_WIDTH, Window.LABEL_HEIGHT);
+		panel.addHeight(Window.LABEL_HEIGHT);
+		panel.add(label);
+		return label;
+	}
+	
+	private JTextField createTextField(String initialValue, MyPanel panel) {
+		JTextField textField = new JTextField(initialValue);
+		textField.setBounds(panel.getInnerLeftMargin(), panel.getMyHeight(),
+				Window.TEXT_FIELD_WIDTH, Window.TEXT_FIELD_HIGH_SIZE);
+		panel.addHeight(Window.TEXT_FIELD_HIGH_SIZE);
+		panel.add(textField);
+		return textField;
+	}
+	
+	private JSpinner createSpinner(Object initialValue, MyPanel panel) {
+		JSpinner spinner = new JSpinner();
+		spinner.setBounds(panel.innerLeftMargin, panel.getMyHeight(),
+				SPINNER_WIDTH, SPINNER_HIGH_SIZE);
+		panel.addHeight(SPINNER_HIGH_SIZE);
+		spinner.setValue(initialValue);
+		panel.add(spinner);
+		return spinner;
+	}
+	
+	private <T extends Enum<T>> JComboBox<String> createComboBox(Class<T> enumType, MyPanel panel) {
+		JComboBox<String> comboBox = new JComboBox<>();
+		for (T item : enumType.getEnumConstants())
+			comboBox.addItem(item.name());
+		comboBox.setBounds(panel.getInnerLeftMargin(), panel.getMyHeight(),
+				COMBO_BOX_WIDTH, COMBO_BOX_HEIGHT);
+		panel.addHeight(COMBO_BOX_HEIGHT);
+		panel.add(comboBox);
+		return comboBox;
+	}
+	
+	private void initTournamentParameters(MyPanel superPanel) {
+		tournamentPanel = new MyPanel(null, Window.LEFT_MARGIN);
+		tournamentPanel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
+		tournamentPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
+		tournamentPanel.setVisible(false);
 		
-		txtTamPobl = new JTextField("100");
-		txtTamPobl.setBounds(22, 32, 114, 19);
-		contentPane.add(txtTamPobl);
-		txtTamPobl.setColumns(10);
+		tournamentPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Contestants Amount", tournamentPanel);
+		tournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		contestantsAmountTF = createTextField(String.valueOf(Window.DEFAULT_CONTESTANTS_AMOUNT), tournamentPanel);
 		
-		lblNmeroDeGeneraciones = new JLabel("Num Generaciones");
-		lblNmeroDeGeneraciones.setBounds(12, 67, 191, 15);
-		contentPane.add(lblNmeroDeGeneraciones);
+		probabilisticTournamentPanel = new MyPanel(null, 0);
+		probabilisticTournamentPanel.setLocation(tournamentPanel.getInnerLeftMargin(), tournamentPanel.getMyHeight());
+		probabilisticTournamentPanel.setVisible(false);
 		
-		txtGeneraciones = new JTextField("100");
-		txtGeneraciones.setBounds(22, 90, 114, 19);
-		contentPane.add(txtGeneraciones);
-		txtGeneraciones.setColumns(10);
+		probabilisticTournamentPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Champion Probability", probabilisticTournamentPanel);
+		probabilisticTournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		championPercentageTF = createTextField(String.valueOf(Window.DEFAULT_CHAMPION_PROBABILITY),
+				probabilisticTournamentPanel);
 		
-		lblCruces = new JLabel("% Cruces");
-		lblCruces.setBounds(22, 121, 114, 15);
-		contentPane.add(lblCruces);
+		probabilisticTournamentPanel.setSize(MAX_WIDTH,
+				probabilisticTournamentPanel.getMyHeight());
+		tournamentPanel.add(probabilisticTournamentPanel);
+		tournamentPanel.addHeight(probabilisticTournamentPanel.getMyHeight());
+		tournamentPanel.addHeight(VERTICAL_MARGIN);
 		
-		spinnerCruces = new JSpinner();
-		spinnerCruces.setBounds(22, 135, 72, 20);
-		contentPane.add(spinnerCruces);
+		tournamentPanel.setSize(Window.PANEL_WIDTH, tournamentPanel.getMyHeight());
+		superPanel.add(tournamentPanel);
+		superPanel.addHeight(tournamentPanel.getMyHeight());
+	}
+	
+	private void initFunctionParameters(MyPanel superPanel) {
+		function4Panel = new MyPanel(null, Window.LEFT_MARGIN);
+		function4Panel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
+		function4Panel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
+		function4Panel.setVisible(false);
 		
-		JLabel lblMutaciones = new JLabel("% Mutaciones");
-		lblMutaciones.setBounds(12, 170, 114, 15);
-		contentPane.add(lblMutaciones);
+		function4Panel.addHeight(VERTICAL_MARGIN);
+		createLabel("Parameter d", function4Panel);
+		function4Panel.addHeight(SMALL_VERTICAL_MARGIN);
+		fuction4DimensionTF = createTextField(String.valueOf(Window.DEFAULT_PARAMETER_D), function4Panel);
+		function4Panel.addHeight(VERTICAL_MARGIN);
 		
-		spinnerMutaciones = new JSpinner();
-		spinnerMutaciones.setBounds(22, 193, 72, 20);
-		contentPane.add(spinnerMutaciones);
-		
-		JLabel lblPrecision = new JLabel("Precisión");
-		lblPrecision.setBounds(22, 284, 114, 15);
-		contentPane.add(lblPrecision);
-		
-		txtPrecision = new JTextField("0.001");
-		txtPrecision.setBounds(22, 304, 72, 20);
-		contentPane.add(txtPrecision);
-		
-		panel = new JPanel();
-		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
-		panel.setBounds(22, 441, 171, 163);
-		contentPane.add(panel);
-		panel.setLayout(null);
-		
-		lblNewLabel = new JLabel("Selección");
-		lblNewLabel.setBounds(12, 8, 70, 15);
-		panel.add(lblNewLabel);
-		
-		comboSeleccion = new JComboBox();
-		comboSeleccion.addItem(SelectionMethod.ROULETTE.name());
-		comboSeleccion.addItem(SelectionMethod.UNIVERSAL_STOCHASTIC.name());
-		comboSeleccion.addItem(SelectionMethod.DETERMINISTIC_TOURNAMENT.name());
-		comboSeleccion.addItem(SelectionMethod.TRUNCATION.name());
-		comboSeleccion.addItem(SelectionMethod.PROBABILISTIC_TOURNAMENT.name());
-		comboSeleccion.addItem(SelectionMethod.REMAINS.name());
+		function4Panel.setSize(Window.PANEL_WIDTH, function4Panel.getMyHeight());
+		superPanel.add(function4Panel);
+		superPanel.addHeight(function4Panel.getMyHeight());
+	}
 
-		comboSeleccion.setBounds(12, 26, 119, 18);
-		panel.add(comboSeleccion);
-		
-		JLabel lblCruce = new JLabel("Cruce");
-		lblCruce.setBounds(12, 58, 70, 15);
-		panel.add(lblCruce);
-		
-		comboCruce = new JComboBox();
-		comboCruce.addItem("ONE_POINT");
-		comboCruce.addItem("UNIFORM");
-		comboCruce.setBounds(12, 74, 119, 18);
-		panel.add(comboCruce);
-		
-		lblNewLabel_1 = new JLabel("Mutación");
-		lblNewLabel_1.setBounds(12, 106, 70, 15);
-		panel.add(lblNewLabel_1);
-		
-		comboMutacion = new JComboBox();
-		comboMutacion.addItem("BASIC");
-		comboMutacion.setBounds(12, 123, 119, 18);
-		panel.add(comboMutacion);
-		
+	public void initSettings(MyPanel superPanel) {
+		createLabel("Population Amount", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		populationAmountTF = createTextField(String.valueOf(Window.DEFAULT_POPULATION_AMOUNT), superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Generation Amount", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		generationAmountTF = createTextField(String.valueOf(Window.DEFAULT_GENERATION_AMOUNT), superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Crossover Rate (%)", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		crossoverRateSpinner = createSpinner(Window.DEFAULT_CROSSOVER_RATE, superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Mutation Rate (%)", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		mutationRateSpinner = createSpinner(Window.DEFAULT_MUTATION_RATE, superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Precision", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		precisionTF = createTextField(String.valueOf(Window.DEFAULT_PRECISION), superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Elitism Rate (%)", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		elitismRateSpinner = createSpinner(Window.DEFAULT_ELITISM_RATE, superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Function", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		functionCB = createComboBox(FitnessFunction.class, superPanel);
+		functionCB.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+            	if (e.getItem().equals(FitnessFunction.FUNCTION4.name()))
+            		function4Panel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            }
+        });
+	}
+	
+	private void initGraphicPanel() {
 		JPanel graphicPanel = new JPanel();
-
 		graphicPanel.setBackground(new Color(222, 221, 218));
-
 		graphicPanel.setBounds(287, 41, 835, 450);
-
 		contentPane.add(graphicPanel);
-
 		plot = new Plot2DPanel();
-
 		plot.addLegend("SOUTH");
-
-
-
 		graphicPanel.add(plot);
 		plot.setBounds(228, 12, 430, 315);
 		plot.setPreferredSize(new Dimension(835, 450));
-		
 		plot.setVisible(false);
+	}
+	
+	private void initMethodPanel(MyPanel superPanel) {
+		methodPanel = new MyPanel(null, Window.LEFT_MARGIN);
+		methodPanel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
+		methodPanel.addHeight(VERTICAL_MARGIN);
+		methodPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
+		superPanel.add(methodPanel);
+		
+		createLabel("Selection Method", methodPanel);
+		selectionCB = createComboBox(SelectionMethod.class, methodPanel);
+		selectionCB.addItemListener(new ItemListener() {
+			@Override
+            public void itemStateChanged(ItemEvent e) {
+            	if (e.getItem().equals(SelectionMethod.DETERMINISTIC_TOURNAMENT.name()) ||
+            			e.getItem().equals(SelectionMethod.PROBABILISTIC_TOURNAMENT.name())) {
+            		tournamentPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            		if (e.getItem().equals(SelectionMethod.PROBABILISTIC_TOURNAMENT.name()))
+            				probabilisticTournamentPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
+            	}
+            }
+        });
+		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		createLabel("Crossover Method", methodPanel);
+		crossCB = createComboBox(CrossoverMethod.class, methodPanel);
+		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		createLabel("Mutation Method", methodPanel);
+		mutationCB = createComboBox(MutationMethod.class, methodPanel);
+		
+		methodPanel.addHeight(VERTICAL_MARGIN);
+		methodPanel.setSize(Window.PANEL_WIDTH, methodPanel.getMyHeight());
+		superPanel.addHeight(methodPanel.getMyHeight());
+	}
 
-		textValue = new JTextArea();
-
-		textValue.setBounds(300, 554, 559, 34);
-
-		contentPane.add(textValue);
-
-		JButton btnStart = new JButton("Empezar");
-
+	private void initStartButton() {
+		JButton btnStart = new JButton("Start Genetic Algorithm");
 		btnStart.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				start();
 			}
 		});
-
 		btnStart.setBounds(968, 563, 117, 25);
-
 		contentPane.add(btnStart);
-		
-		JLabel lblElitismo = new JLabel("% Elitismo");
-		lblElitismo.setBounds(22, 236, 104, 15);
-		contentPane.add(lblElitismo);
-		
-		spinnerElitismo = new JSpinner();
-		spinnerElitismo.setBounds(22, 252, 72, 20);
-		contentPane.add(spinnerElitismo);
-		
-		JLabel lblFuncion = new JLabel("Función");
-		lblFuncion.setBounds(22, 373, 70, 15);
-		contentPane.add(lblFuncion);
-		
-		comboFuncion = new JComboBox();
-		comboFuncion.addItem("FUNCTION1");
-		comboFuncion.addItem("FUNCTION2");
-		comboFuncion.addItem("FUNCTION3");
-		comboFuncion.addItem("FUNCTION4");
-		
-		comboFuncion.setBounds(22, 392, 119, 18);
-		contentPane.add(comboFuncion);
-		
-		
+	}
+	
+	private void initResultTextArea() {
+		textValue = new JTextArea();
+		textValue.setBounds(300, 554, 559, 34);
+		contentPane.add(textValue);
 	}
 
 	private void start() {
 		try {
-			gens = new double[getPopulationAmount()];
-			for (int i = 0; i < getPopulationAmount(); i++) {
+			Request request = new Request(this);
+			Integer populationAmount = request.getPopulationAmount();
+			this.gens = new double[populationAmount];
+			for (int i = 0; i < populationAmount; i++)
 				gens[i] = i;
-			}
-			Controller.getInstance().execute(new Request(this));
-		} catch (InvalidInputException e) {
-			JOptionPane.showMessageDialog(this,e.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+			Controller.getInstance().execute(request);
+		} catch (InvalidInputException iie) {
+			JOptionPane.showMessageDialog(this, iie.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
@@ -232,91 +330,77 @@ public class Window extends JFrame implements RequestMaker {
 		plot.resetMapData();
 		plot.setVisible(true);
 		plot.removeAllPlots();
-		for (int i = 0; i < generationLeaders.length; i++) {
+		for (int i = 0; i < generationLeaders.length; i++)
 			System.out.println(generationLeaders[i]);
-		}
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor valor", Color.blue, gens, generationLeaders);
 		plot.addLinePlot("mejor valor absoluto", Color.red, gens, bestAbsoluteValue);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}
+	
 	@Override
-	public Integer getPopulationAmount() {
-		return Integer.parseInt(txtTamPobl.getText());
+	public String getPopulationAmount() {
+		return this.populationAmountTF.getText();
 	}
 
 	@Override
-	public Integer getGenerationAmount() {
-		return Integer.parseInt(txtGeneraciones.getText());
-
+	public String getGenerationAmount() {
+		return this.generationAmountTF.getText();
 	}
 
 	@Override
-	public Integer getCrossoverPercentage() {
-		return (Integer) spinnerCruces.getValue();
-
+	public String getCrossoverPercentage() {
+		return this.crossoverRateSpinner.getValue().toString();
 	}
 
 	@Override
-	public Integer getMutationPercentage() {
-		return (Integer) spinnerMutaciones.getValue();
-
+	public String getMutationPercentage() {
+		return this.mutationRateSpinner.getValue().toString();
 	}
 
 	@Override
-	public Double getPrecision() {
-		return Double.parseDouble(txtPrecision.getText());
+	public String getPrecision() {
+		return this.precisionTF.getText();
 	}
 
 	@Override
 	public String getSelectionMethod() {
-		return (String) comboSeleccion.getSelectedItem();
-	}
-
-	@Override
-	public String getTournamentMode() {
-		// TODO Auto-generated method stub
-		return null;
+		return (String) selectionCB.getSelectedItem();
 	}
 
 	@Override
 	public String getMutationMethod() {
-		return (String) comboMutacion.getSelectedItem();
-
+		return (String) mutationCB.getSelectedItem();
 	}
 
 	@Override
-	public Integer getElitismPercentage() {
-		return (Integer) spinnerElitismo.getValue();
+	public String getElitismPercentage() {
+		return this.elitismRateSpinner.getValue().toString();
 	}
 
 	@Override
 	public String getFitnessFunction() {
-		return (String) comboFuncion.getSelectedItem();
+		return this.functionCB.getSelectedItem().toString();
 	}
 
 	@Override
-	public Integer getContestantsAmount() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getContestantsAmount() throws NumberFormatException {
+		return this.contestantsAmountTF.getText();
 	}
 
 	@Override
-	public Integer getChampionProbability() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getChampionPercentage() {
+		return this.championPercentageTF.getText();
 	}
 
 	@Override
-	public Integer getFuction4Dimension() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getFuction4Dimension() throws NumberFormatException {
+		return this.fuction4DimensionTF.getText();
 	}
 
 	@Override
 	public String getCrossoverMethod() {
-		return (String) comboCruce.getSelectedItem();
-
+		return this.crossCB.getSelectedItem().toString();
 	}
 }

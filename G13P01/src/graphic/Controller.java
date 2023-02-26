@@ -1,5 +1,6 @@
 package graphic;
 
+import java.awt.EventQueue;
 import java.util.Map;
 
 import model.Builder;
@@ -8,7 +9,7 @@ import model.Executor;
 public class Controller {
 
 	private static Controller controller;
-	private Window win;
+	private Window window;
 	
 	private Controller() {}
 	
@@ -22,12 +23,28 @@ public class Controller {
 		Map<String, Object> config = Builder.build(request);
 		Executor executor = new Executor(config);
 		executor.run();
-		win.paintResult(executor.getGenerationAverage(), executor.getGenerationLeaders(), executor.getAbsoluteLeaders(), executor.getBestChromosomeToString());
-
+		this.window.paintResult(
+				executor.getGenerationAverage(),
+				executor.getGenerationLeaders(),
+				executor.getAbsoluteLeaders(),
+				executor.getBestChromosomeToString());
 	}
 
 	public void start() {
-		win = new Window();
-		win.setVisible(true);
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					Window window = new Window();
+					window.setVisible(true);
+					Controller.getInstance().setWindow(window);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+	
+	private void setWindow(Window window) {
+		this.window = window;
 	}
 }

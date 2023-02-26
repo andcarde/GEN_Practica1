@@ -1,7 +1,6 @@
 package launcher;
 
 import graphic.Controller;
-import graphic.Window;
 
 public class Main {
 

@@ -10,8 +10,10 @@ public class SelectionBuilder {
 			return new Remains();
 		case ROULETTE:
 			return new Roulette();
-		case TOURNAMENT:
-			return buildTournament(tournamentRequest);
+		case DETERMINISTIC_TOURNAMENT:
+			return buildTournament(selectionMethod, tournamentRequest);
+		case PROBABILISTIC_TOURNAMENT:
+			return buildTournament(selectionMethod, tournamentRequest);
 		case TRUNCATION:
 			return new Truncation();
 		case UNIVERSAL_STOCHASTIC:
@@ -21,14 +23,12 @@ public class SelectionBuilder {
 		}
 	}
 		
-	private static Tournament buildTournament(TournamentRequest tournamentRequest) {
-		TournamentMode tournamentMode = tournamentRequest.getTournamentMode();
-		tournamentRequest.getChampionProbability();
+	private static Tournament buildTournament(SelectionMethod selectionMethod, TournamentRequest tournamentRequest) {
 		Integer contestantsAmount = tournamentRequest.getContestantsAmount();
-		switch (tournamentMode) {
-		case DETERMINISTIC:
+		switch (selectionMethod) {
+		case DETERMINISTIC_TOURNAMENT:
 			return new DeterministicTournament(contestantsAmount);
-		case PROBABILIST:
+		case PROBABILISTIC_TOURNAMENT:
 			Double championProbability = tournamentRequest.getChampionProbability();
 			return new ProbabilisticTournament(contestantsAmount, championProbability);
 		default:

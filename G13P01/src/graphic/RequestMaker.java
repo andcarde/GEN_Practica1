@@ -2,31 +2,38 @@ package graphic;
 
 public interface RequestMaker {
 
-	Integer getPopulationAmount();
-
-	Integer getGenerationAmount();
-
-	Integer getCrossoverPercentage();
-
-	Integer getMutationPercentage();
-
-	Double getPrecision();
-
+	// Integer
+	String getPopulationAmount();
+	
+	// Integer
+	String getGenerationAmount();
+	
+	// Integer
+	String getCrossoverPercentage();
+	
+	// Integer
+	String getMutationPercentage();
+	
+	// Double
+	String getPrecision();
+	
 	String getSelectionMethod();
-
-	String getTournamentMode();
 	
 	String getCrossoverMethod();
-
+	
 	String getMutationMethod();
 	
-	Integer getElitismPercentage();
-
+	// Double
+	String getElitismPercentage();
+	
 	String getFitnessFunction();
-
-	Integer getContestantsAmount();
-
-	Integer getChampionProbability();
-
-	Integer getFuction4Dimension();
+	
+	// Integer
+	String getContestantsAmount();
+	
+	// Double
+	String getChampionPercentage();
+	
+	// Integer
+	String getFuction4Dimension();
 }

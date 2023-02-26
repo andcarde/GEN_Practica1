@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import graphic.Controller;
 import graphic.Observer;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
@@ -157,6 +156,4 @@ public class Executor {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
 			+ " con los parámetros: " + intergenerationLeader.getGenesToString();
 	}
-
-	
 }
