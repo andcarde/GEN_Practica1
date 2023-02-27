@@ -65,6 +65,7 @@ public class Chromosome implements ChromosomeI {
 
 	@Override
 	public Double getValue() {
+		if (phenotype == null) evaluate();
 		return this.phenotype;
 	}
 

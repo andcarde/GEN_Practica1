@@ -62,12 +62,12 @@ public class Executor {
 		basicEvaluation();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
 			population.sort(new ChromosomeComparator());
-			extractElitism();
+			//extractElitism();
 			select();
 			cross();
 			mutate();
 			population.sort(new ChromosomeComparator());
-			insertElitism();
+			//insertElitism();
 			evaluate(i);
 		}
 	}
