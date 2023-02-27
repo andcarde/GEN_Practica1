@@ -84,8 +84,9 @@ public class Request {
 		this.crossoverMethod = CrossoverMethod.valueOf(CrossoverMethod.class, requestMaker.getCrossoverMethod());
 		this.mutationMethod = MutationMethod.valueOf(MutationMethod.class, requestMaker.getMutationMethod());
 		try {
-			this.elitismRate = Integer.valueOf(requestMaker.getElitismPercentage());
+			this.elitismRate = (int) Double.parseDouble(requestMaker.getElitismPercentage());
 		} catch (NumberFormatException nfe) {
+			System.out.println(requestMaker.getElitismPercentage());
 			this.errors.add("The elitism rate must be a rational number.");
 		}
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());
@@ -108,7 +109,7 @@ public class Request {
 			errors.add("The mutation probability must be between 0 and 100 (both included).");
 		if (this.precision <= 0)
 			errors.add("The precision must be a positive rational number.");
-		if (this.elitismRate < 0 || this.elitismRate > 1)
+		if (this.elitismRate < 0 || this.elitismRate > 100)
 			errors.add("The elitism rate must be between 0 and 100 (both included).");
 		if (this.fitnessFunction == FitnessFunction.FUNCTION4)
 			if (this.fuction4Dimension <= 0)
