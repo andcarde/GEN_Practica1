@@ -4,7 +4,7 @@ import graphic.TournamentRequest;
 
 public class SelectionBuilder {
 
-	public static Selection build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest) {
+	public static SelectionI build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest) {
 		switch (selectionMethod) {
 		case REMAINS:
 			return new Remains();

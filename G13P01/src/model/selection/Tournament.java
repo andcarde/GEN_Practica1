@@ -6,7 +6,7 @@ import java.util.List;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
-public abstract class Tournament implements Selection {
+public abstract class Tournament implements SelectionI {
 
 	protected Integer contestantsAmount;
 	
@@ -18,17 +18,17 @@ public abstract class Tournament implements Selection {
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selected = new ArrayList<>();
 		if (this.contestantsAmount > 0) {
-			List<ChromosomeI> populationCopy = List.copyOf(population);
 			List<ChromosomeI> match;
-			for (int i = 0; i < population.size(); i++) {
+			int size = population.size();
+			for (int i = 0; i < size; i++) {
 				match = new ArrayList<>();
 				for (int j = 0; j < contestantsAmount; j++) {
-					int randomIndex = RandomGenerator.createAleatoryInt(populationCopy.size());
-					match.add(populationCopy.get(randomIndex));
-					populationCopy.remove(randomIndex);
+					int randomIndex = RandomGenerator.createAleatoryInt(population.size());
+					match.add(population.get(randomIndex));
+					population.remove(randomIndex);
 				}
 				ChromosomeI winner = match.get(0);
-				for (int j = 1; i < contestantsAmount; i++) {
+				for (int j = 1; j < contestantsAmount; j++) {
 					ChromosomeI actual = match.get(j);
 					winner = battle(winner, actual);
 				}
@@ -37,7 +37,7 @@ public abstract class Tournament implements Selection {
 				else
 					selected.add(winner.copy());
 				for (ChromosomeI ch : match)
-					populationCopy.add(ch);
+					population.add(ch);
 			}
 		}
 		return selected;

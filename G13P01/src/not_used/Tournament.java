@@ -6,9 +6,9 @@ import java.util.List;
 import model.PopulationTable;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
-import model.selection.Selection;
+import model.selection.SelectionI;
 
-public class Tournament implements Selection {
+public class Tournament implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

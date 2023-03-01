@@ -21,7 +21,7 @@ public class Gen implements GenI {
 		Double precision = variable.getPrecision();
 		Double width = upperLimit - belowLimit;
 		Integer size = calculateSize(width, precision);
-		Double bitValue = width / Math.pow(size, 2);
+		Double bitValue = width / Math.pow(2, size);
 		return new Gen(name, belowLimit, size, bitValue);
 	}
 	
@@ -30,12 +30,14 @@ public class Gen implements GenI {
 		return (int) (Math.log10((width / precision) + 1) / Math.log10(2));
 	}
 	
-	public Gen(Gen gen) {
+	private Gen(Gen gen) {
 		this.name = gen.name;
 		this.belowLimit = gen.belowLimit;
 		this.size = gen.size;
 		this.bitValue = gen.bitValue;
 		this.bits = new ArrayList<>();
+		for (Boolean bit : gen.bits)
+			this.bits.add(bit);
 	}
 	
 	private Gen(String name, Double belowLimit, Integer size, Double bitValue) {
@@ -83,11 +85,16 @@ public class Gen implements GenI {
 
 	@Override
 	public Boolean getBit(int i) {
+		System.out.println("Bits: " + bits.size());
 		return bits.get(i);
 	}
 
 	@Override
 	public void assimilate(List<Boolean> bits) {
 		this.bits = bits;
+	}
+	
+	public GenI copy() {
+		return new Gen(this);
 	}
 }

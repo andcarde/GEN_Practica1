@@ -7,11 +7,12 @@ import model.PopulationTable;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
-public class Roulette implements Selection {
+public class Roulette implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selection = new ArrayList<>();
+		Positivizer.positivizeFitness(population);
 		PopulationTable table = new PopulationTable(population);
 		List<Double> accumulated = table.getAccumulated();
 		/*BinaryTree<ChromosomeI> binaryTree = new BinaryTree<>();
@@ -34,7 +35,7 @@ public class Roulette implements Selection {
 	}
 	
 	private int getSelected(List<Double> accumulated, double prob) {
-		int closest_index = -1;
+		int closest_index = 0;
 		double closest_value = -10;
 		for (int i = 0; i < accumulated.size(); i++) {
 			if (prob < accumulated.get(i) && (accumulated.get(i) - prob < abs(prob - closest_value))) {

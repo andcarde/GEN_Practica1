@@ -9,6 +9,7 @@ import model.fitness.Input;
 public class Chromosome implements ChromosomeI {
 	
 	private Double phenotype;
+	private Double copytype;
 	private List<GenI> genes;
 	private MoldI mold;
 	
@@ -17,14 +18,15 @@ public class Chromosome implements ChromosomeI {
 		List<Gen> moldGenes = mold.getGenes();
 		this.genes = new ArrayList<>();
 		for (Gen gen : moldGenes)
-			this.genes.add(new Gen(gen));
+			this.genes.add(gen.copy());
 	}
 	
 	private Chromosome(Chromosome chromosome) {
 		this.phenotype = chromosome.phenotype;
+		this.copytype = chromosome.copytype;
 		this.genes = new ArrayList<>();
 		for (GenI gen : chromosome.genes)
-			this.genes.add(new Gen((Gen) gen));
+			this.genes.add(gen.copy());
 		this.mold = chromosome.mold;
 	}
 	
@@ -68,6 +70,13 @@ public class Chromosome implements ChromosomeI {
 		if (phenotype == null) evaluate();
 		return this.phenotype;
 	}
+	
+	@Override
+	public Double getAlterValue() {
+		if (this.copytype == null)
+			return getValue();
+		return this.copytype;
+	}
 
 	@Override
 	public List<GenI> getGenes() {
@@ -106,6 +115,6 @@ public class Chromosome implements ChromosomeI {
 
 	@Override
 	public void displace(double toSum) {
-		this.phenotype += toSum;
+		this.copytype = this.phenotype + toSum;
 	}
 }

@@ -10,7 +10,7 @@ import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
 import model.mutation.MutationI;
-import model.selection.Selection;
+import model.selection.SelectionI;
 
 public class Executor {
 
@@ -19,7 +19,7 @@ public class Executor {
 	private final Integer POPULATION_AMOUNT;
 	private final Integer ELITISM_AMOUNT;
 	private final MoldI mold;
-	private final Selection selection;
+	private final SelectionI selection;
 	private final CrossoverI crossover;
 	private final MutationI mutation;
 	// ------------------------------------------------------------------
@@ -43,7 +43,7 @@ public class Executor {
 		this.POPULATION_AMOUNT = (Integer) config.get("population_amount");
 		this.ELITISM_AMOUNT = (Integer) config.get("elitism_amount") * POPULATION_AMOUNT / 100;
 		this.mold = (MoldI) config.get("mold");
-		this.selection = (Selection) config.get("selection");
+		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
 		this.mutation = (MutationI) config.get("mutation");
 		

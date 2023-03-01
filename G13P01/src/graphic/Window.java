@@ -37,7 +37,7 @@ public class Window extends JFrame implements RequestMaker {
 	private static final double DEFAULT_MUTATION_RATE = 2;
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
-	private static final double DEFAULT_ELITISM_RATE = 10;
+	private static final double DEFAULT_ELITISM_RATE = 0;
 	private static final int OUTER_LEFT_MARGIN = 22;
 	private static final int LEFT_MARGIN = 12;
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;

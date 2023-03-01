@@ -15,8 +15,8 @@ public class Function2 extends Function {
 	public Double getValue(Input input) {
 		Double value = 0.0;
 		Double producer = 1.0;
-		for (int i = 0; i < d; i++) {
-			Double x = input.get("x".concat(Integer.toString(i)));
+		for (int i = 1; i <= d; i++) {
+			Double x = input.get("x".concat(Integer.toString(i - 1)));
 			value += Math.pow(x, 2);
 			producer *= Math.cos(x / Math.sqrt(i));
 		}

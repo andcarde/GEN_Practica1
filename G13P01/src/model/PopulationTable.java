@@ -23,7 +23,7 @@ public class PopulationTable {
 	
 	private void initTable(List<ChromosomeI> population) {
 		for (int i = 0; i < populationAmount; i++)
-			this.fitness.add(population.get(i).getValue());
+			this.fitness.add(population.get(i).getAlterValue());
 		this.fitnessSumatory = 0.0;
 		for (int i = 0; i < populationAmount; i++)
 			this.fitnessSumatory += this.fitness.get(i);

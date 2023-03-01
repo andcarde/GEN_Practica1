@@ -11,4 +11,5 @@ public interface GenI {
 	void initialize();
 	Boolean getBit(int i);
 	void assimilate(List<Boolean> bits);
+	GenI copy();
 }

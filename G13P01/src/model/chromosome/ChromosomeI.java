@@ -17,4 +17,5 @@ public interface ChromosomeI {
 	public String getGenesToString();
 	public ChromosomeI copy();
 	public void displace(double toSum);
+	Double getAlterValue();
 }

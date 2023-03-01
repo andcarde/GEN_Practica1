@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.chromosome.ChromosomeI;
 
-public class Truncation implements Selection {
+public class Truncation implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

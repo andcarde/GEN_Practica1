@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.chromosome.ChromosomeI;
 
-public class Remains implements Selection {
+public class Remains implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

@@ -13,7 +13,7 @@ import model.fitness.Fitness;
 import model.fitness.FunctionBuilder;
 import model.fitness.Variable;
 import model.mutation.MutationBuilder;
-import model.selection.Selection;
+import model.selection.SelectionI;
 import model.selection.SelectionBuilder;
 
 public class Builder {
@@ -41,7 +41,7 @@ public class Builder {
 		return new Mold(function, moldGenes);
 	}
 	
-	private static Selection buildSelection(Request request) {
+	private static SelectionI buildSelection(Request request) {
 		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest());
 	}
 

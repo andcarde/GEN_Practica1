@@ -8,7 +8,7 @@ import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 import model.util.Pair;
 
-public class Ranking implements Selection {
+public class Ranking implements SelectionI {
 	
 	private static final double _beta = 1.5;
 
