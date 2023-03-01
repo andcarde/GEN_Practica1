@@ -10,6 +10,8 @@ public class SelectionBuilder {
 			return new Remains();
 		case ROULETTE:
 			return new Roulette();
+		case RANKING:
+			return new Ranking();
 		case DETERMINISTIC_TOURNAMENT:
 			return buildTournament(selectionMethod, tournamentRequest);
 		case PROBABILISTIC_TOURNAMENT:
