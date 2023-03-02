@@ -42,7 +42,7 @@ public class Builder {
 	}
 	
 	private static SelectionI buildSelection(Request request) {
-		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest());
+		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(), request.getTruncationAmount());
 	}
 
 	private static CrossoverI buildCrossover(Request request, MoldI mold) {

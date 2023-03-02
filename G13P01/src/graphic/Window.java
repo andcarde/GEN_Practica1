@@ -57,6 +57,8 @@ public class Window extends JFrame implements RequestMaker {
 	private static final int VERTICAL_MARGIN = 5;
 	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
+	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
+	private int labelTruncPos;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -88,7 +90,7 @@ public class Window extends JFrame implements RequestMaker {
 	
 	private MyPanel contentPane;
 	private JTextField populationAmountTF, generationAmountTF, precisionTF;
-	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner;
+	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
 	private MyPanel tournamentPanel, probabilisticTournamentPanel, function4Panel;
@@ -248,6 +250,14 @@ public class Window extends JFrame implements RequestMaker {
             		function4Panel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
+		
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Truncation Rate (%)", superPanel);
+		labelTruncPos = superPanel.getComponentCount()-1;
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		truncationSpinner = createSpinner(Window.DEFAULT_TRUNCATION_AMOUNT, superPanel);
+		superPanel.getComponent(labelTruncPos).setVisible(false);
+		truncationSpinner.setVisible(false);
 	}
 	
 	private void initGraphicPanel() {
@@ -281,6 +291,15 @@ public class Window extends JFrame implements RequestMaker {
             		if (e.getItem().equals(SelectionMethod.PROBABILISTIC_TOURNAMENT.name()))
             				probabilisticTournamentPanel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
             	}
+            	if (e.getItem().equals(SelectionMethod.TRUNCATION.name())) {
+            		superPanel.getComponent(labelTruncPos).setVisible(true);
+            		truncationSpinner.setVisible(true);
+            	}
+            	else {
+            		superPanel.getComponent(labelTruncPos).setVisible(false);
+            		truncationSpinner.setVisible(false);
+            	}
+
             }
         });
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
@@ -402,5 +421,10 @@ public class Window extends JFrame implements RequestMaker {
 	@Override
 	public String getCrossoverMethod() {
 		return this.crossCB.getSelectedItem().toString();
+	}
+
+	@Override
+	public String getTruncationPercentage() {
+		return truncationSpinner.getValue().toString();
 	}
 }

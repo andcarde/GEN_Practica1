@@ -13,11 +13,28 @@ public abstract class Selection implements SelectionI {
 	}
 	
 	protected int compare(ChromosomeI chromosome1, ChromosomeI chromosome2) {
-		if (chromosome1.getA
+		if (chromosome1.getValue() < chromosome2.getValue()) {
+			if (isMaximize) return 1;
+			return -1;
+		}
+		if (chromosome1.getValue() > chromosome2.getValue()) {
+			if (isMaximize) return -1;
+			return 1;
+		}
+		return 0;
+		
 	}
 	
 	protected int compareAlter(ChromosomeI chromosome1, ChromosomeI chromosome2) {
-		chromosome1.getA
+		if (chromosome1.getAlterValue() < chromosome2.getAlterValue()) {
+			if (isMaximize) return 1;
+			return -1;
+		}
+		if (chromosome1.getAlterValue() > chromosome2.getAlterValue()) {
+			if (isMaximize) return -1;
+			return 1;
+		}
+		return 0;
 	}
 	
 	@Override

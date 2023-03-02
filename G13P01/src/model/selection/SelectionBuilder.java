@@ -4,7 +4,7 @@ import graphic.TournamentRequest;
 
 public class SelectionBuilder {
 
-	public static SelectionI build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest) {
+	public static SelectionI build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest, Double double1) {
 		switch (selectionMethod) {
 		case REMAINS:
 			return new Remains();
@@ -17,7 +17,7 @@ public class SelectionBuilder {
 		case PROBABILISTIC_TOURNAMENT:
 			return buildTournament(selectionMethod, tournamentRequest);
 		case TRUNCATION:
-			return new Truncation();
+			return new Truncation(double1);
 		case UNIVERSAL_STOCHASTIC:
 			return new UniversalStochastic();
 		default:

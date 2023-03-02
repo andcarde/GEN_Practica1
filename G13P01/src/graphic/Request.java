@@ -18,6 +18,7 @@ public class Request {
 	private Double crossoverProbability;
 	private Double mutationProbability;
 	private Double precision;
+	private Double truncation = 0.0;
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
 	private MutationMethod mutationMethod;
@@ -81,6 +82,13 @@ public class Request {
 				}
 			}
 		}
+		if (this.selectionMethod == SelectionMethod.TRUNCATION) {
+			try {
+				truncation = Double.valueOf(requestMaker.getTruncationPercentage())/100;
+			} catch (NumberFormatException nfe) {
+				this.errors.add("The truncation amount must be an integer.");
+			}
+		}		
 		this.crossoverMethod = CrossoverMethod.valueOf(CrossoverMethod.class, requestMaker.getCrossoverMethod());
 		this.mutationMethod = MutationMethod.valueOf(MutationMethod.class, requestMaker.getMutationMethod());
 		try {
@@ -175,5 +183,9 @@ public class Request {
 
 	public TournamentRequest getTournamentRequest() {
 		return tournamentRequest;
+	}
+
+	public Double getTruncationAmount() {
+		return truncation;
 	}
 }

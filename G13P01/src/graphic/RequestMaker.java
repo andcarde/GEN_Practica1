@@ -36,4 +36,7 @@ public interface RequestMaker {
 	
 	// Integer
 	String getFuction4Dimension();
+
+	// String
+	String getTruncationPercentage();
 }
