@@ -11,31 +11,38 @@ public class Remains implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
+		List<ChromosomeI> selection = new ArrayList<>();
 		PopulationTable table = new PopulationTable(population);
+		
+		// Primera parte
 		List<Double> punctuactions = table.getPunctuation();
-		List<ChromosomeI> ret = new ArrayList<>();
-		//Primera parte
 		for (int i = 0; i < population.size(); i++) {
-			int number_of_copies = (int) (punctuactions.get(i)*population.size());
-			int count = 0;
-			while (count < number_of_copies) {
-				ret.add(population.get(i).copy());
-				count++;
-			}
+			int number_of_copies = (int) Math.floor(punctuactions.get(i) * population.size());
+			for (int j = 0; j < number_of_copies; j++)
+				selection.add(population.get(i).copy());
 		}
 		
-		//Segunda parte
+		// Segunda parte
 		List<Double> accumulated = table.getAccumulated();
 		double probability;
-		while (population.size() > ret.size()) {
+		while (selection.size() < population.size()) {
 			probability = RandomGenerator.createAleatoryDouble();
-			ChromosomeI aux = population.get(getSelected(accumulated, probability));
-			ret.add(aux);
+			ChromosomeI aux = population.get(getSelected(accumulated, probability)).copy();
+			selection.add(aux);
 		}
-
-		return ret;
+		
+		return selection;
 	}
 	
+	// Es correcto puesto que accumulated.get(accumulated.size() - 1) es siempre true
+	private int getSelected(List<Double> accumulated, double prob) {
+		for (int i = 0; i < accumulated.size(); i++)
+			if (accumulated.get(i) > prob)
+				return i;
+		return 0;
+	}
+	
+	/*
 	private int getSelected(List<Double> accumulated, double prob) {
 		int closest_index = 0;
 		double closest_value = -10;
@@ -47,10 +54,10 @@ public class Remains implements SelectionI {
 		}
 		return closest_index;
 	}
-
+	
 	private double abs(double val) {
 		if (val < 0) return -val;
 		return val;
 	}
-
+	*/
 }

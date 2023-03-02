@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import graphic.Observer;
+// Not Used
+// import graphic.Observer;
+
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeI;
@@ -36,7 +38,8 @@ public class Executor {
 	private ChromosomeI intergenerationLeader;
 	// ------------------------------------------------------------------
 	
-	private Observer observer;
+	// Not Used
+	// private Observer observer;
 	
 	public Executor(Map<String, Object> config) {
 		this.GENERATION_AMOUNT = (Integer) config.get("generation_amount");
@@ -47,7 +50,8 @@ public class Executor {
 		this.crossover = (CrossoverI) config.get("crossover");
 		this.mutation = (MutationI) config.get("mutation");
 		
-		this.observer = (Observer) config.get("observer");
+		// Not Used
+		// this.observer = (Observer) config.get("observer");
 		
 		this.population = new ArrayList<>();
 		elitism = new ArrayList<>();
