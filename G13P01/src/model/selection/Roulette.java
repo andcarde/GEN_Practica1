@@ -18,7 +18,8 @@ public class Roulette implements SelectionI {
 		List<ChromosomeI> selection = new ArrayList<>();
 		Positivizer.positivizeFitness(population);
 		PopulationTable table = new PopulationTable(population);
-		List<Double> accumulated = table.getAccumulated();
+		List<Double> fitness = table.getFitness();
+		List<Double> punctuactions;
 		/*BinaryTree<ChromosomeI> binaryTree = new BinaryTree<>();
 		for (int i = 0; i < population.size(); i++)
 			binaryTree.add(population.get(i), accumulated.get(i));
@@ -30,10 +31,19 @@ public class Roulette implements SelectionI {
 			selection.add(chromosome);
 		}*/
 		if (!isMaximization) {
-			for (Double cur : accumulated) {
-				cur = 1-cur;
-			}
+			fitness = corrigeMinimizar(fitness);
+			punctuactions = table.getPunctuation(fitness);
 			
+		}
+		else {
+			fitness = corrigeMaximizar(fitness);
+			punctuactions = table.getPunctuation(fitness);
+		}
+		List<Double> accumulated = new ArrayList<>();
+		double sum = 0.0;
+		for (int i = 0; i < punctuactions.size(); i++) {
+			sum += punctuactions.get(i);
+			accumulated.add(sum);
 		}
 		double probability;
 		for (int i = 0; i < population.size(); i++) {
@@ -42,6 +52,21 @@ public class Roulette implements SelectionI {
 			selection.add(aux);
 		}
 		return selection;
+	}
+	
+	private List<Double> corrigeMaximizar(List<Double> fitness) {
+		List<Double> ret = new ArrayList<>();
+		for (int i = 0; i < fitness.size(); i++) {
+			ret.add(Math.abs(fitness.get(fitness.size()-1))+fitness.get(i)); 
+		}
+		return ret;
+	}
+	private List<Double> corrigeMinimizar(List<Double> fitness) {
+		List<Double> ret = new ArrayList<>();
+		for (int i = 0; i < fitness.size(); i++) {
+			ret.add((1.05*fitness.get(fitness.size()-1))-fitness.get(i)); 
+		}
+		return ret;
 	}
 	
 	private int getSelected(List<Double> accumulated, double prob) {
