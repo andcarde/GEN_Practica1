@@ -49,17 +49,6 @@ public class Chromosome implements ChromosomeI {
 	public Integer getSize() {
 		return this.mold.getSize();
 	}
-	
-	@Override
-	public Boolean getElement(Integer i) {
-		Integer accumulated = 0;
-		for (GenI gen : this.genes) {
-			if (i < gen.getSize() + accumulated)
-				return gen.getBit(i - accumulated);
-			accumulated += gen.getSize();
-		}
-		return null;
-	}
 
 	@Override
 	public MoldI getMold() {

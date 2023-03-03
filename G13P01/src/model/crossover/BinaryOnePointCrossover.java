@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
+import model.chromosome.BinaryGenI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
-import model.chromosome.GenI;
 import model.random.RandomGenerator;
 
 public class BinaryOnePointCrossover extends Crossover {
@@ -21,40 +21,52 @@ public class BinaryOnePointCrossover extends Crossover {
 		Chromosome son1 = new Chromosome(this.mold);
 		Chromosome son2 = new Chromosome(this.mold);
 		
-		List<Object> genome1 = new ArrayList<>();
-		List<Object> genome2 = new ArrayList<>();
+		List<Object> genomes1 = new ArrayList<>();
+		List<Object> genomes2 = new ArrayList<>();
 		
 		Integer cutPoint = RandomGenerator.createAleatoryInt(mold.getSize() - 1) + 1;
+		List<Boolean> genome1, genome2;
+		BinaryGenI binaryGen1, binaryGen2;
 		
 		Integer accumulated = 0;
-		
 		for (int i = 0; i < mold.getGenes().size(); i++) {
-			if (accumulated + mold.getGenes().get(i).)
-		}
-		
-		//List<Boolean> bits = genome.subList(accumulated, accumulated + gen.getSize());
-		for (int i = 0; i < cutPoint; i++) {
-			Boolean bit = parent1.getElement(i);
-			genome1.add(bit);
-			Integer accumulated = 0;
-			for (GenI gen : this.genes) {
-				if (i < gen.getSize() + accumulated)
-					return gen.getBit(i - accumulated);
-				accumulated += gen.getSize();
+			genome1 = new ArrayList<>();
+			genome2 = new ArrayList<>();
+			binaryGen1 = (BinaryGenI) parent1.getGen(i);
+			binaryGen2 = (BinaryGenI) parent1.getGen(i);
+			int genSize = binaryGen1.getSize();
+			for (int j = 0; j < genSize; j++) {
+				if (accumulated < cutPoint) {
+					genome1.add((boolean) binaryGen1.getBit(j));
+					genome2.add((boolean) binaryGen2.getBit(j));
+				} else {
+					genome1.add((boolean) binaryGen2.getBit(j));
+					genome2.add((boolean) binaryGen1.getBit(j));
+				}
+				accumulated++;
 			}
-			return null;
-			genome2.add((boolean) parent2.getElement(i));
-		}
-		for (int i = cutPoint; i < mold.getSize(); i++) {
-			genome1.add((boolean) parent2.getElement(i));
-			genome2.add((boolean) parent1.getElement(i));
+			genomes1.add(genome1);
+			genomes2.add(genome2);
 		}
 		
-		son1.assimilate(genome1);
-		son2.assimilate(genome2);
+		son1.assimilate(genomes1);
+		son2.assimilate(genomes2);
 		
 		sons.add(son1);
 		sons.add(son2);
 		return sons;
 	}
+	
+	/*
+	private Boolean getElement(ChromosomeI chromosome, Integer i) {
+		Integer accumulated = 0;
+		for (GenI gen : chromosome.getGenes()) {
+			BinaryGenI binaryGen = (BinaryGenI) gen;
+			if (i < binaryGen.getSize() + accumulated)
+				return binaryGen.getBit(i - accumulated);
+			accumulated += binaryGen.getSize();
+		}
+		return null;
+	}
+	*/
 }
