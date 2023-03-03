@@ -3,6 +3,8 @@ package model.selection;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 import model.util.Pair;
@@ -18,21 +20,23 @@ public class Ranking implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
+		if (isMaxim) population.sort(new ChromosomeComparator());
+		else population.sort(new ChromosomeComparatorMin());
 		List<Pair<Double,Double>>  aux = puntuacion(population);
 		return rouletteWithRanking(population, aux);
 	}
 	
 	private List<Pair<Double,Double>>  puntuacion(List<ChromosomeI> population) {
-		List<Pair<Double,Double>>  ret = new ArrayList<>();
+		List<Pair<Double,Double>> ret = new ArrayList<>();
 		double accPunc = 0.0;
 		for (int i = 0; i < population.size(); ++i) {
-		double probOfIth = (double)i/population.size();
-		probOfIth *= 2*(_beta-1);
-		probOfIth = _beta - probOfIth;
-		probOfIth = (double)probOfIth * ((double)1/population.size());
-		Pair<Double, Double> a = new Pair<Double, Double>(probOfIth, accPunc);
-		ret.add(a);
-		accPunc += probOfIth;
+			double probOfIth = (double)i/population.size();
+			probOfIth *= 2*(_beta-1);
+			probOfIth = _beta - probOfIth;
+			probOfIth = (double)probOfIth * ((double)1/population.size());
+			Pair<Double, Double> a = new Pair<Double, Double>(probOfIth, accPunc);
+			ret.add(a);
+			accPunc += probOfIth;
 		}
 
 		return ret;
