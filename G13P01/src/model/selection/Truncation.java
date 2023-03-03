@@ -8,9 +8,11 @@ import model.chromosome.ChromosomeI;
 public class Truncation implements SelectionI {
 	
 	private double truncationThreshold;
+	private boolean isMaxim;
 	
-	public Truncation(Double truncationThreshold) {
+	public Truncation(Double truncationThreshold, boolean isMaximization) {
 		this.truncationThreshold = truncationThreshold;
+		isMaximization = isMaximization;
 	}
 
 	@Override

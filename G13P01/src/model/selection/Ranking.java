@@ -10,6 +10,11 @@ import model.util.Pair;
 public class Ranking implements SelectionI {
 	
 	private static final double _beta = 1.5;
+	private boolean isMaxim;
+	
+	public Ranking(boolean isMaxim) {
+		this.isMaxim = isMaxim;
+	}
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

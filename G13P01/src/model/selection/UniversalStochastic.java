@@ -8,6 +8,12 @@ import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
 public class UniversalStochastic implements SelectionI {
+	
+	private boolean isMaxim;
+
+	public UniversalStochastic(boolean isMaximization) {
+		isMaxim	= isMaximization;
+	}
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {

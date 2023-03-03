@@ -37,6 +37,7 @@ public class PopulationTable {
 		}
 	}
 	
+	
 	public List<Double> getFitness() {
 		return this.fitness;
 	}
@@ -51,5 +52,15 @@ public class PopulationTable {
 
 	public Integer getAmount() {
 		return this.populationAmount;
+	}
+
+	public List<Double> getPunctuation(List<Double> fitness2) {
+		List<Double> ret = new ArrayList<>();
+		double total = 0.0;
+		for (int i = 0; i < fitness2.size(); i++)
+			total += fitness2.get(i);
+		for (int i = 0; i < fitness2.size(); i++)
+			ret.add(fitness2.get(i)/total);
+		return ret;
 	}
 }
