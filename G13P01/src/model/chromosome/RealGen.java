@@ -1,10 +1,10 @@
 package model.chromosome;
 
 import model.fitness.Variable;
-import model.mutationMethod.RealMutationI;
+import model.mutation.RealMutationI;
 import model.random.RandomGenerator;
 
-public class RealGen implements GenI, RealGenI {
+public class RealGen implements RealGenI {
 	
 	private final RealMutationI mutationMethod;
 	private final String name;
@@ -62,5 +62,27 @@ public class RealGen implements GenI, RealGenI {
 	@Override
 	public void mutate() {
 		this.mutationMethod.act(this);
+	}
+
+	@Override
+	public Object getGenoma() {
+		return this.real;
+	}
+
+	@Override
+	public GenI assimilate(Object genoma) {
+		this.real = (Double) genoma;
+		return this;
+	}
+
+	@Override
+	public Double getBelowLimit() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double getWidth() {
+		return this.upperLimit - this.belowLimit;
 	}
 }

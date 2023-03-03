@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.fitness.Variable;
-import model.mutation.RealMutationI;
+import model.mutation.BinaryMutationI;
 import model.random.RandomGenerator;
 
 public class BinaryGen implements BinaryGenI {
 	
-	private final RealMutationI mutationMethod;
+	private final BinaryMutationI mutationMethod;
 	private final String name;
 	private final Double belowLimit;
 	private final Integer size;
 	private final Double bitValue;
 	private List<Boolean> bits;
 
-	public static BinaryGen build(Variable variable) {
+	public static BinaryGen build(Variable variable, BinaryMutationI mutationMethod) {
 		String name = variable.getName();
 		Double belowLimit = variable.getBelowLimit();
 		Double upperLimit = variable.getUpperLimit();
@@ -24,7 +24,7 @@ public class BinaryGen implements BinaryGenI {
 		Double width = upperLimit - belowLimit;
 		Integer size = calculateSize(width, precision);
 		Double bitValue = width / Math.pow(2, size);
-		return new BinaryGen(name, belowLimit, size, bitValue);
+		return new BinaryGen(mutationMethod, name, belowLimit, size, bitValue);
 	}
 	
 	public static Integer calculateSize(Double width, Double precision) {
@@ -42,7 +42,8 @@ public class BinaryGen implements BinaryGenI {
 			this.bits.add(bit);
 	}
 	
-	private BinaryGen(String name, Double belowLimit, Integer size, Double bitValue) {
+	private BinaryGen(BinaryMutationI mutationMethod, String name, Double belowLimit, Integer size, Double bitValue) {
+		this.mutationMethod = mutationMethod;
 		this.name = name;
 		this.belowLimit = belowLimit;
 		this.size = size;
@@ -90,11 +91,6 @@ public class BinaryGen implements BinaryGenI {
 		System.out.println("Bits: " + bits.size());
 		return bits.get(i);
 	}
-
-	@Override
-	public void assimilate(List<Boolean> bits) {
-		this.bits = bits;
-	}
 	
 	@Override
 	public GenI copy() {
@@ -105,7 +101,26 @@ public class BinaryGen implements BinaryGenI {
 	public void mutate() {
 		for (int i = 0; i < this.size; i++)
 			this.mutationMethod.act(this);
-			if (RandomGenerator.createAleatoryBoolean(mutationProbability))
-				invertElement(i);
+	}
+
+	@Override
+	public Object getGenoma() {
+		return this.bits;
+	}
+
+	@Override
+	public GenI assimilate(Object genoma) {
+		this.bits = (List<Boolean>) genoma;
+		return this;
+	}
+
+	@Override
+	public Double getBelowLimit() {
+		return this.belowLimit;
+	}
+
+	@Override
+	public Double getWidth() {
+		return this.bitValue * (Math.pow(2, size) - 1);
 	}
 }

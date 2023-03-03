@@ -3,6 +3,8 @@ package model.fitness;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.chromosome.GenType;
+
 public class Function3 extends Function {
 
 	private static final Integer d = 2;
@@ -33,5 +35,10 @@ public class Function3 extends Function {
 			variables.add(new Variable(variableName, -5.0, 5.0, this.precision));
 		}
 		return variables;
+	}
+
+	@Override
+	public GenType getGenType() {
+		return GenType.BINARY;
 	}
 }

@@ -1,6 +1,7 @@
 package model.mutation;
 
 import model.chromosome.RealGenI;
+import model.random.RandomGenerator;
 
 public class BasicRealMutation implements RealMutationI {
 
@@ -12,6 +13,7 @@ public class BasicRealMutation implements RealMutationI {
 	
 	@Override
 	public void act(RealGenI gen) {
-		gen
+		if (RandomGenerator.createAleatoryDouble() < mutationProbability)
+			gen.initialize();
 	}
 }

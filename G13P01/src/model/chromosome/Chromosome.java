@@ -16,9 +16,9 @@ public class Chromosome implements ChromosomeI {
 	
 	public Chromosome(MoldI mold) {
 		this.mold = mold;
-		List<BinaryGen> moldGenes = mold.getGenes();
+		List<GenI> moldGenes = mold.getGenes();
 		this.genes = new ArrayList<>();
-		for (BinaryGen gen : moldGenes)
+		for (GenI gen : moldGenes)
 			this.genes.add(gen.copy());
 	}
 	
@@ -85,16 +85,6 @@ public class Chromosome implements ChromosomeI {
 	}
 
 	@Override
-	public void assimilate(List<Boolean> genome) {
-		Integer accumulated = 0;
-		for (GenI gen : this.genes) {
-			List<Boolean> bits = genome.subList(accumulated, accumulated + gen.getSize());
-			gen.assimilate(bits);
-			accumulated += gen.getSize();
-		}
-	}
-
-	@Override
 	public String getGenesToString() {
 		String g = "";
 		if (genes.isEmpty())
@@ -123,5 +113,20 @@ public class Chromosome implements ChromosomeI {
 	public void mutate() {
 		for (GenI gen : this.genes)
 			gen.mutate();
+	}
+
+	@Override
+	public void assimilate(List<Object> genome) {
+		for (int i = 0; i < this.genes.size(); i++) 
+			this.genes.get(i).assimilate(genome.get(i));
+	}
+
+	@Override
+	public GenI getGen(int i) {
+		return this.genes.get(i);
+	}
+
+	public void setGen(int i, GenI gen) {
+		this.genes.set(i, gen);
 	}
 }

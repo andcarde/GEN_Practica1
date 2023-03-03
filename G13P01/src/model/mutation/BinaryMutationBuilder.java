@@ -1,8 +1,8 @@
 package model.mutation;
 
-public class MutationBuilder {
+public class BinaryMutationBuilder {
 
-	public static RealMutationI build(MutationMethod mutationMethod, Double mutationProbability) {
+	public static BinaryMutationI build(MutationMethod mutationMethod, Double mutationProbability) {
 		switch (mutationMethod) {
 		case BASIC:
 			return new BasicBinaryMutation(mutationProbability);

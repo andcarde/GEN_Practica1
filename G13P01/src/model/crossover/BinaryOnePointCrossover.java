@@ -6,13 +6,12 @@ import java.util.List;
 import model.MoldI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
+import model.chromosome.GenI;
 import model.random.RandomGenerator;
 
-// TODO Se debe de hacer más genérico para que el elemento puede ser un Integer o un Double.
+public class BinaryOnePointCrossover extends Crossover {
 
-public class OnePointCrossover extends Crossover {	
-	
-	public OnePointCrossover(MoldI mold, Double crossProbability) {
+	public BinaryOnePointCrossover(MoldI mold, Double crossProbability) {
 		super(mold, crossProbability);
 	}
 	
@@ -22,13 +21,28 @@ public class OnePointCrossover extends Crossover {
 		Chromosome son1 = new Chromosome(this.mold);
 		Chromosome son2 = new Chromosome(this.mold);
 		
-		List<Boolean> genome1 = new ArrayList<>();
-		List<Boolean> genome2 = new ArrayList<>();
+		List<Object> genome1 = new ArrayList<>();
+		List<Object> genome2 = new ArrayList<>();
 		
 		Integer cutPoint = RandomGenerator.createAleatoryInt(mold.getSize() - 1) + 1;
-
+		
+		Integer accumulated = 0;
+		
+		for (int i = 0; i < mold.getGenes().size(); i++) {
+			if (accumulated + mold.getGenes().get(i).)
+		}
+		
+		//List<Boolean> bits = genome.subList(accumulated, accumulated + gen.getSize());
 		for (int i = 0; i < cutPoint; i++) {
-			genome1.add((boolean) parent1.getElement(i));
+			Boolean bit = parent1.getElement(i);
+			genome1.add(bit);
+			Integer accumulated = 0;
+			for (GenI gen : this.genes) {
+				if (i < gen.getSize() + accumulated)
+					return gen.getBit(i - accumulated);
+				accumulated += gen.getSize();
+			}
+			return null;
 			genome2.add((boolean) parent2.getElement(i));
 		}
 		for (int i = cutPoint; i < mold.getSize(); i++) {

@@ -3,6 +3,8 @@ package model.fitness;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.chromosome.GenType;
+
 public class Function1 extends Function {
 
 	/* La primera función se llama de calibración porque es simple y
@@ -28,5 +30,10 @@ public class Function1 extends Function {
 		variables.add(new Variable("x1", -3.0, 12.1, this.precision));
 		variables.add(new Variable("x2", 4.1, 5.8, this.precision));
 		return variables;
+	}
+
+	@Override
+	public GenType getGenType() {
+		return GenType.BINARY;
 	}
 }

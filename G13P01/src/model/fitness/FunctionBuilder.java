@@ -10,8 +10,10 @@ public class FunctionBuilder {
 			return new Function2(precision);
 		case FUNCTION3:
 			return new Function3(precision);
-		case FUNCTION4:
-			return new Function4(precision, fuction4Dimension);
+		case FUNCTION4a:
+			return new Function4a(precision, fuction4Dimension);
+		case FUNCTION4b:
+			return new Function4b(precision, fuction4Dimension);
 		default:
 			return null;
 		}

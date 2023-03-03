@@ -3,7 +3,7 @@ package model.fitness;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Function4 extends Function {
+public abstract class Function4 extends Function {
 
 	private static final Integer m = 10;
 	private final Integer d;
