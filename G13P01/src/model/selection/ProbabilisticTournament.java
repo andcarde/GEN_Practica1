@@ -22,13 +22,13 @@ public class ProbabilisticTournament extends Tournament {
 				winner =  contestant2;
 		}
 		else if (this.championProbability > RandomGenerator.createAleatoryDouble()) {
-			if (contestant1.getValue() > contestant2.getValue())
+			if (Selection.compare(contestant1, contestant2) == -1)
 				winner = contestant1;
 			else
 				winner = contestant2;
 		}
 		else {
-			if (contestant1.getValue() < contestant2.getValue())
+			if (Selection.compare(contestant1, contestant2) == 1)
 				winner = contestant1;
 			else
 				winner = contestant2;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.PopulationTable;
+import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
@@ -18,9 +20,27 @@ public class UniversalStochastic implements SelectionI {
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selection = new ArrayList<>();
+		if (isMaxim) population.sort(new ChromosomeComparator());
+		else population.sort(new ChromosomeComparatorMin());
 		PopulationTable table = new PopulationTable(population);
-		List<Double> accumulated = table.getAccumulated();
+		List<Double> fitness = table.getFitness();
+		List<Double> punctuactions = new ArrayList<>();
 		
+		if (!isMaxim) {
+			fitness = corrigeMinimizar(fitness);
+			punctuactions = table.getPunctuation(fitness);
+			
+		}
+		else {
+			fitness = corrigeMaximizar(fitness);
+			punctuactions = table.getPunctuation(fitness);
+		}
+		List<Double> accumulated = new ArrayList<>();
+		double sum = 0.0;
+		for (int i = 0; i < punctuactions.size(); i++) {
+			sum += punctuactions.get(i);
+			accumulated.add(sum);
+		}
 		double distance = RandomGenerator.createAleatoryDouble() / population.size();
 		for (int i = 0; i < population.size(); i++) {
 			ChromosomeI aux = population.get(getSelected(accumulated, distance));
@@ -28,6 +48,21 @@ public class UniversalStochastic implements SelectionI {
 			distance += 1/population.size();
 		}
 		return selection;
+	}
+	
+	private List<Double> corrigeMaximizar(List<Double> fitness) {
+		List<Double> ret = new ArrayList<>();
+		for (int i = 0; i < fitness.size(); i++) {
+			ret.add(Math.abs(fitness.get(fitness.size()-1))+fitness.get(i)); 
+		}
+		return ret;
+	}
+	private List<Double> corrigeMinimizar(List<Double> fitness) {
+		List<Double> ret = new ArrayList<>();
+		for (int i = 0; i < fitness.size(); i++) {
+			ret.add((1.05*fitness.get(fitness.size()-1))-fitness.get(i)); 
+		}
+		return ret;
 	}
 	
 	private int getSelected(List<Double> accumulated, double prob) {
