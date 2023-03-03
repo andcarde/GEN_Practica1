@@ -77,8 +77,7 @@ public class RealGen implements RealGenI {
 
 	@Override
 	public Double getBelowLimit() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.belowLimit;
 	}
 
 	@Override

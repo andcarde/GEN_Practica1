@@ -12,6 +12,6 @@ public interface MoldI {
 	List<GenI> getGenes();
 
 	Integer getSize();
-
-	Integer getMeanSize();
+	
+	Integer getNumGenes();
 }

@@ -11,20 +11,17 @@ public class Mold implements MoldI {
 	private final Fitness function;
 	private final List<GenI> moldGenes;
 	private Integer totalSize;
-	private Integer meanSize;
 	
 	public Mold(Fitness function, List<GenI> moldGenes) {
 		this.function = function;
 		this.moldGenes = moldGenes;
 		this.totalSize = 0;
-		int binaryGenes = 0;
 		for (GenI gen : moldGenes) {
-			if (gen instanceof BinaryGen) {
+			if (gen instanceof BinaryGen)
 				this.totalSize += ((BinaryGen) gen).getSize();
-				binaryGenes++;
-			}
+			else
+				this.totalSize++;
 		}
-		//this.meanSize = this.totalSize / binaryGenes;
 	}
 	
 	@Override
@@ -43,7 +40,7 @@ public class Mold implements MoldI {
 	}
 
 	@Override
-	public Integer getMeanSize() {
-		return meanSize;
+	public Integer getNumGenes() {
+		return this.moldGenes.size();
 	}
 }

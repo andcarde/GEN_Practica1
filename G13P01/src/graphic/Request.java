@@ -135,6 +135,12 @@ public class Request {
 					errors.add("The champion probability must be between 0 and 100 (both included).");
 			}
 		}
+		if (this.fitnessFunction != FitnessFunction.FUNCTION4b) {
+			if (this.crossoverMethod == CrossoverMethod.ARITHMETIC)
+				errors.add("The crossover method Arithmetic is only available for the function 4b");
+			else if (this.crossoverMethod == CrossoverMethod.BLX_ALPHA)
+				errors.add("The crossover method BLXalpha is only available for the function 4b");
+		}
 	}
 	
 	public Integer getPopulationAmount() {

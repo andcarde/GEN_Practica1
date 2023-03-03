@@ -23,6 +23,10 @@ public class CrossoverBuilder {
 				return new RealOnePointCrossover(mold, crossoverProbability);
 			case UNIFORM:
 				return new UniformCrossover(mold, crossoverProbability);
+			case ARITHMETIC :
+				return new RealArithmeticCrossover(mold, crossoverProbability);
+			case BLX_ALPHA :
+				return new RealBLXCrossover(mold, crossoverProbability);
 			default:
 				return null;
 			}

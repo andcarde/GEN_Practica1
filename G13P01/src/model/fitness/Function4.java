@@ -19,7 +19,7 @@ public abstract class Function4 extends Function {
 		Double value = 0.0;
 		for (int i = 0; i < d; i++) {
 			Double x = input.get("x".concat(Integer.toString(i)));
-			Double secondSin = Math.sin(i * Math.pow(x, 2) / Math.PI);
+			Double secondSin = Math.sin((i + 1) * Math.pow(x, 2) / Math.PI);
 			value += Math.sin(x) * Math.pow(secondSin, 2 * Function4.m);
 		}
 		value *= -1;

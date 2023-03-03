@@ -29,4 +29,8 @@ public class RandomGenerator {
 			RandomGenerator.random = new Random();
 		return random.nextDouble();
 	}
+	
+	public static Double createAleatoryDoublePlus(Double belowLimit, Double upperLimit) {
+		return createAleatoryDouble() * upperLimit + belowLimit;
+	}
 }
