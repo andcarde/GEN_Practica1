@@ -7,8 +7,8 @@ public class ProbabilisticTournament extends Tournament {
 
 	private Double championProbability;
 	
-	public ProbabilisticTournament(Integer contestantsAmount, Double championProbability) {
-		super(contestantsAmount);
+	public ProbabilisticTournament(boolean isMaximize, Integer contestantsAmount, Double championProbability) {
+		super(isMaximize, contestantsAmount);
 		this.championProbability = championProbability;
 	}
 	
@@ -22,13 +22,13 @@ public class ProbabilisticTournament extends Tournament {
 				winner =  contestant2;
 		}
 		else if (this.championProbability > RandomGenerator.createAleatoryDouble()) {
-			if (Selection.compare(contestant1, contestant2) == -1)
+			if (compare(contestant1, contestant2) == -1)
 				winner = contestant1;
 			else
 				winner = contestant2;
 		}
 		else {
-			if (Selection.compare(contestant1, contestant2) == 1)
+			if (compare(contestant1, contestant2) == 1)
 				winner = contestant1;
 			else
 				winner = contestant2;

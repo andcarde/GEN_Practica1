@@ -15,9 +15,9 @@ public class Chromosome implements ChromosomeI {
 	
 	public Chromosome(MoldI mold) {
 		this.mold = mold;
-		List<Gen> moldGenes = mold.getGenes();
+		List<BinaryGen> moldGenes = mold.getGenes();
 		this.genes = new ArrayList<>();
-		for (Gen gen : moldGenes)
+		for (BinaryGen gen : moldGenes)
 			this.genes.add(gen.copy());
 	}
 	

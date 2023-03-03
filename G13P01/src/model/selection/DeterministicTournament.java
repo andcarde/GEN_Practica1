@@ -5,8 +5,8 @@ import model.random.RandomGenerator;
 
 public class DeterministicTournament extends Tournament {
 
-	public DeterministicTournament(Integer contestantsAmount) {
-		super(contestantsAmount);
+	public DeterministicTournament(boolean isMaximize, Integer contestantsAmount) {
+		super(isMaximize, contestantsAmount);
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class DeterministicTournament extends Tournament {
 			else
 				winner =  contestant2;
 		}
-		else if (Selection.compare(contestant1, contestant2) == -1)
+		else if (compare(contestant1, contestant2) == -1)
 			winner = contestant1;
 		else
 			winner = contestant2;

@@ -14,7 +14,7 @@ public class Truncation implements SelectionI {
 	
 	public Truncation(Double truncationThreshold, boolean isMaximization) {
 		this.truncationThreshold = truncationThreshold;
-		isMaximization = isMaximization;
+		this.isMaxim = isMaximization;
 	}
 
 	@Override

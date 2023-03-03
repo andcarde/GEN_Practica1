@@ -2,14 +2,14 @@ package model;
 
 import java.util.List;
 
-import model.chromosome.Gen;
+import model.chromosome.BinaryGen;
 import model.fitness.Fitness;
 
 public interface MoldI {
 
 	Fitness getFunction();
 
-	List<Gen> getGenes();
+	List<BinaryGen> getGenes();
 
 	Integer getSize();
 }

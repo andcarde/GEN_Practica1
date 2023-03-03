@@ -177,17 +177,6 @@ public class Executor {
 			selectivePressure[generation] = generationLeaders[generation] / generationAverage[generation];
 		}
 	}
-	
-	private void positivizeFitness() {
-		double toSum = 0.0;
-		for (ChromosomeI chromosome : this.population) {
-			if (chromosome.getValue() < toSum)
-				toSum = chromosome.getValue();
-		}
-		toSum *= -1;
-		for (ChromosomeI chromosome : this.population)
-			chromosome.displace(toSum);
-	}
 
 	public double[] getGenerationAverage() { return generationAverage; }
 	public double[] getGenerationLeaders() { return generationLeaders; }

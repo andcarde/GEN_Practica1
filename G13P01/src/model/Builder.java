@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import graphic.Request;
-import model.chromosome.Gen;
+import model.chromosome.BinaryGen;
 import model.crossover.CrossoverBuilder;
 import model.crossover.CrossoverI;
 import model.fitness.Fitness;
@@ -36,9 +36,9 @@ public class Builder {
 		Fitness function = FunctionBuilder.build(request.getFitnessFunction(),
 				request.getPrecision(), request.getFuction4Dimension());
 		List<Variable> variables = function.getVariables();
-		List<Gen> moldGenes = new ArrayList<>();
+		List<BinaryGen> moldGenes = new ArrayList<>();
 		for (Variable var : variables)
-			moldGenes.add(Gen.build(var));
+			moldGenes.add(BinaryGen.build(var));
 		return new Mold(function, moldGenes);
 	}
 	

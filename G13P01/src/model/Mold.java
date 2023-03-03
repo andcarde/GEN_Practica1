@@ -2,20 +2,20 @@ package model;
 
 import java.util.List;
 
-import model.chromosome.Gen;
+import model.chromosome.BinaryGen;
 import model.fitness.Fitness;
 
 public class Mold implements MoldI {
-
+	
 	private final Fitness function;
-	private final List<Gen> moldGenes;
+	private final List<BinaryGen> moldGenes;
 	private Integer totalSize;
 	
-	public Mold(Fitness function, List<Gen> moldGenes) {
+	public Mold(Fitness function, List<BinaryGen> moldGenes) {
 		this.function = function;
 		this.moldGenes = moldGenes;
 		this.totalSize = 0;
-		for (Gen gen : moldGenes)
+		for (BinaryGen gen : moldGenes)
 			this.totalSize += gen.getSize();
 	}
 	
@@ -25,7 +25,7 @@ public class Mold implements MoldI {
 	}
 
 	@Override
-	public List<Gen> getGenes() {
+	public List<BinaryGen> getGenes() {
 		return this.moldGenes;
 	}
 	

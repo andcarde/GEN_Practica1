@@ -6,11 +6,12 @@ import java.util.List;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
-public abstract class Tournament implements SelectionI {
+public abstract class Tournament extends Selection {
 
 	protected Integer contestantsAmount;
 	
-	public Tournament(Integer contestantsAmount) {
+	public Tournament(boolean isMaximize, Integer contestantsAmount) {
+		super(isMaximize);
 		this.contestantsAmount = contestantsAmount;
 	}
 	

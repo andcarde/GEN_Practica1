@@ -6,7 +6,7 @@ import java.util.List;
 import model.fitness.Variable;
 import model.random.RandomGenerator;
 
-public class Gen implements GenI {
+public class BinaryGen implements GenI, BinaryGenI {
 	
 	private final String name;
 	private final Double belowLimit;
@@ -14,7 +14,7 @@ public class Gen implements GenI {
 	private final Double bitValue;
 	private List<Boolean> bits;
 
-	public static Gen build(Variable variable) {
+	public static BinaryGen build(Variable variable) {
 		String name = variable.getName();
 		Double belowLimit = variable.getBelowLimit();
 		Double upperLimit = variable.getUpperLimit();
@@ -22,15 +22,14 @@ public class Gen implements GenI {
 		Double width = upperLimit - belowLimit;
 		Integer size = calculateSize(width, precision);
 		Double bitValue = width / Math.pow(2, size);
-		return new Gen(name, belowLimit, size, bitValue);
+		return new BinaryGen(name, belowLimit, size, bitValue);
 	}
 	
-	// TODO Revisar la validez de este algoritmo.
 	public static Integer calculateSize(Double width, Double precision) {
 		return (int) (Math.log10((width / precision) + 1) / Math.log10(2));
 	}
 	
-	private Gen(Gen gen) {
+	private BinaryGen(BinaryGen gen) {
 		this.name = gen.name;
 		this.belowLimit = gen.belowLimit;
 		this.size = gen.size;
@@ -40,7 +39,7 @@ public class Gen implements GenI {
 			this.bits.add(bit);
 	}
 	
-	private Gen(String name, Double belowLimit, Integer size, Double bitValue) {
+	private BinaryGen(String name, Double belowLimit, Integer size, Double bitValue) {
 		this.name = name;
 		this.belowLimit = belowLimit;
 		this.size = size;
@@ -94,7 +93,8 @@ public class Gen implements GenI {
 		this.bits = bits;
 	}
 	
+	@Override
 	public GenI copy() {
-		return new Gen(this);
+		return new BinaryGen(this);
 	}
 }
