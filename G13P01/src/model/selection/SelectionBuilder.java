@@ -13,9 +13,9 @@ public class SelectionBuilder {
 		case RANKING:
 			return new Ranking(isMaximization);
 		case DETERMINISTIC_TOURNAMENT:
-			return buildTournament(selectionMethod, tournamentRequest);
+			return buildTournament(selectionMethod, tournamentRequest, isMaximization);
 		case PROBABILISTIC_TOURNAMENT:
-			return buildTournament(selectionMethod, tournamentRequest);
+			return buildTournament(selectionMethod, tournamentRequest, isMaximization);
 		case TRUNCATION:
 			return new Truncation(trunc, isMaximization);
 		case UNIVERSAL_STOCHASTIC:
@@ -25,14 +25,14 @@ public class SelectionBuilder {
 		}
 	}
 		
-	private static Tournament buildTournament(SelectionMethod selectionMethod, TournamentRequest tournamentRequest) {
+	private static Tournament buildTournament(SelectionMethod selectionMethod, TournamentRequest tournamentRequest, boolean isMaximization) {
 		Integer contestantsAmount = tournamentRequest.getContestantsAmount();
 		switch (selectionMethod) {
 		case DETERMINISTIC_TOURNAMENT:
-			return new DeterministicTournament(contestantsAmount);
+			return new DeterministicTournament(isMaximization, contestantsAmount);
 		case PROBABILISTIC_TOURNAMENT:
 			Double championProbability = tournamentRequest.getChampionProbability();
-			return new ProbabilisticTournament(contestantsAmount, championProbability);
+			return new ProbabilisticTournament(isMaximization, contestantsAmount, championProbability);
 		default:
 			return null;
 		}

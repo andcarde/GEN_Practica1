@@ -98,7 +98,7 @@ public class Request {
 			this.errors.add("The elitism rate must be a rational number.");
 		}
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());
-		if (this.fitnessFunction == FitnessFunction.FUNCTION4)
+		if (this.fitnessFunction == FitnessFunction.FUNCTION4b)
 			try {
 				this.fuction4Dimension = Integer.valueOf(requestMaker.getFuction4Dimension());
 			} catch (NumberFormatException nfe) {
@@ -119,7 +119,7 @@ public class Request {
 			errors.add("The precision must be a positive rational number.");
 		if (this.elitismRate < 0 || this.elitismRate > 100)
 			errors.add("The elitism rate must be between 0 and 100 (both included).");
-		if (this.fitnessFunction == FitnessFunction.FUNCTION4)
+		if (this.fitnessFunction == FitnessFunction.FUNCTION4b || this.fitnessFunction == FitnessFunction.FUNCTION4a)
 			if (this.fuction4Dimension <= 0)
 				errors.add("The parameter d of function 4 must be a positive integer.");
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
