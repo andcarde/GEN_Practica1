@@ -246,7 +246,7 @@ public class Window extends JFrame implements RequestMaker {
 		functionCB.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-            	if (e.getItem().equals(FitnessFunction.FUNCTION4.name()))
+            	if (e.getItem().equals(FitnessFunction.FUNCTION4a.name()) || e.getItem().equals(FitnessFunction.FUNCTION4b.name()))
             		function4Panel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
