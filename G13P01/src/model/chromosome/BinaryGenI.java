@@ -2,7 +2,7 @@ package model.chromosome;
 
 import java.util.List;
 
-public interface BinaryGenI {
+public interface BinaryGenI extends GenI {
 
 	Integer getSize();
 	void invertElement(int i);

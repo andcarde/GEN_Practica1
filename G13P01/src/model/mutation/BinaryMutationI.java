@@ -1,5 +1,8 @@
 package model.mutation;
 
-public interface BinaryMutationI extends MutationI {
+import model.chromosome.BinaryGenI;
 
+public interface BinaryMutationI {
+
+	void act(BinaryGenI gen);
 }

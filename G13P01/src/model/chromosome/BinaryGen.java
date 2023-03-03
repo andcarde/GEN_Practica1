@@ -7,7 +7,7 @@ import model.fitness.Variable;
 import model.mutation.RealMutationI;
 import model.random.RandomGenerator;
 
-public class BinaryGen implements GenI, BinaryGenI {
+public class BinaryGen implements BinaryGenI {
 	
 	private final RealMutationI mutationMethod;
 	private final String name;
@@ -32,6 +32,7 @@ public class BinaryGen implements GenI, BinaryGenI {
 	}
 	
 	private BinaryGen(BinaryGen gen) {
+		this.mutationMethod = gen.mutationMethod;
 		this.name = gen.name;
 		this.belowLimit = gen.belowLimit;
 		this.size = gen.size;

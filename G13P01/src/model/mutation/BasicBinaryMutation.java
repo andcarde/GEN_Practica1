@@ -3,7 +3,7 @@ package model.mutation;
 import model.chromosome.BinaryGenI;
 import model.random.RandomGenerator;
 
-public class BasicBinaryMutation {
+public class BasicBinaryMutation implements BinaryMutationI {
 
 	private Double mutationProbability;
 	

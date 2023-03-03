@@ -2,8 +2,7 @@ package model.mutation;
 
 import model.chromosome.RealGenI;
 
-public interface RealMutationI extends MutationI {
-
-	//void act(GenI gen);
+public interface RealMutationI {
+	
 	void act(RealGenI gen);
 }
