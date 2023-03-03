@@ -6,7 +6,6 @@ import java.util.List;
 
 import model.MoldI;
 import model.fitness.Input;
-import model.random.RandomGenerator;
 
 public class Chromosome implements ChromosomeI {
 	

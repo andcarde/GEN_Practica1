@@ -108,6 +108,7 @@ public class BinaryGen implements BinaryGenI {
 		return this.bits;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public GenI assimilate(Object genoma) {
 		this.bits = (List<Boolean>) genoma;
