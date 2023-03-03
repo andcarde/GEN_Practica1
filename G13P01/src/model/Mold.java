@@ -24,7 +24,7 @@ public class Mold implements MoldI {
 				binaryGenes++;
 			}
 		}
-		this.meanSize = this.totalSize / binaryGenes;
+		//this.meanSize = this.totalSize / binaryGenes;
 	}
 	
 	@Override

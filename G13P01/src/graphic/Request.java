@@ -98,7 +98,7 @@ public class Request {
 			this.errors.add("The elitism rate must be a rational number.");
 		}
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());
-		if (this.fitnessFunction == FitnessFunction.FUNCTION4b)
+		if (this.fitnessFunction == FitnessFunction.FUNCTION4a || this.fitnessFunction == FitnessFunction.FUNCTION4b)
 			try {
 				this.fuction4Dimension = Integer.valueOf(requestMaker.getFuction4Dimension());
 			} catch (NumberFormatException nfe) {

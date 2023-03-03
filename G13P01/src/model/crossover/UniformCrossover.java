@@ -21,7 +21,7 @@ public class UniformCrossover extends Crossover {
 		Chromosome son2 = new Chromosome(this.mold);
 		
 		Object genome1, genome2;
-		for (int i = 0; i < mold.getSize(); i++) {
+		for (int i = 0; i < mold.getGenes().size(); i++) {
 			genome1 = parent1.getGen(i).getGenoma();
 			genome2 = parent2.getGen(i).getGenoma();
 			if (RandomGenerator.createAleatoryBoolean(0.5)) {

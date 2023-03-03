@@ -29,7 +29,7 @@ public class RealOnePointCrossover extends Crossover {
 			son1.setGen(i, son1.getGen(i).copy().assimilate(genome1));
 			son2.setGen(i, son1.getGen(i).copy().assimilate(genome2));
 		}
-		for (int i = cutPoint; i < mold.getSize(); i++) {
+		for (int i = cutPoint; i < mold.getGenes().size(); i++) {
 			genome1 = parent1.getGen(i).getGenoma();
 			genome2 = parent2.getGen(i).getGenoma();
 			son1.setGen(i, son1.getGen(i).copy().assimilate(genome2));
