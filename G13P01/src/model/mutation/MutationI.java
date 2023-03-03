@@ -1,8 +1,6 @@
 package model.mutation;
 
-import model.chromosome.ChromosomeI;
-
 public interface MutationI {
 
-	void act(ChromosomeI chromosome);
+	void act<T extends GenI>(T gen);
 }

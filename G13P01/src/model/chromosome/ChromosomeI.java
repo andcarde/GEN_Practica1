@@ -18,4 +18,5 @@ public interface ChromosomeI {
 	public ChromosomeI copy();
 	public void displace(double toSum);
 	Double getAlterValue();
+	void mutate();
 }

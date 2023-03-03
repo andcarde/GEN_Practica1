@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.MoldI;
 import model.fitness.Input;
+import model.random.RandomGenerator;
 
 public class Chromosome implements ChromosomeI {
 	
@@ -116,5 +117,11 @@ public class Chromosome implements ChromosomeI {
 	@Override
 	public void displace(double toSum) {
 		this.copytype = this.phenotype + toSum;
+	}
+	
+	@Override
+	public void mutate() {
+		for (GenI gen : this.genes)
+			gen.mutate();
 	}
 }

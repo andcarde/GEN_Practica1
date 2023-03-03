@@ -13,7 +13,7 @@ import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
-import model.mutation.MutationI;
+import model.mutation.RealMutationI;
 import model.selection.SelectionI;
 
 public class Executor {
@@ -25,7 +25,7 @@ public class Executor {
 	private final MoldI mold;
 	private final SelectionI selection;
 	private final CrossoverI crossover;
-	private final MutationI mutation;
+	private final RealMutationI mutation;
 	// ------------------------------------------------------------------
 	
 	private List<ChromosomeI> population;
@@ -54,7 +54,7 @@ public class Executor {
 		this.mold = (MoldI) config.get("mold");
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
-		this.mutation = (MutationI) config.get("mutation");
+		this.mutation = (RealMutationI) config.get("mutation");
 		
 		// Not Used
 		// this.observer = (Observer) config.get("observer");

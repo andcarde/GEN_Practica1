@@ -2,10 +2,10 @@ package model.mutation;
 
 public class MutationBuilder {
 
-	public static MutationI build(MutationMethod mutationMethod, Double mutationProbability) {
+	public static RealMutationI build(MutationMethod mutationMethod, Double mutationProbability) {
 		switch (mutationMethod) {
 		case BASIC:
-			return new BasicMutation(mutationProbability);
+			return new BasicBinaryMutation(mutationProbability);
 		default:
 			return null;
 		}

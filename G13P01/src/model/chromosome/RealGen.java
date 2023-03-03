@@ -6,7 +6,7 @@ import java.util.List;
 import model.fitness.Variable;
 import model.random.RandomGenerator;
 
-public class RealGen implements GenI {
+public class RealGen implements GenI, BinaryGenI {
 	
 	private final String name;
 	private final Double belowLimit;

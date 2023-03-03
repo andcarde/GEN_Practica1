@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.fitness.Variable;
+import model.mutation.RealMutationI;
 import model.random.RandomGenerator;
 
 public class BinaryGen implements GenI, BinaryGenI {
 	
+	private final RealMutationI mutationMethod;
 	private final String name;
 	private final Double belowLimit;
 	private final Integer size;
@@ -96,5 +98,13 @@ public class BinaryGen implements GenI, BinaryGenI {
 	@Override
 	public GenI copy() {
 		return new BinaryGen(this);
+	}
+	
+	@Override
+	public void mutate() {
+		for (int i = 0; i < this.size; i++)
+			this.mutationMethod.act(this);
+			if (RandomGenerator.createAleatoryBoolean(mutationProbability))
+				invertElement(i);
 	}
 }

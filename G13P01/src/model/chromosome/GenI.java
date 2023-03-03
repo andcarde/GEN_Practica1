@@ -6,4 +6,5 @@ public interface GenI {
 	Double getValue();
 	void initialize();
 	GenI copy();
+	void mutate();
 }
