@@ -18,7 +18,7 @@ public class DeterministicTournament extends Tournament {
 			else
 				winner =  contestant2;
 		}
-		else if (contestant1.getValue() > contestant2.getValue())
+		else if (Selection.compare(contestant1, contestant2) == -1)
 			winner = contestant1;
 		else
 			winner = contestant2;

@@ -352,8 +352,8 @@ public class Window extends JFrame implements RequestMaker {
 		for (int i = 0; i < generationLeaders.length; i++)
 			System.out.println(generationLeaders[i]);
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
-		plot.addLinePlot("mejor valor", Color.blue, gens, generationLeaders);
-		plot.addLinePlot("mejor valor absoluto", Color.red, gens, bestAbsoluteValue);
+		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
+		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}

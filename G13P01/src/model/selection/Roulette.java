@@ -8,7 +8,11 @@ import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
 
 public class Roulette implements SelectionI {
+	private boolean isMaximization;
 
+	public Roulette(boolean maxim) {
+		isMaximization = maxim;
+	}
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selection = new ArrayList<>();
@@ -25,6 +29,12 @@ public class Roulette implements SelectionI {
 			chromosome = binaryTree.find(probability);
 			selection.add(chromosome);
 		}*/
+		if (!isMaximization) {
+			for (Double cur : accumulated) {
+				cur = 1-cur;
+			}
+			
+		}
 		double probability;
 		for (int i = 0; i < population.size(); i++) {
 			probability = RandomGenerator.createAleatoryDouble();

@@ -9,6 +9,7 @@ public class Function2 extends Function {
 	
 	public Function2(Double precision) {
 		super(precision);
+		super.isMaxim = false;
 	}
 
 	@Override

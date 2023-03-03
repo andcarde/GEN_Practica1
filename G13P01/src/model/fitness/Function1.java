@@ -11,6 +11,7 @@ public class Function1 extends Function {
 	
 	public Function1(Double precision) {
 		super(precision);
+		super.isMaxim = true;
 	}
 	
 	@Override

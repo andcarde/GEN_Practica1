@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -9,6 +10,7 @@ import java.util.Map;
 
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
 import model.mutation.MutationI;
@@ -38,6 +40,9 @@ public class Executor {
 	private ChromosomeI intergenerationLeader;
 	// ------------------------------------------------------------------
 	
+	// COMPARATOR -------------------------------------------------------
+	private Comparator<ChromosomeI> comparator;
+	
 	// Not Used
 	// private Observer observer;
 	
@@ -65,12 +70,12 @@ public class Executor {
 		initilize();
 		basicEvaluation();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
-			population.sort(new ChromosomeComparator());
+			population.sort(comparator);
 			extractElitism();
 			select();
 			cross();
 			mutate();
-			population.sort(new ChromosomeComparator());
+			population.sort(comparator);
 			insertElitism();
 			evaluate(i);
 		}
@@ -80,7 +85,7 @@ public class Executor {
 		for (int i = 0; i < elitism.size(); i++) {
 			population.remove(population.size()-1);
 			population.add(elitism.get(i));
-			population.sort(new ChromosomeComparator());
+			population.sort(comparator);
 		}
 	}
 
@@ -93,6 +98,8 @@ public class Executor {
 	}
 
 	private void initilize() {
+		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
+		else comparator = new ChromosomeComparatorMin();
 		for (int i = 0; i < POPULATION_AMOUNT; i++)
 			population.add(new Chromosome(mold));
 		for (ChromosomeI chromosome : population)
@@ -122,7 +129,8 @@ public class Executor {
 				if (chromosome.getValue() > leader.getValue())
 					leader = chromosome;
 			}
-			positivizeFitness();
+			//positivizeFitness();
+			
 		}
 	}
 
@@ -134,11 +142,11 @@ public class Executor {
 			double fitnessSum = leader.getValue();
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if (chromosome.getValue() > leader.getValue())
+				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization()) || (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
 					leader = chromosome.copy();
 				fitnessSum += chromosome.getValue();
 			}
-			positivizeFitness();
+			//positivizeFitness();
 			
 			// Calculamos la media de la generación
 			generationAverage[generation] = fitnessSum / population.size();
@@ -153,13 +161,13 @@ public class Executor {
 			if (this.intergenerationLeader == null)
 				intergenerationLeader = leader.copy();
 			//this.observer.updateIntergenerationLeader(intergenerationLeader);
-			else if (leader.getValue() > intergenerationLeader.getValue()) {
+			else if ((leader.getValue() > intergenerationLeader.getValue() && mold.getFunction().isMaximization()) || (leader.getValue() < intergenerationLeader.getValue() && !mold.getFunction().isMaximization())) {
 				intergenerationLeader = leader.copy();
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
 			//Se añade el lider absoluto del momento
-			if (generation < 1 || generationsAbsoluteLeaders[generation-1] < leader.getValue()) {
+			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getValue() && mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getValue() && !mold.getFunction().isMaximization())) {
 				generationsAbsoluteLeaders[generation] = leader.getValue();
 			}
 			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];

@@ -4,12 +4,12 @@ import graphic.TournamentRequest;
 
 public class SelectionBuilder {
 
-	public static SelectionI build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest, Double double1) {
+	public static SelectionI build(SelectionMethod selectionMethod, TournamentRequest tournamentRequest, boolean isMaximization,Double trunc) {
 		switch (selectionMethod) {
 		case REMAINS:
 			return new Remains();
 		case ROULETTE:
-			return new Roulette();
+			return new Roulette(isMaximization);
 		case RANKING:
 			return new Ranking();
 		case DETERMINISTIC_TOURNAMENT:
@@ -17,7 +17,7 @@ public class SelectionBuilder {
 		case PROBABILISTIC_TOURNAMENT:
 			return buildTournament(selectionMethod, tournamentRequest);
 		case TRUNCATION:
-			return new Truncation(double1);
+			return new Truncation(trunc);
 		case UNIVERSAL_STOCHASTIC:
 			return new UniversalStochastic();
 		default:

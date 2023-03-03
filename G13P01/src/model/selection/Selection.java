@@ -6,13 +6,13 @@ import model.chromosome.ChromosomeI;
 
 public abstract class Selection implements SelectionI {
 
-	private boolean isMaximize;
+	private static boolean isMaximize;
 	
 	public Selection(boolean isMaximize) {
 		this.isMaximize = isMaximize;
 	}
 	
-	protected int compare(ChromosomeI chromosome1, ChromosomeI chromosome2) {
+	public static int compare(ChromosomeI chromosome1, ChromosomeI chromosome2) {
 		if (chromosome1.getValue() < chromosome2.getValue()) {
 			if (isMaximize) return 1;
 			return -1;

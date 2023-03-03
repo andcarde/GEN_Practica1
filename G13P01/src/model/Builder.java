@@ -18,12 +18,13 @@ import model.selection.SelectionBuilder;
 
 public class Builder {
 
+	private static MoldI mold;
 	public static Map<String, Object> build(Request request) {
 		Map<String, Object> config = new HashMap<>();
 		config.put("generation_amount", request.getGenerationAmount());
 		config.put("population_amount", request.getPopulationAmount());
 		config.put("elitism_amount", request.getElitismProbability());
-		MoldI mold = buildMold(request);
+		mold = buildMold(request);
 		config.put("mold", mold);
 		config.put("selection", buildSelection(request));
 		config.put("crossover", buildCrossover(request, mold));
@@ -42,7 +43,7 @@ public class Builder {
 	}
 	
 	private static SelectionI buildSelection(Request request) {
-		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(), request.getTruncationAmount());
+		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(), mold.getFunction().isMaximization(),request.getTruncationAmount());
 	}
 
 	private static CrossoverI buildCrossover(Request request, MoldI mold) {
