@@ -34,7 +34,7 @@ public class Window extends JFrame implements RequestMaker {
 	private static final long serialVersionUID = 8815627840243675666L;
 	private static final double DEFAULT_PRECISION = 0.001;
 	private static final double DEFAULT_CROSSOVER_RATE = 60;
-	private static final double DEFAULT_MUTATION_RATE = 2;
+	private static final double DEFAULT_MUTATION_RATE = 5;
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
@@ -345,7 +345,7 @@ public class Window extends JFrame implements RequestMaker {
 		}
 	}
 	
-	public void paintResult(double[] generationAverage, double[] generationLeaders, double[] bestAbsoluteValue,String bestResult) {
+	public void paintResult(double[] generationAverage, double[] generationLeaders, double[] bestAbsoluteValue, double[] selectivePressure, String bestResult) {
 		plot.resetMapData();
 		plot.setVisible(true);
 		plot.removeAllPlots();
@@ -354,6 +354,7 @@ public class Window extends JFrame implements RequestMaker {
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
 		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
+		plot.addLinePlot("presión selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}

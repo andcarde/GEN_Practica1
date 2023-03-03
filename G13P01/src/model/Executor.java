@@ -38,6 +38,7 @@ public class Executor {
 	// List of the best absolute individuals
 	private double[] generationsAbsoluteLeaders;
 	private ChromosomeI intergenerationLeader;
+	private double[] selectivePressure;
 	// ------------------------------------------------------------------
 	
 	// COMPARATOR -------------------------------------------------------
@@ -63,6 +64,7 @@ public class Executor {
 		this.generationAverage = new double[GENERATION_AMOUNT];
 		this.generationLeaders = new double[GENERATION_AMOUNT];
 		generationsAbsoluteLeaders = new double[GENERATION_AMOUNT];
+		selectivePressure = new double[GENERATION_AMOUNT];
 		this.intergenerationLeader = null;
 	}
 	
@@ -171,6 +173,8 @@ public class Executor {
 				generationsAbsoluteLeaders[generation] = leader.getValue();
 			}
 			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
+			
+			selectivePressure[generation] = generationLeaders[generation] / generationAverage[generation];
 		}
 	}
 	
@@ -188,9 +192,10 @@ public class Executor {
 	public double[] getGenerationAverage() { return generationAverage; }
 	public double[] getGenerationLeaders() { return generationLeaders; }
 	public double[] getAbsoluteLeaders() { return generationsAbsoluteLeaders; }
+	public double[] getSelectivePressure() { return selectivePressure; }
 
 	public String getBestChromosomeToString() {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
-			+ " con los parámetros: " + intergenerationLeader.getGenesToString();
+			+ " con los parámetros: \n\r" + intergenerationLeader.getGenesToString();
 	}
 }
