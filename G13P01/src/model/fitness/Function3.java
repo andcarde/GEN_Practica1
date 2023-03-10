@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.chromosome.GenType;
 
-public class Function3 extends Function {
+public class Function3 extends NumericFunction {
 
 	private static final Integer d = 2;
 	
@@ -32,7 +32,7 @@ public class Function3 extends Function {
 		List<Variable> variables = new ArrayList<>();
 		for (int i = 0; i < d; i++) {
 			String variableName = "x".concat(Integer.toString(i));
-			variables.add(new Variable(variableName, -5.0, 5.0, this.precision));
+			variables.add(new DoubleVariable(variableName, -5.0, 5.0, this.precision));
 		}
 		return variables;
 	}

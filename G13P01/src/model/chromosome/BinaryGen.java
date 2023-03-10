@@ -3,7 +3,7 @@ package model.chromosome;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.fitness.Variable;
+import model.fitness.DoubleVariable;
 import model.mutation.BinaryMutationI;
 import model.random.RandomGenerator;
 
@@ -16,7 +16,7 @@ public class BinaryGen implements BinaryGenI {
 	private final Double bitValue;
 	private List<Boolean> bits;
 
-	public static BinaryGen build(Variable variable, BinaryMutationI mutationMethod) {
+	public static BinaryGen build(DoubleVariable variable, BinaryMutationI mutationMethod) {
 		String name = variable.getName();
 		Double belowLimit = variable.getBelowLimit();
 		Double upperLimit = variable.getUpperLimit();
@@ -93,7 +93,7 @@ public class BinaryGen implements BinaryGenI {
 	}
 	
 	@Override
-	public GenI copy() {
+	public BoundedGenI copy() {
 		return new BinaryGen(this);
 	}
 	
@@ -110,7 +110,7 @@ public class BinaryGen implements BinaryGenI {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public GenI assimilate(Object genoma) {
+	public BoundedGenI assimilate(Object genoma) {
 		this.bits = (List<Boolean>) genoma;
 		return this;
 	}

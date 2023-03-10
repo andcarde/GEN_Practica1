@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.MoldI;
 import model.chromosome.BinaryGenI;
+import model.chromosome.BoundedChromosome;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
@@ -18,8 +19,8 @@ public class BinaryOnePointCrossover extends Crossover {
 	@Override
 	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
 		List<ChromosomeI> sons = new ArrayList<>();
-		Chromosome son1 = new Chromosome(this.mold);
-		Chromosome son2 = new Chromosome(this.mold);
+		Chromosome son1 = new BoundedChromosome(this.mold);
+		Chromosome son2 = new BoundedChromosome(this.mold);
 		
 		List<Object> genomes1 = new ArrayList<>();
 		List<Object> genomes2 = new ArrayList<>();

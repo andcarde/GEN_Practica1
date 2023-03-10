@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
+import model.chromosome.BoundedChromosome;
+import model.chromosome.BoundedGenI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 
@@ -18,8 +20,8 @@ public class RealArithmeticCrossover extends Crossover {
 	@Override
 	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
 		List<ChromosomeI> sons = new ArrayList<>();
-		Chromosome son1 = new Chromosome(this.mold);
-		Chromosome son2 = new Chromosome(this.mold);
+		Chromosome son1 = new BoundedChromosome(this.mold);
+		Chromosome son2 = new BoundedChromosome(this.mold);
 		
 		Double genome1, genome2;
 		for (int i = 0; i < mold.getNumGenes(); i++) {
@@ -27,8 +29,8 @@ public class RealArithmeticCrossover extends Crossover {
 			genome1 += (Double) parent2.getGen(i).getGenoma() * (1 - alpha);
 			genome2 = (Double) parent2.getGen(i).getGenoma() * alpha;
 			genome2 += (Double) parent1.getGen(i).getGenoma() * (1 - alpha);
-			son1.setGen(i, son1.getGen(i).copy().assimilate(genome1));
-			son2.setGen(i, son1.getGen(i).copy().assimilate(genome2));
+			son1.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome1));
+			son2.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome2));
 		}
 		
 		sons.add(son1);

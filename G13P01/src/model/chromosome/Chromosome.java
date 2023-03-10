@@ -1,18 +1,17 @@
 package model.chromosome;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
 import model.fitness.Input;
 
-public class Chromosome implements ChromosomeI {
+public abstract class Chromosome implements ChromosomeI {
 	
-	private Double phenotype;
+	protected Double phenotype;
 	private Double copytype;
-	private List<GenI> genes;
-	private MoldI mold;
+	protected List<GenI> genes;
+	protected MoldI mold;
 	
 	public Chromosome(MoldI mold) {
 		this.mold = mold;
@@ -22,7 +21,7 @@ public class Chromosome implements ChromosomeI {
 			this.genes.add(gen.copy());
 	}
 	
-	private Chromosome(Chromosome chromosome) {
+	protected Chromosome(Chromosome chromosome) {
 		this.phenotype = chromosome.phenotype;
 		this.copytype = chromosome.copytype;
 		this.genes = new ArrayList<>();
@@ -37,12 +36,6 @@ public class Chromosome implements ChromosomeI {
 		for (GenI gen : genes)
 			input.put(gen.getName(), gen.getValue());
 		this.phenotype = this.mold.getFunction().getValue(input);
-	}
-	
-	@Override
-	public void initialize() {
-		for (GenI gen : this.genes)
-			gen.initialize();
 	}
 
 	@Override
@@ -72,36 +65,14 @@ public class Chromosome implements ChromosomeI {
 	public List<GenI> getGenes() {
 		return this.genes;
 	}
-
-	@Override
-	public String getGenesToString() {
-		String g = "";
-		if (genes.isEmpty())
-			g = "There are no genes";
-		else {
-			for (int i = 0; i < genes.size(); i++) {
-				g = g.concat(genes.get(i).getName() + ": " + new DecimalFormat("#.0000").format(genes.get(i).getValue()));
-				if (i != genes.size() -1)
-					g = g.concat("; ");
-			}
-		}
-		return g;
-	}
-
-	@Override
-	public ChromosomeI copy() {
-		return new Chromosome(this);
-	}
+	
+	public abstract String getGenesToString();
+	
+	public abstract ChromosomeI copy();
 
 	@Override
 	public void displace(double toSum) {
 		this.copytype = this.phenotype + toSum;
-	}
-	
-	@Override
-	public void mutate() {
-		for (GenI gen : this.genes)
-			gen.mutate();
 	}
 
 	@Override
@@ -115,7 +86,7 @@ public class Chromosome implements ChromosomeI {
 		return this.genes.get(i);
 	}
 
-	public void setGen(int i, GenI gen) {
+	public void setGen(int i, BoundedGenI gen) {
 		this.genes.set(i, gen);
 	}
 }

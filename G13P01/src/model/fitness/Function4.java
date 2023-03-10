@@ -3,7 +3,7 @@ package model.fitness;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Function4 extends Function {
+public abstract class Function4 extends NumericFunction {
 
 	private static final Integer m = 10;
 	private final Integer d;
@@ -31,7 +31,7 @@ public abstract class Function4 extends Function {
 		List<Variable> variables = new ArrayList<>();
 		for (int i = 0; i < d; i++) {
 			String variableName = "x".concat(Integer.toString(i));
-			variables.add(new Variable(variableName, 0.0, Math.PI, this.precision));
+			variables.add(new DoubleVariable(variableName, 0.0, Math.PI, this.precision));
 		}
 		return variables;
 	}

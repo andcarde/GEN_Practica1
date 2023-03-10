@@ -1,6 +1,6 @@
 package model.chromosome;
 
-public interface RealGenI extends GenI {
+public interface RealGenI extends BoundedGenI {
 
 	void assimilate(Double real);
 }

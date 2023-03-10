@@ -1,6 +1,6 @@
 package model.chromosome;
 
-import model.fitness.Variable;
+import model.fitness.DoubleVariable;
 import model.mutation.RealMutationI;
 import model.random.RandomGenerator;
 
@@ -12,7 +12,7 @@ public class RealGen implements RealGenI {
 	private final Double upperLimit;
 	private Double real;
 
-	public static GenI build(Variable variable, RealMutationI mutationMethod) {
+	public static BoundedGenI build(DoubleVariable variable, RealMutationI mutationMethod) {
 		String name = variable.getName();
 		Double belowLimit = variable.getBelowLimit();
 		Double upperLimit = variable.getUpperLimit();
@@ -55,7 +55,7 @@ public class RealGen implements RealGenI {
 	}
 	
 	@Override
-	public GenI copy() {
+	public BoundedGenI copy() {
 		return new RealGen(this);
 	}
 
@@ -70,7 +70,7 @@ public class RealGen implements RealGenI {
 	}
 
 	@Override
-	public GenI assimilate(Object genoma) {
+	public BoundedGenI assimilate(Object genoma) {
 		this.real = (Double) genoma;
 		return this;
 	}

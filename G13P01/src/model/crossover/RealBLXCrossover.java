@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
+import model.chromosome.BoundedChromosome;
+import model.chromosome.BoundedGenI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
@@ -19,8 +21,8 @@ public class RealBLXCrossover extends Crossover {
 	@Override
 	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
 		List<ChromosomeI> sons = new ArrayList<>();
-		Chromosome son1 = new Chromosome(this.mold);
-		Chromosome son2 = new Chromosome(this.mold);
+		Chromosome son1 = new BoundedChromosome(this.mold);
+		Chromosome son2 = new BoundedChromosome(this.mold);
 		
 		Double genomeParent1, genomeParent2, genomeSon1, genomeSon2;
 		for (int i = 0; i < mold.getNumGenes(); i++) {
@@ -44,8 +46,8 @@ public class RealBLXCrossover extends Crossover {
 				genomeSon1 = RandomGenerator.createAleatoryDoublePlus(belowLimit, upperLimit);
 				genomeSon2 = RandomGenerator.createAleatoryDoublePlus(belowLimit, upperLimit);
 			}
-			son1.setGen(i, son1.getGen(i).copy().assimilate(genomeSon1));
-			son2.setGen(i, son1.getGen(i).copy().assimilate(genomeSon2));
+			son1.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genomeSon1));
+			son2.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genomeSon2));
 		}
 		
 		sons.add(son1);

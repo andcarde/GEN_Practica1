@@ -2,5 +2,5 @@ package model.chromosome;
 
 public enum GenType {
 	
-	BINARY, REAL;
+	BINARY, REAL, CITY;
 }

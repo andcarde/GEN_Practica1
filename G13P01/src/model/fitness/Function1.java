@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.chromosome.GenType;
 
-public class Function1 extends Function {
+public class Function1 extends NumericFunction {
 
 	/* La primera función se llama de calibración porque es simple y
 	 * por lo tanto debe converger de forma más simple.
@@ -27,8 +27,8 @@ public class Function1 extends Function {
 	@Override
 	public List<Variable> getVariables() {
 		List<Variable> variables = new ArrayList<>();
-		variables.add(new Variable("x1", -3.0, 12.1, this.precision));
-		variables.add(new Variable("x2", 4.1, 5.8, this.precision));
+		variables.add(new DoubleVariable("x1", -3.0, 12.1, this.precision));
+		variables.add(new DoubleVariable("x2", 4.1, 5.8, this.precision));
 		return variables;
 	}
 

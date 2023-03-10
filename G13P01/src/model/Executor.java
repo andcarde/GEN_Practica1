@@ -5,14 +5,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-// Not Used
-// import graphic.Observer;
-
-import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
+import model.chromosome.GenType;
 import model.crossover.CrossoverI;
+import model.initialization.Initializer;
+import model.mutation.MutationI;
 import model.selection.SelectionI;
 
 public class Executor {
@@ -24,6 +23,8 @@ public class Executor {
 	private final MoldI mold;
 	private final SelectionI selection;
 	private final CrossoverI crossover;
+	private GenType genType;
+	private MutationI mutation;
 	// ------------------------------------------------------------------
 	
 	private List<ChromosomeI> population;
@@ -52,6 +53,8 @@ public class Executor {
 		this.mold = (MoldI) config.get("mold");
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
+		this.genType = (GenType) config.get("gen_type");
+		this.mutation = (MutationI) config.get("mutation");
 		
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
@@ -99,8 +102,7 @@ public class Executor {
 	private void initilize() {
 		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
 		else comparator = new ChromosomeComparatorMin();
-		for (int i = 0; i < POPULATION_AMOUNT; i++)
-			population.add(new Chromosome(mold));
+		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation);
 		for (ChromosomeI chromosome : population)
 			chromosome.initialize();
 	}
@@ -129,7 +131,6 @@ public class Executor {
 					leader = chromosome;
 			}
 			//positivizeFitness();
-			
 		}
 	}
 
