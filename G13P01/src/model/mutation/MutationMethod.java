@@ -2,5 +2,5 @@ package model.mutation;
 
 public enum MutationMethod {
 	
-	BASIC;
+	BASIC, EXCHANGE;
 }

@@ -29,7 +29,7 @@ public class TravellerChromosome extends Chromosome {
 	
 	@Override
 	public void mutate() {
-		mutationMethod.act(null);
+		super.genes = mutationMethod.act(super.getGenes());
 	}
 	
 	// TODO Falta

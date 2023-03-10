@@ -20,6 +20,7 @@ import model.fitness.Variable;
 import model.mutation.BinaryMutationBuilder;
 import model.mutation.BinaryMutationI;
 import model.mutation.MutationBuilder;
+import model.mutation.MutationI;
 import model.mutation.CityMutationI;
 import model.mutation.RealMutationBuilder;
 import model.mutation.RealMutationI;
@@ -38,7 +39,7 @@ public class Builder {
 		config.put("mold", mold);
 		config.put("selection", buildSelection(request));
 		config.put("crossover", buildCrossover(request, mold, mold.getFunction().getGenType()));
-		config.put("mutation", buildMutation(request));
+		config.put("mutation", buildMutation(request, mold.getFunction().getGenType()));
 		config.put("gen_type", mold.getFunction().getGenType());
 		return config;
 	}
@@ -76,7 +77,7 @@ public class Builder {
 		return RealMutationBuilder.build(request.getMutationMethod(), request.getMutationProbability());
 	}
 	
-	private static CityMutationI buildMutation(Request request) {
-		return MutationBuilder.build(request.getMutationMethod(), request.getMutationProbability());
+	private static MutationI buildMutation(Request request, GenType gen) {
+		return MutationBuilder.build(gen, request.getMutationMethod(), request.getMutationProbability());
 	}
 }

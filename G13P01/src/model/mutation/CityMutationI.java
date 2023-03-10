@@ -6,5 +6,5 @@ import model.chromosome.GenI;
 
 public interface CityMutationI extends MutationI {
 	
-	void act(List<GenI> genes);
+	List<GenI> act(List<GenI> genes);
 }
