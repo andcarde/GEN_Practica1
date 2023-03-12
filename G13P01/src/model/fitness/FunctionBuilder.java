@@ -14,6 +14,8 @@ public class FunctionBuilder {
 			return new Function4a(precision, fuction4Dimension);
 		case FUNCTION4b:
 			return new Function4b(precision, fuction4Dimension);
+		case CITIES:
+			return new FunctionTSP();
 		default:
 			return null;
 		}
