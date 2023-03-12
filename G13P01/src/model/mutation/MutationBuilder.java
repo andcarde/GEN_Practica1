@@ -14,6 +14,8 @@ public class MutationBuilder {
 				switch(mutationMethod) {
 					case EXCHANGE:
 						return new CityExchangeMutation(mutationProbability);
+					case INVERSE:
+						return new CityInverseMutation(mutationProbability);
 				}
 		}
 		return null;
