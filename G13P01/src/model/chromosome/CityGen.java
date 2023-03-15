@@ -16,6 +16,11 @@ public class CityGen implements GenI {
 		this.name = name;
 	}
 	
+	public CityGen(String name, Integer val) {
+		this.name = name;
+		value = val + 0.0;
+	}
+	
 	private CityGen(CityGen cityGen) {
 		this.name = cityGen.name;
 		this.value = cityGen.value;
@@ -43,7 +48,7 @@ public class CityGen implements GenI {
 
 	@Override
 	public GenI assimilate(Object genoma) {
-		value = (Double) genoma;
+		value = (Integer)genoma + 0.0;
 		return this;
 	}
 }

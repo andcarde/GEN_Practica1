@@ -86,7 +86,7 @@ public abstract class Chromosome implements ChromosomeI {
 		return this.genes.get(i);
 	}
 
-	public void setGen(int i, BoundedGenI gen) {
+	public void setGen(int i, GenI gen) {
 		this.genes.set(i, gen);
 	}
 }

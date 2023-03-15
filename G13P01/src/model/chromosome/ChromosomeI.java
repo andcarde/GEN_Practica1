@@ -18,5 +18,6 @@ public interface ChromosomeI {
 	Double getAlterValue();
 	void mutate();
 	public GenI getGen(int i);
+	void setGen(int i, GenI gen);
 	void assimilate(List<Object> genome);
 }
