@@ -51,15 +51,17 @@ public class TravellerChromosome extends Chromosome {
 	@Override
 	public void initialize() {
 		List<Integer> cities = new ArrayList<>();
+		
 		for (int i = 0; i < mold.getNumGenes(); i++)
 			cities.add(i);
 		int i = 0;
+		genes.clear();
 		while (!cities.isEmpty()) {
 			Integer city = RandomGenerator.createAleatoryInt(cities.size());
 			GenI gen = new CityGen("x".concat(String.valueOf(i)), cities.get(city));
 			gen.assimilate(cities.get(city));
 			this.genes.add(gen);
-			cities.remove(city);
+			cities.remove(cities.get(city));
 			i++;
 		}
 	}
