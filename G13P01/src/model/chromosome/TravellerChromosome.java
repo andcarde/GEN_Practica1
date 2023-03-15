@@ -40,7 +40,7 @@ public class TravellerChromosome extends Chromosome {
 			g = "There are no genes";
 		else {
 			for (int i = 0; i < genes.size(); i++) {
-				g = g.concat(genes.get(i).getName() + ": " + new DecimalFormat("#.0000").format(genes.get(i).getValue()));
+				g = g.concat(genes.get(i).getName() + ": " + genes.get(i).getValue());
 				if (i != genes.size() -1)
 					g = g.concat("; ");
 			}
@@ -56,7 +56,7 @@ public class TravellerChromosome extends Chromosome {
 		int i = 0;
 		while (!cities.isEmpty()) {
 			Integer city = RandomGenerator.createAleatoryInt(cities.size());
-			GenI gen = new CityGen("x".concat(String.valueOf(i)));
+			GenI gen = new CityGen("x".concat(String.valueOf(i)), cities.get(city));
 			gen.assimilate(cities.get(city));
 			this.genes.add(gen);
 			cities.remove(city);

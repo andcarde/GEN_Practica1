@@ -41,6 +41,10 @@ public class FunctionTSP extends Function {
 			{150,	75,	219,	516,	675,	590,	796,	638,	654,	613,	306,	357,	444,	1010,	292,	690,	278,	459,	628,	611,	340,	734,	583,	694,	912,	401,	407}
 			};
 	
+	public FunctionTSP() {
+		super();
+		super.isMaxim = false;
+	}
 	/*** El input es mapa que relacionada a cada variable que
 	 * representa una ciudad con la distancia a la ciudad siguiente.
 	 */
@@ -75,4 +79,5 @@ public class FunctionTSP extends Function {
 	public GenType getGenType() {
 		return GenType.CITY;
 	}
+	
 }
