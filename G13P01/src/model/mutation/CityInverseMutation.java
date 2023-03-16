@@ -2,6 +2,7 @@ package model.mutation;
 
 import java.util.List;
 
+import model.chromosome.ChromosomeI;
 import model.chromosome.GenI;
 import model.random.RandomGenerator;
 
@@ -14,7 +15,8 @@ public class CityInverseMutation implements CityMutationI {
 	}
 
 	@Override
-	public List<GenI> act(List<GenI> genes) {
+	public List<GenI> act(ChromosomeI chromosome) {
+		List<GenI> genes = chromosome.getGenes();
 		if (RandomGenerator.createAleatoryBoolean(mutationProbability)) {
 			int lower_bound = RandomGenerator.createAleatoryInt(genes.size());
 			int upper_bound = RandomGenerator.createAleatoryInt(genes.size());

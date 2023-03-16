@@ -1,6 +1,5 @@
 package model.chromosome;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,7 @@ public class TravellerChromosome extends Chromosome {
 	
 	@Override
 	public void mutate() {
-		super.genes = mutationMethod.act(super.getGenes());
+		super.genes = mutationMethod.act(this);
 	}
 	
 	// TODO Falta

@@ -21,7 +21,6 @@ import model.mutation.BinaryMutationBuilder;
 import model.mutation.BinaryMutationI;
 import model.mutation.MutationBuilder;
 import model.mutation.MutationI;
-import model.mutation.CityMutationI;
 import model.mutation.RealMutationBuilder;
 import model.mutation.RealMutationI;
 import model.selection.SelectionBuilder;

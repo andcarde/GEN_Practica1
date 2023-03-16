@@ -2,6 +2,7 @@ package model.mutation;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import model.chromosome.ChromosomeI;
@@ -18,6 +19,38 @@ public class CityHeuristicMutation implements CityMutationI {
 		return listCopy;
 	}
 	
+	public static void main(String[] args) {
+		Integer num_random = 10;
+		
+		List<Integer> indexs = new ArrayList<>();
+		List<Integer> numbers = new ArrayList<>();
+		for (int i = 0; i < num_random; i++)
+			numbers.add(i);
+		for (int i = 0; i < num_random; i++) {
+			int random = RandomGenerator.createAleatoryInt(numbers.size());
+			Integer index = numbers.remove(random);
+			indexs.add(index);
+		}
+		
+		System.out.print("\nLista:");
+		for (Integer i : indexs)
+			System.out.print(" " + i);
+		
+		indexs.sort(new Comparator<Integer>() {
+			@Override
+			public int compare(Integer i1, Integer i2) {
+				if (i1 < i2)
+					return -1;
+				else
+					return 1;
+			}
+		});
+		
+		System.out.print("\nLista:");
+		for (Integer i : indexs)
+			System.out.print(" " + i);
+	}
+	
 	@Override
 	public List<GenI> act(ChromosomeI chromosome) {
 		List<Integer> indexs = new ArrayList<>();
@@ -29,9 +62,18 @@ public class CityHeuristicMutation implements CityMutationI {
 			Integer index = numbers.remove(random);
 			indexs.add(index);
 		}
-		// TODO indexs.sort();
+		indexs.sort(new Comparator<Integer>() {
+			@Override
+			public int compare(Integer i1, Integer i2) {
+				if (i1 < i2)
+					return -1;
+				else
+					return 1;
+			}
+		});
 		Backtracking bt = new Backtracking(chromosome, indexs);
 		chromosome = bt.getBestChromosome();
+		return chromosome.getGenes();
 	}
 	
 	private class Backtracking {
