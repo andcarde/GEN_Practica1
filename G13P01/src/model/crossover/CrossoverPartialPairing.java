@@ -7,6 +7,7 @@ import java.util.List;
 import model.MoldI;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
+import model.util.Converter;
 
 public class CrossoverPartialPairing extends Crossover {
 
@@ -35,15 +36,16 @@ public class CrossoverPartialPairing extends Crossover {
 			lower_bound = tmp;
 		}
 		for (int i = 0; i < parent1.getSize(); i++) {
-			p1.put(i, (Integer) parent1.getGen(i).getGenoma());
-			p2.put(i, (Integer) parent2.getGen(i).getGenoma());
+			
+			p1.put(i, Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()));
+			p2.put(i, Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()));
 			if (i >= lower_bound && i <= upper_bound) continue;
 			s1_missing_indexes.remove(i);
 			s2_missing_indexes.remove(i);
 			p1_missing_indexes.remove(i);
 			p2_missing_indexes.remove(i);
-			s1.put(i, (Integer) parent2.getGen(i).getGenoma());
-			s2.put(i, (Integer) parent1.getGen(i).getGenoma());
+			s1.put(i,  Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()));
+			s2.put(i,  Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()));
 		}
 		
 		ChromosomeI son1 = parent2.copy();
@@ -51,14 +53,14 @@ public class CrossoverPartialPairing extends Crossover {
 		
 		for (int i = 0; i < parent1.getSize(); i++) {
 			if (i >= lower_bound && i <= upper_bound) continue;
-			if (!s1.containsValue((Integer) parent1.getGen(i).getGenoma())) {
-				s1.put(i, (Integer) parent1.getGen(i).getGenoma());
+			if (!s1.containsValue(Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()))) {
+				s1.put(i,  Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()));
 				son1.setGen(i, parent1.getGen(i));
 				s1_missing_indexes.remove(i);
 				p1_missing_indexes.remove(i);
 			}
-			if (!s2.containsValue((Integer) parent2.getGen(i).getGenoma())) {
-				s2.put(i, (Integer) parent2.getGen(i).getGenoma());
+			if (!s2.containsValue(Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()))) {
+				s2.put(i,  Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()));
 				son2.setGen(i, parent2.getGen(i));
 				s2_missing_indexes.remove(i);
 				p2_missing_indexes.remove(i);

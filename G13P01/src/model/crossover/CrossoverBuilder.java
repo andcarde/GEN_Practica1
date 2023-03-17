@@ -30,6 +30,14 @@ public class CrossoverBuilder {
 			default:
 				return null;
 			}
+		case CITY:
+			switch (selectionMethod) {
+			case PARTIAL_PAIRING:
+				return new CrossoverPartialPairing(mold, crossoverProbability);
+			
+			default:
+				return null;
+			}
 		default:
 			return null;
 		}

@@ -9,7 +9,8 @@ import model.chromosome.GenType;
 
 public class FunctionTSP extends Function {
 
-	private static final Integer NUM_OF_CITIES = 25;
+	private static final Integer NUM_OF_CITIES = 28;
+	private static final Integer MADRID_INDEX = 25;
 	private final static int[][] _DIST = {
 			{},
 			{171},
@@ -53,8 +54,13 @@ public class FunctionTSP extends Function {
 		Double value = 0.0;
 		Integer ciudad1, ciudad2;
 		ciudad2 = Math.round(Math.round(input.get("x".concat(Integer.toString(0)))));
-		value += _DIST[0][ciudad2];
-		for (int i = 1; i < NUM_OF_CITIES; i++) {
+		if (ciudad2 > MADRID_INDEX)
+			value += _DIST[ciudad2][MADRID_INDEX];
+		else {
+			value += _DIST[MADRID_INDEX][ciudad2];
+			
+			}
+		for (int i = 1; i < NUM_OF_CITIES-1; i++) {
 			ciudad1 = ciudad2;
 			ciudad2 = Math.round(Math.round(input.get("x".concat(Integer.toString(i)))));
 			if (ciudad1 > ciudad2)
@@ -68,7 +74,7 @@ public class FunctionTSP extends Function {
 	@Override
 	public List<Variable> getVariables() {
 		List<Variable> variables = new ArrayList<>();
-		for (int i = 0; i < NUM_OF_CITIES; i++) {
+		for (int i = 0; i < NUM_OF_CITIES-1; i++) {
 			String variableName = "x".concat(Integer.toString(i));
 			variables.add(new Variable(variableName));
 		}

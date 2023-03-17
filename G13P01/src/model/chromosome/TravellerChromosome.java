@@ -53,6 +53,7 @@ public class TravellerChromosome extends Chromosome {
 		
 		for (int i = 0; i < mold.getNumGenes(); i++)
 			cities.add(i);
+		cities.set(25, 27);
 		int i = 0;
 		genes.clear();
 		while (!cities.isEmpty()) {
