@@ -62,7 +62,12 @@ public class FunctionTSP extends Function {
 			}
 		for (int i = 1; i < NUM_OF_CITIES-1; i++) {
 			ciudad1 = ciudad2;
+			try {
 			ciudad2 = Math.round(Math.round(input.get("x".concat(Integer.toString(i)))));
+			}
+			catch(Exception e) {
+				System.out.println(e.getMessage());
+			}
 			if (ciudad1 > ciudad2)
 				value += _DIST[ciudad1][ciudad2];
 			else
