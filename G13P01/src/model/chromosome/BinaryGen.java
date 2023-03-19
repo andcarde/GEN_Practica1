@@ -124,4 +124,10 @@ public class BinaryGen implements BinaryGenI {
 	public Double getWidth() {
 		return this.bitValue * (Math.pow(2, size) - 1);
 	}
+
+	@Override
+	public void setName(String name) {
+		//this.name = name;
+		
+	}
 }

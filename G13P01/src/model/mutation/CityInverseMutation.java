@@ -30,9 +30,11 @@ public class CityInverseMutation implements CityMutationI {
 				upper_bound = tmp;
 			}
 			int i = lower_bound; int j = upper_bound;
-			while (i != j) {
+			while (i < j) {
 				GenI gen1 = genes.get(i).copy();
 				GenI gen2 = genes.get(j).copy();
+				gen1.setName(genes.get(j).getName());
+				gen2.setName(genes.get(i).getName());
 				genes.set(i, gen2);
 				genes.set(j, gen1);
 				i++; j--;

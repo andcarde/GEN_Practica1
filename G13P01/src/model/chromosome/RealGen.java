@@ -84,4 +84,10 @@ public class RealGen implements RealGenI {
 	public Double getWidth() {
 		return this.upperLimit - this.belowLimit;
 	}
+
+	@Override
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
 }

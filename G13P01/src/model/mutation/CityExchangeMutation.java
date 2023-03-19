@@ -23,9 +23,12 @@ public class CityExchangeMutation implements CityMutationI {
 			while (second_to_move == first_to_move) {
 				second_to_move = RandomGenerator.createAleatoryInt(genes.size());
 			}
-			GenI aux = genes.get(first_to_move).copy();
-			genes.set(first_to_move, genes.get(second_to_move));
-			genes.set(second_to_move, aux);
+			GenI gen1 = genes.get(first_to_move).copy();
+			gen1.setName(genes.get(second_to_move).getName());
+			GenI gen2 = genes.get(second_to_move).copy();
+			gen2.setName(genes.get(first_to_move).getName());
+			genes.set(first_to_move, gen2);
+			genes.set(second_to_move, gen1);
 		}
 		return genes;
 	}

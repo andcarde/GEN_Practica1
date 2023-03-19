@@ -7,4 +7,5 @@ public interface GenI {
 	GenI copy();
 	Object getGenoma();
 	GenI assimilate(Object genoma);
+	void setName(String name);
 }

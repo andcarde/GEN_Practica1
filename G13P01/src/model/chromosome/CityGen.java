@@ -51,4 +51,10 @@ public class CityGen implements GenI {
 		value = (Integer)genoma + 0.0;
 		return this;
 	}
+
+	@Override
+	public void setName(String name) {
+		this.name = name;
+		
+	}
 }
