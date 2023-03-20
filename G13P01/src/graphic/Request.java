@@ -2,6 +2,7 @@ package graphic;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
@@ -10,8 +11,11 @@ import model.selection.SelectionMethod;
 
 public class Request {
 
-	// TODO Falta: Renombrar a "generation amount" por "generations number"
-	
+	private static AvailableBoolean[][] availableCrossover = {
+			
+			
+	};
+	private static Map<FitnessFunction, MutationMethod> availableMutation;
 	private List<String> errors;
 	private Integer populationAmount;
 	private Integer generationAmount;
@@ -140,6 +144,10 @@ public class Request {
 				errors.add("The crossover method Arithmetic is only available for the function 4b");
 			else if (this.crossoverMethod == CrossoverMethod.BLX_ALPHA)
 				errors.add("The crossover method BLXalpha is only available for the function 4b");
+		}
+		if (this.fitnessFunction == FitnessFunction.CITIES) {
+			if (this.crossoverMethod == CrossoverMethod.)
+				errors.add("The crossover method " + this.crossoverMethod.name() + "is not available for the functions
 		}
 	}
 	
