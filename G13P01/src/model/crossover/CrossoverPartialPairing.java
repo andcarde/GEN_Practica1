@@ -2,11 +2,8 @@ package model.crossover;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map.Entry;
-import java.util.Set;
-
 import model.MoldI;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
