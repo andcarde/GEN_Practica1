@@ -32,9 +32,15 @@ public class CrossoverBuilder {
 			}
 		case CITY:
 			switch (selectionMethod) {
-			case PARTIAL_PAIRING:
+			// TODO case CO:
+			// TODO case CX:
+			// TODO case ERX:
+			// TODO case OX:
+			// TODO case PA:
+			case PMX:
 				return new CrossoverPartialPairing(mold, crossoverProbability);
-			
+			// TODO case POX:
+			// TODO case PPOX:
 			default:
 				return null;
 			}

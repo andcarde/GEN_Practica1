@@ -2,7 +2,6 @@ package graphic;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
@@ -10,12 +9,7 @@ import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 
 public class Request {
-
-	private static AvailableBoolean[][] availableCrossover = {
-			
-			
-	};
-	private static Map<FitnessFunction, MutationMethod> availableMutation;
+	
 	private List<String> errors;
 	private Integer populationAmount;
 	private Integer generationAmount;
@@ -145,9 +139,13 @@ public class Request {
 			else if (this.crossoverMethod == CrossoverMethod.BLX_ALPHA)
 				errors.add("The crossover method BLXalpha is only available for the function 4b");
 		}
-		if (this.fitnessFunction == FitnessFunction.CITIES) {
-			if (this.crossoverMethod == CrossoverMethod.)
-				errors.add("The crossover method " + this.crossoverMethod.name() + "is not available for the functions
+		if (!Available.isCrossoverAvailable(fitnessFunction, crossoverMethod)) {
+			errors.add("The crossover method " + this.crossoverMethod.name() +
+					" is not available for the function " + fitnessFunction.name());
+		}
+		if (!Available.isMutationAvailable(fitnessFunction, mutationMethod)) {
+			errors.add("The mutation method " + this.mutationMethod.name() +
+					" is not available for the function " + fitnessFunction.name());
 		}
 	}
 	
