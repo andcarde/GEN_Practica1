@@ -2,5 +2,8 @@ package model.mutation;
 
 public enum MutationMethod {
 	
-	BASIC, EXCHANGE, INVERSE, INSERTION;
+	// Binary or Real Chromosome
+	BASIC,
+	// City Chromosome
+	INSERTION, EXCHANGE, INVERSE, HEURISTIC, EUGENESIC;
 }
