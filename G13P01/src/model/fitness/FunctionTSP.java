@@ -46,6 +46,7 @@ public class FunctionTSP extends Function {
 		super();
 		super.isMaxim = false;
 	}
+	
 	/*** El input es mapa que relacionada a cada variable que
 	 * representa una ciudad con la distancia a la ciudad siguiente.
 	 */
@@ -53,7 +54,8 @@ public class FunctionTSP extends Function {
 	public Double getValue(Input input) {
 		Double value = 0.0;
 		Integer ciudad1, ciudad2;
-		ciudad2 = Math.round(Math.round(input.get("x".concat(Integer.toString(0)))));
+		String varName = "x".concat(Integer.toString(0));
+		ciudad2 = Math.round(Math.round(input.get(varName)));
 		if (ciudad2 > MADRID_INDEX)
 			value += _DIST[ciudad2][MADRID_INDEX];
 		else {
@@ -62,7 +64,12 @@ public class FunctionTSP extends Function {
 			}
 		for (int i = 1; i < NUM_OF_CITIES-1; i++) {
 			ciudad1 = ciudad2;
-			ciudad2 = Math.round(Math.round(input.get("x".concat(Integer.toString(i)))));
+			try {
+				varName = "x".concat(Integer.toString(i));
+				ciudad2 = Math.round(Math.round(input.get(varName)));
+			} catch (Exception e) {
+				System.out.println();
+			}
 			if (ciudad1 > ciudad2)
 				value += _DIST[ciudad1][ciudad2];
 			else

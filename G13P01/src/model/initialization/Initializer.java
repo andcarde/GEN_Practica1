@@ -21,10 +21,12 @@ public class Initializer {
 			for (int i = 0; i < populationAmount; i++) {
 				population.add(new BoundedChromosome(mold));
 			}
+			break;
 		case CITY:
 			for (int i = 0; i < populationAmount; i++) {
 				population.add(new TravellerChromosome(mold, (CityMutationI) mutation));
 			}
+			break;
 		default:
 			break;
 		}

@@ -12,6 +12,11 @@ import model.random.RandomGenerator;
 public class CityHeuristicMutation implements CityMutationI {
 
 	private static final Integer NUM_RANDOM = 3;
+	private Double mutationProbability;
+
+	public CityHeuristicMutation(Double mutation) {
+		mutationProbability = mutation;
+	}
 	
 	public static <T> List<T> constructCopy(List<T> list) {
 		List<T> listCopy = new ArrayList<>(list.size());
@@ -53,6 +58,8 @@ public class CityHeuristicMutation implements CityMutationI {
 	
 	@Override
 	public List<GenI> act(ChromosomeI chromosome) {
+		if (RandomGenerator.createAleatoryBoolean(1 - mutationProbability))
+			return chromosome.getGenes();
 		List<Integer> indexs = new ArrayList<>();
 		List<Integer> numbers = new ArrayList<>();
 		for (int i = 0; i < NUM_RANDOM; i++)
@@ -86,6 +93,7 @@ public class CityHeuristicMutation implements CityMutationI {
 		private boolean isMaximization;
 		
 		private Backtracking(ChromosomeI actualChromosome, List<Integer> indexs) {
+			this.actualChromosome = actualChromosome;
 			isMaximization = actualChromosome.getMold().getFunction().isMaximization();
 			variator = new ChromosomeVariator(indexs);
 			group = new ArrayList<>();

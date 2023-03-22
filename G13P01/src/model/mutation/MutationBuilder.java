@@ -19,7 +19,8 @@ public class MutationBuilder {
 					case INSERTION:
 						return new CityInsertionMutation(mutationProbability);
 					// TODO case EUGENESIC:
-					// TODO case HEURISTIC:
+					case HEURISTIC:
+						return new CityHeuristicMutation(mutationProbability);
 					default:
 						return null;
 				}
