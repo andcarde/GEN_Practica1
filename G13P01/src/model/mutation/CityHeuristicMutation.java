@@ -151,7 +151,10 @@ public class CityHeuristicMutation implements CityMutationI {
 		
 		private void set(GenI gen, ChromosomeI chromosome) {
 			List<GenI> genes = chromosome.getGenes();
-			genes.add(allocationCounter, gen);
+			int index = indexs.get(allocationCounter);
+			String varName = "x".concat(Integer.toString(index));
+			gen.setName(varName);
+			genes.add(index, gen);
 			allocationCounter++;
 		}
 		

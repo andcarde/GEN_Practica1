@@ -86,7 +86,11 @@ public class CrossoverPartialPairing extends Crossover {
 			if (s1.containsValue(set.getValue())) {
 				System.out.println(set.getValue());
 			}
-			s1.put(s1_not_added.get(count), set.getValue());
+			try {
+				s1.put(s1_not_added.get(count), set.getValue());
+			} catch (Exception e) {
+				System.out.println();
+			}
 			count++;
 		}
 		count = 0;
@@ -94,7 +98,11 @@ public class CrossoverPartialPairing extends Crossover {
 			if (s2.containsValue(set.getValue())) {
 				System.out.println(set.getValue());
 			}
-			s2.put(s2_not_added.get(count), set.getValue());
+			try {
+				s2.put(s2_not_added.get(count), set.getValue());
+			} catch (Exception e) {
+				System.out.println();
+			}
 			count++;
 		}
 		
