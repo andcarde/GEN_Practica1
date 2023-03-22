@@ -93,4 +93,9 @@ public class FunctionTSP extends Function {
 		return GenType.CITY;
 	}
 	
+	public static Integer getDist(int city1, int city2) {
+		if (city1 > city2) return _DIST[city1][city2];
+		return _DIST[city2][city1];
+	}
+	
 }

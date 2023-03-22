@@ -5,5 +5,5 @@ public enum MutationMethod {
 	// Binary or Real Chromosome
 	BASIC,
 	// City Chromosome
-	INSERTION, EXCHANGE, INVERSE, HEURISTIC, EUGENESIC;
+	INSERTION, EXCHANGE, INVERSE, HEURISTIC, EUGENIC;
 }
