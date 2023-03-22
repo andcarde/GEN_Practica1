@@ -33,7 +33,8 @@ public class CrossoverBuilder {
 		case CITY:
 			switch (selectionMethod) {
 			// TODO case CO:
-			// TODO case CX:
+			case CX:
+				return new CrossoverCycles(mold, crossoverProbability);
 			case ERX:
 				return new CrossoverRouteRecombination(mold, crossoverProbability);			// TODO case OX:
 			// TODO case PA:

@@ -250,6 +250,7 @@ public class Window extends JFrame implements RequestMaker {
             		function4Panel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
             }
         });
+		functionCB.setSelectedItem(FitnessFunction.CITIES.toString());
 		
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Truncation Rate (%)", superPanel);
@@ -305,9 +306,11 @@ public class Window extends JFrame implements RequestMaker {
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		createLabel("Crossover Method", methodPanel);
 		crossCB = createComboBox(CrossoverMethod.class, methodPanel);
+		crossCB.setSelectedItem(CrossoverMethod.CX.toString());
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		createLabel("Mutation Method", methodPanel);
 		mutationCB = createComboBox(MutationMethod.class, methodPanel);
+		mutationCB.setSelectedItem(MutationMethod.EXCHANGE.toString());
 		
 		methodPanel.addHeight(VERTICAL_MARGIN);
 		methodPanel.setSize(Window.PANEL_WIDTH, methodPanel.getMyHeight());
