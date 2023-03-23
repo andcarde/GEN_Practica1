@@ -55,6 +55,5 @@ public class CityGen implements GenI {
 	@Override
 	public void setName(String name) {
 		this.name = name;
-		
 	}
 }
