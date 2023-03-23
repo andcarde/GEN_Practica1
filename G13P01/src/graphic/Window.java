@@ -58,6 +58,8 @@ public class Window extends JFrame implements RequestMaker {
 	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
 	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
+	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.PMX;
+	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.HEURISTIC;
 	private int labelTruncPos;
 	
 	private static int OBTAIN_MAX_WIDTH() {
@@ -306,11 +308,11 @@ public class Window extends JFrame implements RequestMaker {
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		createLabel("Crossover Method", methodPanel);
 		crossCB = createComboBox(CrossoverMethod.class, methodPanel);
-		crossCB.setSelectedItem(CrossoverMethod.CX.toString());
+		crossCB.setSelectedItem(DEFAULT_CROSSOVER_METHOD.toString());
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		createLabel("Mutation Method", methodPanel);
 		mutationCB = createComboBox(MutationMethod.class, methodPanel);
-		mutationCB.setSelectedItem(MutationMethod.EXCHANGE.toString());
+		mutationCB.setSelectedItem(DEFAULT_MUTATION_METHOD.toString());
 		
 		methodPanel.addHeight(VERTICAL_MARGIN);
 		methodPanel.setSize(Window.PANEL_WIDTH, methodPanel.getMyHeight());

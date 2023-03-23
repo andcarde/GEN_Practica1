@@ -1,7 +1,6 @@
 package model.mutation;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import model.chromosome.ChromosomeI;
@@ -11,7 +10,7 @@ import model.random.RandomGenerator;
 import model.util.Pair;
 
 public class CityEugenicMutation implements CityMutationI {
-
+	
 	private double mutationProbability;
 	
 	public CityEugenicMutation(Double mutationProbability) {
@@ -35,5 +34,4 @@ public class CityEugenicMutation implements CityMutationI {
 		//TODO
 		return genes;
 	}
-
 }

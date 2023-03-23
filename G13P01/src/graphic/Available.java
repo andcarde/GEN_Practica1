@@ -44,7 +44,7 @@ class Available {
 		cityFunctions.add(FitnessFunction.CITIES);
 		
 		List<MutationMethod> cityMutations = new ArrayList<>();
-		cityMutations.add(MutationMethod.EUGENESIC);
+		cityMutations.add(MutationMethod.EUGENIC);
 		cityMutations.add(MutationMethod.EXCHANGE);
 		cityMutations.add(MutationMethod.HEURISTIC);
 		cityMutations.add(MutationMethod.INSERTION);

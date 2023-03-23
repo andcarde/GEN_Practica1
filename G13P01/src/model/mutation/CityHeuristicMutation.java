@@ -24,6 +24,7 @@ public class CityHeuristicMutation implements CityMutationI {
 		return listCopy;
 	}
 	
+	/*
 	public static void main(String[] args) {
 		Integer num_random = 10;
 		
@@ -55,6 +56,7 @@ public class CityHeuristicMutation implements CityMutationI {
 		for (Integer i : indexs)
 			System.out.print(" " + i);
 	}
+	*/
 	
 	@Override
 	public List<GenI> act(ChromosomeI chromosome) {
