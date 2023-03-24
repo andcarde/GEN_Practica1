@@ -42,6 +42,9 @@ public class FunctionTSP extends Function {
 			{150,	75,		219,	516,	675,	590,	796,	638,	654,	613,	306,	357,	444,	1010,	292,	690,	278,	459,	628,	611,	340,	734,	583,	694,	912,	401,	407}
 			};
 	
+	private static String[] cityName = {"Albacete", "Alicante", "Almeria", "Avila", "Badajoz", "Barcelona", "Bilbao", "Burgos", "Cáceres",
+			"Cádiz", "Castellón", "Ciudad Real", "Córdoba", "A Coruña", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", 
+			"Huesca", "Jaén", "León", "Lérida", "Logroño", "Lugo", "Madrid", "Málaga", "Murcia"};
 	public FunctionTSP() {
 		super();
 		super.isMaxim = false;
@@ -96,6 +99,10 @@ public class FunctionTSP extends Function {
 	public static Integer getDist(int city1, int city2) {
 		if (city1 > city2) return _DIST[city1][city2];
 		return _DIST[city2][city1];
+	}
+	
+	public static String toCityName(int index) {
+		return cityName[index];
 	}
 	
 }

@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
+import model.fitness.FunctionTSP;
 import model.mutation.CityMutationI;
 import model.random.RandomGenerator;
+import model.util.Converter;
 
 public class TravellerChromosome extends Chromosome {
 	
@@ -39,9 +41,10 @@ public class TravellerChromosome extends Chromosome {
 			g = "There are no genes";
 		else {
 			for (int i = 0; i < genes.size(); i++) {
-				g = g.concat(genes.get(i).getName() + ": " + genes.get(i).getValue());
-				if (i != genes.size() -1)
-					g = g.concat("; ");
+				String city = FunctionTSP.toCityName(Converter.DoubleToInt(genes.get(i).getValue()));
+				g = g.concat(city);
+				if (i != genes.size() -1) g = g.concat(" --> ");
+				if (i % 6 == 0 && i > 0) g = g.concat("\r\n");
 			}
 		}
 		return g;
@@ -65,4 +68,5 @@ public class TravellerChromosome extends Chromosome {
 			i++;
 		}
 	}
+	
 }

@@ -1,21 +1,5 @@
 package graphic;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import javax.swing.JSpinner;
-import javax.swing.border.LineBorder;
-
-import org.math.plot.Plot2DPanel;
-
-import model.crossover.CrossoverMethod;
-import model.fitness.FitnessFunction;
-import model.mutation.MutationMethod;
-import model.selection.SelectionMethod;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.LayoutManager;
@@ -27,7 +11,23 @@ import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
+
+import org.math.plot.Plot2DPanel;
+
+import model.crossover.CrossoverMethod;
+import model.fitness.FitnessFunction;
+import model.mutation.MutationMethod;
+import model.selection.SelectionMethod;
 
 public class Window extends JFrame implements RequestMaker {
 
@@ -104,12 +104,13 @@ public class Window extends JFrame implements RequestMaker {
 	private double[] gens;
 	private Plot2DPanel plot;
 	private JTextArea textValue;
+	private JScrollPane scroll;
 
 	/**
 	 * Create the frame.
 	 */
 	public Window() {
-		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 01>");
+		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 02>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1197, 703);
 		contentPane = new MyPanel(null, Window.OUTER_LEFT_MARGIN);
@@ -126,6 +127,7 @@ public class Window extends JFrame implements RequestMaker {
 		initTournamentParameters(contentPane);
 		initGraphicPanel();
 		initResultTextArea();
+		initScrollPane();
 		initStartButton();
 	}
 	
@@ -333,8 +335,13 @@ public class Window extends JFrame implements RequestMaker {
 	
 	private void initResultTextArea() {
 		textValue = new JTextArea();
-		textValue.setBounds(300, 554, 559, 34);
-		contentPane.add(textValue);
+		textValue.setBounds(300, 554, 559, 84);
+		contentPane.add(textValue);	
+	}
+	
+	private void initScrollPane() {
+		//scroll = new JScrollPane(textValue);
+        //scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	}
 
 	private void start() {
