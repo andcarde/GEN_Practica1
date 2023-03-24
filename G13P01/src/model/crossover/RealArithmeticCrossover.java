@@ -25,10 +25,10 @@ public class RealArithmeticCrossover extends Crossover {
 		
 		Double genome1, genome2;
 		for (int i = 0; i < mold.getNumGenes(); i++) {
-			genome1 = (Double) parent1.getGen(i).getGenoma() * alpha;
-			genome1 += (Double) parent2.getGen(i).getGenoma() * (1 - alpha);
-			genome2 = (Double) parent2.getGen(i).getGenoma() * alpha;
-			genome2 += (Double) parent1.getGen(i).getGenoma() * (1 - alpha);
+			genome1 = (Double) parent1.getGen(i).getGenome() * alpha;
+			genome1 += (Double) parent2.getGen(i).getGenome() * (1 - alpha);
+			genome2 = (Double) parent2.getGen(i).getGenome() * alpha;
+			genome2 += (Double) parent1.getGen(i).getGenome() * (1 - alpha);
 			son1.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome1));
 			son2.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome2));
 		}

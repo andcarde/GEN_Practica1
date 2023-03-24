@@ -104,7 +104,7 @@ public class BinaryGen implements BinaryGenI {
 	}
 
 	@Override
-	public Object getGenoma() {
+	public Object getGenome() {
 		return this.bits;
 	}
 

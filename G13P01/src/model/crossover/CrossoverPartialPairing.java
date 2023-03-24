@@ -28,11 +28,11 @@ public class CrossoverPartialPairing extends Crossover {
 		//Introducimos los genes del intervalo en el mapa
 		for (int i = 0; i < mold.getSize(); i++) {
 			
-			p1.put(i, Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()));
-			p2.put(i, Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()));
+			p1.put(i, Converter.DoubleToInt((Double) parent1.getGen(i).getGenome()));
+			p2.put(i, Converter.DoubleToInt((Double) parent2.getGen(i).getGenome()));
 			if (i >= lower_bound && i <= upper_bound) {
-				s1.put(i,  Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma()));
-				s2.put(i,  Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma()));
+				s1.put(i,  Converter.DoubleToInt((Double) parent2.getGen(i).getGenome()));
+				s2.put(i,  Converter.DoubleToInt((Double) parent1.getGen(i).getGenome()));
 				
 			}
 		}
@@ -43,7 +43,7 @@ public class CrossoverPartialPairing extends Crossover {
 		//introducimos los genes validos con su respectivo padre
 		for (int i = 0; i < mold.getSize(); i++) {
 			if (i >= lower_bound && i <= upper_bound) continue;
-			int value = Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma());
+			int value = Converter.DoubleToInt((Double) parent1.getGen(i).getGenome());
 			if (!s1.containsValue(value)) {
 				s1.put(i, value);
 				son1.setGen(i, parent1.getGen(i));
@@ -52,7 +52,7 @@ public class CrossoverPartialPairing extends Crossover {
 			else {
 				s1_not_added.add(i);
 			}
-			value = Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma());
+			value = Converter.DoubleToInt((Double) parent2.getGen(i).getGenome());
 			if (!s2.containsValue(value)) {
 				s2.put(i, value);
 				son2.setGen(i, parent2.getGen(i));
@@ -65,11 +65,11 @@ public class CrossoverPartialPairing extends Crossover {
 		
 		//Buscamos los genes restantes
 		for (int i = 0; i < mold.getSize(); i++) {
-			int value = Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma());
+			int value = Converter.DoubleToInt((Double) parent1.getGen(i).getGenome());
 			if (!s1.containsValue(value)) {
 				p1_not_added.put(i, value);
 			}
-			value = Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma());
+			value = Converter.DoubleToInt((Double) parent2.getGen(i).getGenome());
 			if (!s2.containsValue(value)) {
 				p2_not_added.put(i, value);
 			}

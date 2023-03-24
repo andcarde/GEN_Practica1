@@ -65,7 +65,7 @@ public class RealGen implements RealGenI {
 	}
 
 	@Override
-	public Object getGenoma() {
+	public Object getGenome() {
 		return this.real;
 	}
 

@@ -26,8 +26,8 @@ public class RealBLXCrossover extends Crossover {
 		
 		Double genomeParent1, genomeParent2, genomeSon1, genomeSon2;
 		for (int i = 0; i < mold.getNumGenes(); i++) {
-			genomeParent1 = (Double) parent1.getGen(i).getGenoma();
-			genomeParent2 = (Double) parent2.getGen(i).getGenoma();
+			genomeParent1 = (Double) parent1.getGen(i).getGenome();
+			genomeParent2 = (Double) parent2.getGen(i).getGenome();
 			if (genomeParent1 == genomeParent2) {
 				genomeSon1 = genomeParent1;
 				genomeSon2 = genomeParent1;

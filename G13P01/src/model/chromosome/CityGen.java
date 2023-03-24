@@ -42,13 +42,13 @@ public class CityGen implements GenI {
 	}
 
 	@Override
-	public Object getGenoma() {
+	public Object getGenome() {
 		return value;
 	}
 
 	@Override
 	public GenI assimilate(Object genoma) {
-		value = (Integer)genoma + 0.0;
+		value = (Double) genoma;
 		return this;
 	}
 

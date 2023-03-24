@@ -68,5 +68,9 @@ public class TravellerChromosome extends Chromosome {
 			i++;
 		}
 	}
+
+	public CityMutationI getMutation() {
+		return mutationMethod;
+	}
 	
 }

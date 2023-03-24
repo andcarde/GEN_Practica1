@@ -23,27 +23,27 @@ public class ConnectionTable {
 		List<Integer> adjacents = new ArrayList<>();
 		HashSet<Object> set = new HashSet<>();
 		int der = 0, izq = 0;
-		if (index == 0) izq = Converter.DoubleToInt((Double)c1.getGen(c1.getSize()-1).getGenoma());
-		else Converter.DoubleToInt((Double)c1.getGen(index-1).getGenoma());
+		if (index == 0) izq = Converter.DoubleToInt((Double)c1.getGen(c1.getSize()-1).getGenome());
+		else Converter.DoubleToInt((Double)c1.getGen(index-1).getGenome());
 		
-		if (index == c1.getSize()-1) der = Converter.DoubleToInt((Double)c1.getGen(0).getGenoma());
-		else Converter.DoubleToInt((Double)c1.getGen(index+1).getGenoma());
+		if (index == c1.getSize()-1) der = Converter.DoubleToInt((Double)c1.getGen(0).getGenome());
+		else Converter.DoubleToInt((Double)c1.getGen(index+1).getGenome());
 		
-		adjacents.add(Converter.DoubleToInt((Double)c1.getGen(izq).getGenoma()));
-		set.add(c1.getGen(izq).getGenoma());
-		if (!set.contains(c1.getGen(der).getGenoma())) {
-			adjacents.add(Converter.DoubleToInt((Double)c1.getGen(der).getGenoma()));
-			set.add(c1.getGen(der).getGenoma());
+		adjacents.add(Converter.DoubleToInt((Double)c1.getGen(izq).getGenome()));
+		set.add(c1.getGen(izq).getGenome());
+		if (!set.contains(c1.getGen(der).getGenome())) {
+			adjacents.add(Converter.DoubleToInt((Double)c1.getGen(der).getGenome()));
+			set.add(c1.getGen(der).getGenome());
 		}
 		
-		if (!set.contains(c2.getGen(der).getGenoma())) {
-			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(der).getGenoma()));
-			set.add(c2.getGen(der).getGenoma());
+		if (!set.contains(c2.getGen(der).getGenome())) {
+			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(der).getGenome()));
+			set.add(c2.getGen(der).getGenome());
 		}
 		
-		if (!set.contains(c2.getGen(izq).getGenoma())) {
-			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(izq).getGenoma()));
-			set.add(c2.getGen(izq).getGenoma());
+		if (!set.contains(c2.getGen(izq).getGenome())) {
+			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(izq).getGenome()));
+			set.add(c2.getGen(izq).getGenome());
 		}
 		
 		return adjacents;

@@ -48,7 +48,7 @@ public class OrdinalCoding extends Crossover {
 	private ChromosomeI coding(ChromosomeI chromsome, ChromosomeI parent) {
 		List<Integer> dynamic_list = initializeList();
 		for (int i = 0; i < parent.getSize(); i++) {
-			int value = Converter.DoubleToInt((Double) parent.getGen(i).getGenoma());
+			int value = Converter.DoubleToInt((Double) parent.getGen(i).getGenome());
 			GenI aux = chromsome.getGen(i);
 			aux.assimilate(dynamic_list.indexOf(value));
 			chromsome.setGen(i, aux);
@@ -60,7 +60,7 @@ public class OrdinalCoding extends Crossover {
 	private ChromosomeI decoding(ChromosomeI chromsome) {
 		List<Integer> dynamic_list = initializeList();
 		for (int i = 0; i < chromsome.getSize(); i++) {
-			int index = Converter.DoubleToInt((Double) chromsome.getGen(i).getGenoma());
+			int index = Converter.DoubleToInt((Double) chromsome.getGen(i).getGenome());
 			GenI aux = chromsome.getGen(i);
 			aux.assimilate(dynamic_list.get(index));
 			chromsome.setGen(i, aux);
@@ -78,14 +78,14 @@ public class OrdinalCoding extends Crossover {
 		
 		Object genome1, genome2;
 		for (int i = 0; i < cutPoint; i++) {
-			genome1 = Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma());
-			genome2 = Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma());
+			genome1 = Converter.DoubleToInt((Double) parent1.getGen(i).getGenome());
+			genome2 = Converter.DoubleToInt((Double) parent2.getGen(i).getGenome());
 			son1.setGen(i, (GenI) son1.getGen(i).copy().assimilate(genome1));
 			son2.setGen(i, (GenI) son1.getGen(i).copy().assimilate(genome2));
 		}
 		for (int i = cutPoint; i < mold.getGenes().size(); i++) {
-			genome1 = Converter.DoubleToInt((Double) parent1.getGen(i).getGenoma());
-			genome2 = Converter.DoubleToInt((Double) parent2.getGen(i).getGenoma());
+			genome1 = Converter.DoubleToInt((Double) parent1.getGen(i).getGenome());
+			genome2 = Converter.DoubleToInt((Double) parent2.getGen(i).getGenome());
 			son1.setGen(i, (GenI) son1.getGen(i).copy().assimilate(genome2));
 			son2.setGen(i, (GenI) son1.getGen(i).copy().assimilate(genome1));
 		}

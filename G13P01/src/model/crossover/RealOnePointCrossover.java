@@ -26,14 +26,14 @@ public class RealOnePointCrossover extends Crossover {
 		
 		Object genome1, genome2;
 		for (int i = 0; i < cutPoint; i++) {
-			genome1 = parent1.getGen(i).getGenoma();
-			genome2 = parent2.getGen(i).getGenoma();
+			genome1 = parent1.getGen(i).getGenome();
+			genome2 = parent2.getGen(i).getGenome();
 			son1.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome1));
 			son2.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome2));
 		}
 		for (int i = cutPoint; i < mold.getGenes().size(); i++) {
-			genome1 = parent1.getGen(i).getGenoma();
-			genome2 = parent2.getGen(i).getGenoma();
+			genome1 = parent1.getGen(i).getGenome();
+			genome2 = parent2.getGen(i).getGenome();
 			son1.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome2));
 			son2.setGen(i, (BoundedGenI) son1.getGen(i).copy().assimilate(genome1));
 		}
