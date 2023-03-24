@@ -31,7 +31,33 @@ public class CityEugenicMutation implements CityMutationI {
 			valores.add(new Pair<String, Double>(genes.get(i).getName(), value));
 		}
 		
-		//TODO
+		int worst_index = 0;
+		int less_worse_index = 1;
+		if (valores.get(worst_index).getR() > valores.get(less_worse_index).getR()) {
+			int tmp = worst_index;
+			worst_index = less_worse_index;
+			less_worse_index = tmp;
+		} //Hallamos los dos peores indices
+		for (int i = 2; i < valores.size(); i++) {
+			if (valores.get(i).getR() < valores.get(less_worse_index).getR()) {
+				if (valores.get(i).getR() < valores.get(worst_index).getR()) {
+					less_worse_index = worst_index;
+					worst_index = i;
+				}
+				else less_worse_index = i;
+			}
+		}
+		
+		
+		//Los intercambiamos
+		
+		GenI worst = genes.get(worst_index).copy();
+		GenI less_worse = genes.get(less_worse_index).copy();
+		String worst_name = worst.getName();
+		worst.setName(less_worse.getName());
+		less_worse.setName(worst_name);
+		genes.set(less_worse_index, worst);
+		genes.set(worst_index, less_worse);
 		return genes;
 	}
 }
