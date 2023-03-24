@@ -10,7 +10,7 @@ import model.random.RandomGenerator;
 public abstract class Crossover implements CrossoverI {
 
 	protected MoldI mold;
-	private Double crossProbability;
+	protected Double crossProbability;
 	
 	protected Crossover(MoldI mold, Double crossProbability) {
 		this.mold = mold;

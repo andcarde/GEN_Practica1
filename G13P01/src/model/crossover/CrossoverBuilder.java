@@ -32,7 +32,8 @@ public class CrossoverBuilder {
 			}
 		case CITY:
 			switch (selectionMethod) {
-			// TODO case CO:
+			case CO:
+				return new OrdinalCoding(mold, crossoverProbability);
 			case CX:
 				return new CrossoverCycles(mold, crossoverProbability);
 			case ERX:
