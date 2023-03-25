@@ -23,7 +23,7 @@ public class CrossoverRouteRecombination extends Crossover {
 		
 		HashMap<Integer, Object> s1 = new HashMap<>();
 		for (int i = 0; i < parent1.getSize(); i++) {
-			s1.put(i, parent1.getGen(cur_index));
+			s1.put(i, parent1.getGen(cur_index).getGenome());
 			cur_index = connections.getLeastConnected(cur_index, s1);
 		}
 		ChromosomeI son1 = parent1.copy();
@@ -34,7 +34,7 @@ public class CrossoverRouteRecombination extends Crossover {
 		cur_index = 0;
 		HashMap<Integer, Object> s2 = new HashMap<>();
 		for (int i = 0; i < parent2.getSize(); i++) {
-			s2.put(i, parent1.getGen(cur_index));
+			s2.put(i, parent1.getGen(cur_index).getGenome());
 			cur_index = connections.getLeastConnected(cur_index, s2);
 		}
 		ChromosomeI son2 = parent1.copy();

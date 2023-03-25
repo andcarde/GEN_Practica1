@@ -4,12 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.chromosome.BoundedChromosome;
-import model.chromosome.BoundedGenI;
-import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.chromosome.GenI;
-import model.chromosome.TravellerChromosome;
 import model.random.RandomGenerator;
 import model.util.Converter;
 

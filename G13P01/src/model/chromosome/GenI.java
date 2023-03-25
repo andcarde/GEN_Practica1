@@ -8,4 +8,5 @@ public interface GenI {
 	Object getGenome();
 	GenI assimilate(Object genoma);
 	void setName(String name);
+	String toString();
 }

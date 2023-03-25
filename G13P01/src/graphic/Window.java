@@ -15,7 +15,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -104,7 +103,6 @@ public class Window extends JFrame implements RequestMaker {
 	private double[] gens;
 	private Plot2DPanel plot;
 	private JTextArea textValue;
-	private JScrollPane scroll;
 
 	/**
 	 * Create the frame.
@@ -347,9 +345,9 @@ public class Window extends JFrame implements RequestMaker {
 	private void start() {
 		try {
 			Request request = new Request(this);
-			Integer populationAmount = request.getPopulationAmount();
-			this.gens = new double[populationAmount];
-			for (int i = 0; i < populationAmount; i++)
+			Integer generationAmount = request.getGenerationAmount();
+			this.gens = new double[generationAmount];
+			for (int i = 0; i < generationAmount; i++)
 				gens[i] = i;
 			Controller.getInstance().execute(request);
 		} catch (InvalidInputException iie) {

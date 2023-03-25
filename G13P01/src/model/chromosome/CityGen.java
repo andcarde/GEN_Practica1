@@ -61,4 +61,8 @@ public class CityGen implements GenI {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public String toString() {
+		return "<" + name + ", " + value +">";
+	}
 }
