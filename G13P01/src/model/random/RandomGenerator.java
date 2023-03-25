@@ -4,30 +4,29 @@ import java.util.Random;
 
 public class RandomGenerator {
 
+	private static final Long seed = 534538184710L;
 	private static Random random;
 	
-	public static Boolean createAleatoryBoolean(Double probability) {
+	private static Random getRandom() {
 		if (RandomGenerator.random == null)
-			RandomGenerator.random = new Random();
-		return random.nextDouble() < probability;
+			RandomGenerator.random = new Random(RandomGenerator.seed);
+		return RandomGenerator.random;
+	}
+	
+	public static Boolean createAleatoryBoolean(Double probability) {
+		return getRandom().nextDouble() < probability;
 	}
 	
 	public static Boolean createAleatoryBoolean() {
-		if (RandomGenerator.random == null)
-			RandomGenerator.random = new Random();
-		return random.nextBoolean();
+		return getRandom().nextBoolean();
 	}
 	
 	public static Integer createAleatoryInt(Integer upperLimit) {
-		if (RandomGenerator.random == null)
-			RandomGenerator.random = new Random();
-		return random.nextInt(upperLimit);
+		return getRandom().nextInt(upperLimit);
 	}
 	
 	public static Double createAleatoryDouble() {
-		if (RandomGenerator.random == null)
-			RandomGenerator.random = new Random();
-		return random.nextDouble();
+		return getRandom().nextDouble();
 	}
 	
 	public static Double createAleatoryDoublePlus(Double belowLimit, Double upperLimit) {

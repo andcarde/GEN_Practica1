@@ -1,6 +1,7 @@
 package model.crossover;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -69,7 +70,8 @@ public class OrderCrossover extends Crossover {
 	private List<List<Double>> specificCross(List<Double> parent1Genome, List<Double> parent2Genome,
 			int lowerBound, int upperBound) {
 		Set<Double> son1Set = new TreeSet<>(), son2Set = new TreeSet<>();
-		List<Double> son1Genome = new ArrayList<>(mold.getSize()), son2Genome = new ArrayList<>(mold.getSize());
+		Double[] son1Array = new Double[mold.getSize()], son2Array = new Double[mold.getSize()];
+		List<Double> son1Genome = Arrays.asList(son1Array), son2Genome = Arrays.asList(son2Array);
 		Double d;
 		for (int i = lowerBound; i <= upperBound; i++) {
 			d = parent1Genome.get(i);

@@ -5,7 +5,7 @@ import model.fitness.Variable;
 public class CityGen implements GenI {
 
 	private String name;
-	private Double value;
+	private double value;
 	
 	public static GenI build(Variable var) {
 		String name = var.getName();
@@ -48,7 +48,12 @@ public class CityGen implements GenI {
 
 	@Override
 	public GenI assimilate(Object genoma) {
-		value = (Double) genoma;
+		if (genoma instanceof Integer)
+			value = (Integer) genoma + 0.0;
+		else if (genoma instanceof Float)
+			value = (Float) genoma + 0.0;
+		else if (genoma instanceof Double)
+			value = (Double) genoma;
 		return this;
 	}
 

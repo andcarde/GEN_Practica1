@@ -7,6 +7,7 @@ import java.util.List;
 
 import model.chromosome.ChromosomeI;
 import model.chromosome.GenI;
+import model.debug.TravellerChromosomeChecker;
 import model.random.RandomGenerator;
 
 public class CityHeuristicMutation implements CityMutationI {
@@ -26,12 +27,14 @@ public class CityHeuristicMutation implements CityMutationI {
 	
 	/*
 	public static void main(String[] args) {
+		Integer num_numbers = 20;
 		Integer num_random = 10;
 		
-		List<Integer> indexs = new ArrayList<>();
 		List<Integer> numbers = new ArrayList<>();
-		for (int i = 0; i < num_random; i++)
+		for (int i = 0; i < num_numbers; i++)
 			numbers.add(i);
+		
+		List<Integer> indexs = new ArrayList<>();
 		for (int i = 0; i < num_random; i++) {
 			int random = RandomGenerator.createAleatoryInt(numbers.size());
 			Integer index = numbers.remove(random);
@@ -60,17 +63,25 @@ public class CityHeuristicMutation implements CityMutationI {
 	
 	@Override
 	public List<GenI> act(ChromosomeI chromosome) {
+		// DEBUG
+		if (!new TravellerChromosomeChecker(chromosome).isOk())
+			System.out.println("Detected Error!");
+		// end DEBUG
+
 		if (RandomGenerator.createAleatoryBoolean(1 - mutationProbability))
 			return chromosome.getGenes();
-		List<Integer> indexs = new ArrayList<>();
+		
 		List<Integer> numbers = new ArrayList<>();
-		for (int i = 0; i < NUM_RANDOM; i++)
+		for (int i = 0; i < chromosome.getSize(); i++)
 			numbers.add(i);
+		
+		List<Integer> indexs = new ArrayList<>();
 		for (int i = 0; i < NUM_RANDOM; i++) {
 			int random = RandomGenerator.createAleatoryInt(numbers.size());
 			Integer index = numbers.remove(random);
 			indexs.add(index);
 		}
+		
 		indexs.sort(new Comparator<Integer>() {
 			@Override
 			public int compare(Integer i1, Integer i2) {
@@ -81,30 +92,41 @@ public class CityHeuristicMutation implements CityMutationI {
 			}
 		});
 		Backtracking bt = new Backtracking(chromosome, indexs);
-		chromosome = bt.getBestChromosome();
-		return chromosome.getGenes();
+		ChromosomeI mutant = bt.getBestChromosome();
+		// DEBUG
+		if (!new TravellerChromosomeChecker(mutant).isOk())
+			System.out.println("Detected Error!");
+		// end DEBUG
+		return mutant.getGenes();
 	}
 	
 	private class Backtracking {
 		
 		private ChromosomeVariator variator;
-		private double bestFenotype;
-		private ChromosomeI bestChromosome;
+		private List<Double> values;
 		private ChromosomeI actualChromosome;
-		private List<GenI> group;
+		private ChromosomeI bestChromosome;
+		private double bestFenotype;
 		private boolean isMaximization;
 		
 		private Backtracking(ChromosomeI actualChromosome, List<Integer> indexs) {
 			this.actualChromosome = actualChromosome;
-			isMaximization = actualChromosome.getMold().getFunction().isMaximization();
-			variator = new ChromosomeVariator(indexs);
-			group = new ArrayList<>();
-			for (int i = indexs.size() - 1; i >= 0; i--)
-				group.add(actualChromosome.getGenes().remove(i));
+			this.isMaximization = actualChromosome.getMold().getFunction().isMaximization();
 			if (isMaximization)
-				bestFenotype = Double.MIN_VALUE;
+				this.bestFenotype = Double.MIN_VALUE;
 			else
-				bestFenotype = Double.MAX_VALUE;
+				this.bestFenotype = Double.MAX_VALUE;
+			
+			this.values = new ArrayList<>();
+			List<GenI> group = new ArrayList<>();
+			List<GenI> genes = actualChromosome.getGenes();
+			for (int i = 0; i < indexs.size(); i++) {
+				GenI gen = genes.get(indexs.get(i));
+				group.add(gen);
+				values.add(gen.getValue());
+			}
+			this.variator = new ChromosomeVariator(group);
+			
 			recursive();
 		}
 		
@@ -120,18 +142,18 @@ public class CityHeuristicMutation implements CityMutationI {
 				actualChromosome.evaluate();
 				double actualFenotype = actualChromosome.getValue();
 				if (isBetter(actualFenotype, bestFenotype)) {
-					bestChromosome = actualChromosome.copy();
+					this.bestChromosome = actualChromosome.copy();
 					bestFenotype = actualFenotype;
 				}
 			}
 			else {
-				int variations = group.size();
+				int variations = values.size();
 				for (int i = 0; i < variations; i++) {
-					GenI gen = group.remove(i);
-					variator.set(gen, actualChromosome);
+					Double d = values.remove(i);
+					variator.set(d);
 					recursive();
 					variator.takeOff();
-					group.add(i, gen);
+					values.add(i, d);
 				}
 			}
 		}
@@ -143,20 +165,16 @@ public class CityHeuristicMutation implements CityMutationI {
 	
 	private class ChromosomeVariator {
 		
-		private List<Integer> indexs;
+		private List<GenI> group;
 		private int allocationCounter;
 		
-		private ChromosomeVariator(List<Integer> indexs) {
-			this.indexs = indexs;
+		private ChromosomeVariator(List<GenI> group) {
+			this.group = group;
 			allocationCounter = 0;
 		}
 		
-		private void set(GenI gen, ChromosomeI chromosome) {
-			List<GenI> genes = chromosome.getGenes();
-			int index = indexs.get(allocationCounter);
-			String varName = "x".concat(Integer.toString(index));
-			gen.setName(varName);
-			genes.add(index, gen);
+		private void set(Double d) {
+			group.get(allocationCounter).assimilate(d);
 			allocationCounter++;
 		}
 		
@@ -165,7 +183,7 @@ public class CityHeuristicMutation implements CityMutationI {
 		}
 		
 		private boolean isOver() {
-			return allocationCounter == indexs.size();
+			return allocationCounter == NUM_RANDOM;
 		}
 	}
 }

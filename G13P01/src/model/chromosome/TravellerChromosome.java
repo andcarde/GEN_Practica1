@@ -33,7 +33,6 @@ public class TravellerChromosome extends Chromosome {
 		super.genes = mutationMethod.act(this);
 	}
 	
-	// TODO Falta
 	@Override
 	public String getGenesToString() {
 		String g = "";
