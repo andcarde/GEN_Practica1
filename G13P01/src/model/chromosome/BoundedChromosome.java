@@ -45,4 +45,9 @@ public class BoundedChromosome extends Chromosome {
 		}
 		return g;
 	}
+
+	@Override
+	public int indexOf(int gen) {
+		return 0;
+	}
 }
