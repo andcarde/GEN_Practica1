@@ -58,15 +58,6 @@ public class CrossoverRouteRecombination extends Crossover {
 		for (int i = 0; i < s1.size(); i++) {
 			son2.getGen(i).assimilate(s1.get(i));
 		}
-		Set<Object> aux = new HashSet<>();
-		for (int i = 0; i < son1.getSize(); i++) {
-			if (i == 25) continue;
-			if (aux.contains(son1.getGen(i).getGenome())) {
-				System.out.println();
-			}
-			else aux.add(son1.getGen(i).getGenome());
-		}
-		
 		
 		if (RandomGenerator.createAleatoryBoolean(0.5)) {
 			sons.add(son1);			
