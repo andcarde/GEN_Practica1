@@ -41,7 +41,8 @@ public class CrossoverBuilder {
 			// TODO case PA:
 			case PMX:
 				return new CrossoverPartialPairing(mold, crossoverProbability);
-			
+			case OX:
+				return new OrderCrossover(mold, crossoverProbability);
 			// TODO case POX:
 			// TODO case PPOX:
 			default:
