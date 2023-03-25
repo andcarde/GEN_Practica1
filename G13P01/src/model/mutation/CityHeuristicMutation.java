@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.chromosome.ChromosomeI;
 import model.chromosome.GenI;
-import model.debug.TravellerChromosomeChecker;
 import model.random.RandomGenerator;
 
 public class CityHeuristicMutation implements CityMutationI {
@@ -63,11 +62,6 @@ public class CityHeuristicMutation implements CityMutationI {
 	
 	@Override
 	public List<GenI> act(ChromosomeI chromosome) {
-		// DEBUG
-		if (!new TravellerChromosomeChecker(chromosome).isOk())
-			System.out.println("Detected Error!");
-		// end DEBUG
-
 		if (RandomGenerator.createAleatoryBoolean(1 - mutationProbability))
 			return chromosome.getGenes();
 		
@@ -93,10 +87,6 @@ public class CityHeuristicMutation implements CityMutationI {
 		});
 		Backtracking bt = new Backtracking(chromosome, indexs);
 		ChromosomeI mutant = bt.getBestChromosome();
-		// DEBUG
-		if (!new TravellerChromosomeChecker(mutant).isOk())
-			System.out.println("Detected Error!");
-		// end DEBUG
 		return mutant.getGenes();
 	}
 	

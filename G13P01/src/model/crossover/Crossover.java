@@ -22,9 +22,9 @@ public abstract class Crossover implements CrossoverI {
 		List<ChromosomeI> toCross = new ArrayList<>(); 
 		for (ChromosomeI ch : population) {
 			if (RandomGenerator.createAleatoryBoolean(this.crossProbability))
-				toCross.add(ch);
+				toCross.add(ch.copy());
 			else
-				newborns.add(ch);
+				newborns.add(ch.copy());
 		}
 		if (toCross.size() % 2 == 1) {
 			newborns.add(toCross.get(toCross.size() - 1));
