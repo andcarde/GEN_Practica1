@@ -25,23 +25,15 @@ public class CityInsertionMutation implements CityMutationI {
 			}
 			
 			GenI gen_to_move = genes.get(pos).copy();
-			GenI cur_gen = genes.get(target).copy();
-			gen_to_move.setName(genes.get(target).getName());
-			genes.set(target, gen_to_move); //Movemos el gen a la posicion indicada
-										   //despues de guardar el de dicha posicion 
-			int cur_index = 0;
-			if (pos > target) cur_index = target + 1;
-			else cur_index = target - 1;
-			while (cur_index != pos) { // Desplazamos el resto hasta 
-									  //la posicion origen de gen_to_move
-				GenI aux = genes.get(cur_index);
-				cur_gen.setName(genes.get(cur_index).getName());
-				genes.set(cur_index, cur_gen);
-				cur_gen = aux.copy();
-				if (pos > target) cur_index++;
-				else cur_index--;
+			gen_to_move.setName(genes.get(target).getName()); //Movemos el gen
+			genes.add(target, gen_to_move);
+			genes.remove(target);
+			
+			for (int i = 0; i < genes.size(); i++) {
+				genes.get(i).setName("x".concat(String.valueOf(i))); //Actualizamos los nombres
 			}
-
+			
+			
 		}
 		return genes;
 	}
