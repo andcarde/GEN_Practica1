@@ -13,9 +13,9 @@ import model.chromosome.TravellerChromosome;
 import model.mutation.CityMutationI;
 import model.random.RandomGenerator;
 
-public class OrderCrossover extends Crossover {
+public class PriorityOrderCrossover extends Crossover {
 
-	protected OrderCrossover(MoldI mold, Double crossProbability) {
+	protected PriorityOrderCrossover(MoldI mold, Double crossProbability) {
 		super(mold, crossProbability);
 	}
 
@@ -29,9 +29,7 @@ public class OrderCrossover extends Crossover {
 		List<Double> parent2Genome = new ArrayList<>();
 		for (GenI gen : genes)
 			parent2Genome.add((Double) gen.getGenome());
-		int lowerBound = RandomGenerator.createAleatoryInt(mold.getSize() - 2) + 1;
-		int upperBound = RandomGenerator.createAleatoryInt(mold.getSize() - 1 - lowerBound) + lowerBound;
-		List<List<Double>> sonsGenome = specificCross(parent1Genome, parent2Genome, lowerBound, upperBound);
+		List<List<Double>> sonsGenome = specificCross(parent1Genome, parent2Genome);
 		List<List<Object>> sonsObjectGenome = new ArrayList<>();
 		for (List<Double> sonGenome : sonsGenome) {
 			List<Object> objectGenome = new ArrayList<>();
@@ -49,41 +47,40 @@ public class OrderCrossover extends Crossover {
 		return sons;
 	}
 	
-	private List<List<Double>> specificCross(List<Double> parent1Genome, List<Double> parent2Genome,
-			int lowerBound, int upperBound) {
-		Set<Double> son1Set = new TreeSet<>(), son2Set = new TreeSet<>();
+	private List<List<Double>> specificCross(List<Double> parent1Genome, List<Double> parent2Genome) {
+		int priorityPosition1 = RandomGenerator.createAleatoryInt(mold.getSize());
+		int priorityPosition2 = RandomGenerator.createAleatoryInt(mold.getSize() - 1);
+		if (priorityPosition2 >= priorityPosition1)
+			priorityPosition2++;
 		Double[] son1Array = new Double[mold.getSize()], son2Array = new Double[mold.getSize()];
 		List<Double> son1Genome = Arrays.asList(son1Array), son2Genome = Arrays.asList(son2Array);
+		Set<Double> son1Set = new TreeSet<>(), son2Set = new TreeSet<>();
 		Double d;
-		for (int i = lowerBound; i <= upperBound; i++) {
-			d = parent1Genome.get(i);
-			son2Set.add(d);
-			son2Genome.set(i, d);
-			d = parent2Genome.get(i);
-			son1Set.add(d);
-			son1Genome.set(i, d);
-		}
-		Iterator parent1Iterator = new Iterator(parent1Genome, upperBound);
-		Iterator parent2Iterator = new Iterator(parent2Genome, upperBound);
-		for (int i = upperBound + 1; i < mold.getSize(); i++) {
-			d = parent1Iterator.next();
-			while (son1Set.contains(d))
+		d = parent2Genome.get(priorityPosition1);
+		son1Genome.set(priorityPosition1, d);
+		son1Set.add(d);
+		d = parent2Genome.get(priorityPosition2);
+		son1Genome.set(priorityPosition2, d);
+		son1Set.add(d);
+		d = parent1Genome.get(priorityPosition1);
+		son2Genome.set(priorityPosition1, d);
+		son2Set.add(d);
+		d = parent1Genome.get(priorityPosition2);
+		son2Genome.set(priorityPosition2, d);
+		son2Set.add(d);
+		Iterator parent1Iterator = new Iterator(parent1Genome, mold.getSize() - 1);
+		Iterator parent2Iterator = new Iterator(parent2Genome, mold.getSize() - 1);
+		for (int i = 0; i < mold.getSize(); i++) {
+			if (i != priorityPosition1 && i != priorityPosition2) {
 				d = parent1Iterator.next();
-			son1Genome.set(i, d);
-			d = parent2Iterator.next();
-			while (son2Set.contains(d))
+				while (son1Set.contains(d))
+					d = parent1Iterator.next();
+				son1Genome.set(i, d);
 				d = parent2Iterator.next();
-			son2Genome.set(i, d);
-		}
-		for (int i = 0; i < lowerBound; i++) {
-			d = parent1Iterator.next();
-			while (son1Set.contains(d))
-				d = parent1Iterator.next();
-			son1Genome.set(i, d);
-			d = parent2Iterator.next();
-			while (son2Set.contains(d))
-				d = parent2Iterator.next();
-			son2Genome.set(i, d);
+				while (son2Set.contains(d))
+					d = parent2Iterator.next();
+				son2Genome.set(i, d);
+			}
 		}
 		List<List<Double>> sonsGenome = new ArrayList<>();
 		sonsGenome.add(son1Genome);
