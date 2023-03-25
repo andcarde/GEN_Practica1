@@ -71,5 +71,12 @@ public class TravellerChromosome extends Chromosome {
 	public CityMutationI getMutation() {
 		return mutationMethod;
 	}
+
+	@Override
+	public int indexOf(int gen) {
+		for (GenI g : genes)
+			if (Converter.DoubleToInt((Double)g.getGenome()) == gen) return genes.indexOf(g);
+		return -1;
+	}
 	
 }

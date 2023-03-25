@@ -14,36 +14,53 @@ public class ConnectionTable {
 	private HashMap<Integer, List<Integer>> connections;
 	public ConnectionTable(ChromosomeI c1, ChromosomeI c2) {
 		connections = new HashMap<>();
-		for (int i = 0; i < c1.getSize(); i++) {
+		for (int i = 0; i <= c1.getSize(); i++) {
+			if (i == 25) continue;
 			connections.put(i, getAdyacents(i, c1, c2));
 		}
+		
 	}
 	
-	private List<Integer> getAdyacents(int index, ChromosomeI c1, ChromosomeI c2) {
+	private List<Integer> getAdyacents(int city, ChromosomeI c1, ChromosomeI c2) {
 		List<Integer> adjacents = new ArrayList<>();
-		HashSet<Object> set = new HashSet<>();
+		HashSet<Integer> set = new HashSet<>();
+		int index = c1.indexOf(city);
 		int der = 0, izq = 0;
-		if (index == 0) izq = Converter.DoubleToInt((Double)c1.getGen(c1.getSize()-1).getGenome());
-		else Converter.DoubleToInt((Double)c1.getGen(index-1).getGenome());
+		if (index == -1)
+			System.out.println();
+		if (index == 0) 
+			izq = c1.getSize()-1;
+		else 
+			izq = index-1;
 		
-		if (index == c1.getSize()-1) der = Converter.DoubleToInt((Double)c1.getGen(0).getGenome());
-		else Converter.DoubleToInt((Double)c1.getGen(index+1).getGenome());
+		if (index != c1.getSize()-1) der = 0;
+		
 		
 		adjacents.add(Converter.DoubleToInt((Double)c1.getGen(izq).getGenome()));
-		set.add(c1.getGen(izq).getGenome());
-		if (!set.contains(c1.getGen(der).getGenome())) {
+		set.add(Converter.DoubleToInt((Double)c1.getGen(izq).getGenome()));
+		if (!set.contains(Converter.DoubleToInt((Double)c1.getGen(der).getGenome()))) {
 			adjacents.add(Converter.DoubleToInt((Double)c1.getGen(der).getGenome()));
-			set.add(c1.getGen(der).getGenome());
+			set.add(Converter.DoubleToInt((Double)c1.getGen(der).getGenome()));
 		}
 		
-		if (!set.contains(c2.getGen(der).getGenome())) {
+		index = c2.indexOf(city);
+		if (index == -1)
+			System.out.println();
+		if (index == 0) 
+			izq = c1.getSize()-1;
+		else 
+			izq = index-1;
+		
+		if (index != c1.getSize()-1) der = 0;
+		
+		if (!set.contains(Converter.DoubleToInt((Double)c2.getGen(der).getGenome()))) {
 			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(der).getGenome()));
-			set.add(c2.getGen(der).getGenome());
+			set.add(Converter.DoubleToInt((Double)c2.getGen(der).getGenome()));
 		}
 		
-		if (!set.contains(c2.getGen(izq).getGenome())) {
+		if (!set.contains(Converter.DoubleToInt((Double)c2.getGen(izq).getGenome()))) {
 			adjacents.add(Converter.DoubleToInt((Double)c2.getGen(izq).getGenome()));
-			set.add(c2.getGen(izq).getGenome());
+			set.add(Converter.DoubleToInt((Double)c2.getGen(izq).getGenome()));
 		}
 		
 		return adjacents;
@@ -59,17 +76,23 @@ public class ConnectionTable {
 
 	
 	/**
-     * Dado una clave, se devuelve el indice del valor dentro de su lista con menos conexiones
-     * @param index La clave desde donde se busca
+     * Dada una ciudad, se devuelve la ciudad dentro de su lista con menos conexiones
+     * @param city La ciudad desde donde se busca
      */
-	public int getLeastConnected(int index, HashMap<Integer, Object> existence) {
-		int leastConnectedIndex = 0;
-		for (Integer gen : connections.get(index)) {
+	public int getLeastConnectedCity(int city, HashMap<Integer, Object> existence) {
+		int leastConnectedCity = -1;
+		try {
+		for (Integer gen : connections.get(city)) {
 			if (existence.containsValue(gen)) continue;
-			if (connections.get(gen).size() < connections.get(leastConnectedIndex).size() || (connections.get(gen).size() == connections.get(leastConnectedIndex).size() && RandomGenerator.createAleatoryBoolean(0.5))) 
-				leastConnectedIndex = gen;
+			
+			if (leastConnectedCity == -1 || connections.get(gen).size() < connections.get(leastConnectedCity).size() || (connections.get(gen).size() == connections.get(leastConnectedCity).size() && RandomGenerator.createAleatoryBoolean(0.5))) 
+				leastConnectedCity = gen;
+			
 		} 
-		return leastConnectedIndex;
+		} catch(Exception e) {
+			System.out.println(city);
+		}
+		return leastConnectedCity;
 	}
 
 }
