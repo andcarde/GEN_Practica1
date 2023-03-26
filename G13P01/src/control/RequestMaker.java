@@ -1,4 +1,4 @@
-package graphic;
+package control;
 
 public interface RequestMaker {
 

@@ -23,25 +23,35 @@ import javax.swing.border.LineBorder;
 
 import org.math.plot.Plot2DPanel;
 
+import control.Client;
+import control.Controller;
+import control.InvalidInputException;
+import control.Request;
+import control.RequestMaker;
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 
-public class Window extends JFrame implements RequestMaker {
-
-	private static final long serialVersionUID = 8815627840243675666L;
+public class Window extends JFrame implements RequestMaker, Client {
+	
 	private static final double DEFAULT_PRECISION = 0.001;
 	private static final double DEFAULT_CROSSOVER_RATE = 60;
 	private static final double DEFAULT_MUTATION_RATE = 5;
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
-	private static final int OUTER_LEFT_MARGIN = 22;
-	private static final int LEFT_MARGIN = 12;
+	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
+	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.AO;
+	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.HEURISTIC;
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
 	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
 	private static final int DEFAULT_PARAMETER_D = 2;
+	
+	private static final long serialVersionUID = 8815627840243675666L;
+	
+	private static final int OUTER_LEFT_MARGIN = 22;
+	private static final int LEFT_MARGIN = 12;
 	private static final int LABEL_HEIGHT = 20;
 	private static final int LABEL_WIDTH = 150;
 	private static final int TEXT_FIELD_HIGH_SIZE = 20;
@@ -56,10 +66,6 @@ public class Window extends JFrame implements RequestMaker {
 	private static final int VERTICAL_MARGIN = 5;
 	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
-	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
-	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.AO;
-	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.HEURISTIC;
-	private int labelTruncPos;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -103,6 +109,7 @@ public class Window extends JFrame implements RequestMaker {
 	private double[] gens;
 	private Plot2DPanel plot;
 	private JTextArea textValue;
+	private int labelTruncPos;
 
 	/**
 	 * Create the frame.
@@ -350,12 +357,14 @@ public class Window extends JFrame implements RequestMaker {
 			for (int i = 0; i < generationAmount; i++)
 				gens[i] = i;
 			Controller.getInstance().execute(request);
+			Controller.getInstance().updateView(this);
 		} catch (InvalidInputException iie) {
 			JOptionPane.showMessageDialog(this, iie.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	
-	public void paintResult(double[] generationAverage, double[] generationLeaders, double[] bestAbsoluteValue, double[] selectivePressure, String bestResult) {
+	public void paintResult(double[] generationAverage, double[] generationLeaders,
+			double[] bestAbsoluteValue, double[] selectivePressure, String bestResult) {
 		plot.resetMapData();
 		plot.setVisible(true);
 		plot.removeAllPlots();

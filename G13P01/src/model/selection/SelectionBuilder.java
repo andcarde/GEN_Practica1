@@ -1,6 +1,6 @@
 package model.selection;
 
-import graphic.TournamentRequest;
+import control.TournamentRequest;
 
 public class SelectionBuilder {
 

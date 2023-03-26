@@ -1,13 +1,13 @@
-package graphic;
+package control;
 
 import java.util.List;
 
-class InvalidInputException extends Exception {
+public class InvalidInputException extends Exception {
 
 	private static final long serialVersionUID = -4409023998892587339L;
 	private List<String> errors;
 
-	InvalidInputException(List<String> errors) {
+	public InvalidInputException(List<String> errors) {
 		this.errors = errors;
 	}
 	

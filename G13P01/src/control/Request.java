@@ -1,4 +1,4 @@
-package graphic;
+package control;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Request {
 	private Integer fuction4Dimension;
 	private TournamentRequest tournamentRequest;
 	
-	Request(RequestMaker requestMaker) throws InvalidInputException {
+	public Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.errors = new ArrayList<>();
 		initializeAttributes(requestMaker);
 		if (!this.errors.isEmpty())
