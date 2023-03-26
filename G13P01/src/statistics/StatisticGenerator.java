@@ -115,10 +115,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 		}
 		
 		for (CrossoverMethod c : crossoverMethodArray)
-			crossoverResult.put(c, crossoverResult.get(c) / TOTAL);
+			crossoverResult.put(c, crossoverResult.get(c) * crossoverMethodArray.length / TOTAL);
 		for (MutationMethod m : mutationMethodArray)
-			mutationResult.put(m, mutationResult.get(m) / TOTAL);
+			mutationResult.put(m, mutationResult.get(m) * mutationMethodArray.length / TOTAL);
 		uploadEnd();
+		System.out.println("Statistics Completed!");
 	}
 	
 	private void uploadTest() {
@@ -140,6 +141,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 				mutationMethod.name(),
 				String.valueOf(average)
 		);
+
 	}
 	
 	private void uploadEnd() {
@@ -165,8 +167,8 @@ public class StatisticGenerator implements RequestMaker, Client {
 		crossoverList.sort(comparator);
 		mutationList.sort(comparator);
 		
-		String[] crossoverNames = new String[selectionMethodArray.length];
-		String[] crossoverAverages = new String[selectionMethodArray.length];
+		String[] crossoverNames = new String[crossoverMethodArray.length];
+		String[] crossoverAverages = new String[crossoverMethodArray.length];
 		String[] mutationNames = new String[mutationMethodArray.length];
 		String[] mutationAverages = new String[mutationMethodArray.length];
 		
