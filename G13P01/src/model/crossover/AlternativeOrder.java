@@ -84,10 +84,11 @@ public class AlternativeOrder extends Crossover {
 			value = parent.get(parent.size() - 1);
 		Set<Double> set = new TreeSet<>();
 		set.add(value);
+		son.add(value);
 		MapIterator map1Iterator = new MapIterator(map1, value, set);
 		MapIterator map2Iterator = new MapIterator(map2, value, set);
 		boolean turn = true;
-		for (int i = 0; i < mold.getSize(); i++) {
+		for (int i = 0; i < mold.getSize() - 1; i++) {
 			if (turn)
 				son.add(map1Iterator.next());
 			else

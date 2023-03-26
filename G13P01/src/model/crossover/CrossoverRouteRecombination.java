@@ -6,10 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import model.ConnectionTable;
 import model.MoldI;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
+import model.util.ConnectionTable;
 import model.util.Converter;
 
 public class CrossoverRouteRecombination extends Crossover {

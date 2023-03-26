@@ -57,7 +57,7 @@ public class Window extends JFrame implements RequestMaker {
 	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
 	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
-	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.PMX;
+	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.AO;
 	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.HEURISTIC;
 	private int labelTruncPos;
 	

@@ -1,4 +1,4 @@
-package model;
+package model.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,6 @@ import java.util.List;
 
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
-import model.util.Converter;
 
 public class ConnectionTable {
 	

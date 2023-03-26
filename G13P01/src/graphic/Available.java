@@ -58,7 +58,6 @@ class Available {
 		cityCrossovers.add(CrossoverMethod.AO);
 		cityCrossovers.add(CrossoverMethod.PMX);
 		cityCrossovers.add(CrossoverMethod.POX);
-		cityCrossovers.add(CrossoverMethod.PPOX);
 		
 		for (FitnessFunction f : cityFunctions) {
 			this.availableMutations.put(f, cityMutations);
