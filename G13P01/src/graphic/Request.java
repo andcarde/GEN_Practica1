@@ -92,7 +92,6 @@ public class Request {
 		try {
 			this.elitismRate = (int) Double.parseDouble(requestMaker.getElitismPercentage());
 		} catch (NumberFormatException nfe) {
-			System.out.println(requestMaker.getElitismPercentage());
 			this.errors.add("The elitism rate must be a rational number.");
 		}
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());

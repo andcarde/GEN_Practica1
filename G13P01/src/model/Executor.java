@@ -10,7 +10,6 @@ import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.chromosome.GenType;
 import model.crossover.CrossoverI;
-import model.debug.TravellerChromosomeChecker;
 import model.initialization.Initializer;
 import model.mutation.MutationI;
 import model.selection.SelectionI;
@@ -78,16 +77,6 @@ public class Executor {
 			select();
 			cross();
 			mutate();
-			// DEBUG
-			int j = 0;
-			for (ChromosomeI chromosome : population) {
-				if (!new TravellerChromosomeChecker(chromosome).isOk()) {
-					System.out.println("Chromosome: " + j);
-					System.out.println("Detected Error!");
-				}
-				j++;
-			}
-			// end DEBUG
 			population.sort(comparator);
 			insertElitism();
 			evaluate(i);
@@ -127,17 +116,8 @@ public class Executor {
 	}
 	
 	private void mutate() {
-		int k = 0;
-		for (ChromosomeI chromosome : population) {
-			if (k == 99)
-				System.out.println("let go!");
+		for (ChromosomeI chromosome : population)
 			chromosome.mutate();
-			if (population.get(8).getGenes().get(26).getValue() == 14) {
-				System.out.println("Collision: " + k);
-				System.out.println("Error!");
-			}
-			k++;
-		}
 	}
 	
 	private void basicEvaluation() {

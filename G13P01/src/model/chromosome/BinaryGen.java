@@ -88,7 +88,6 @@ public class BinaryGen implements BinaryGenI {
 
 	@Override
 	public Boolean getBit(int i) {
-		System.out.println("Bits: " + bits.size());
 		return bits.get(i);
 	}
 	

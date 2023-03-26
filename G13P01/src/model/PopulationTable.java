@@ -37,7 +37,6 @@ public class PopulationTable {
 		}
 	}
 	
-	
 	public List<Double> getFitness() {
 		return this.fitness;
 	}

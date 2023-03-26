@@ -78,17 +78,11 @@ public class CrossoverPartialPairing extends Crossover {
 		//Metemos los genes restantes
 		int count = 0;
 		for (Entry<Integer, Integer> set : p1_not_added.entrySet()) {
-			if (s1.containsValue(set.getValue())) {
-				System.out.println(set.getValue());
-			}
 			s1.put(s1_not_added.get(count), set.getValue());
 			count++;
 		}
 		count = 0;
 		for (Entry<Integer, Integer> set : p2_not_added.entrySet()) {
-			if (s2.containsValue(set.getValue())) {
-				System.out.println(set.getValue());
-			}
 			s2.put(s2_not_added.get(count), set.getValue());
 			count++;
 		}

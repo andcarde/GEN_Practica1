@@ -55,7 +55,7 @@ class Available {
 		cityCrossovers.add(CrossoverMethod.CX);
 		cityCrossovers.add(CrossoverMethod.ERX);
 		cityCrossovers.add(CrossoverMethod.OX);
-		cityCrossovers.add(CrossoverMethod.PA);
+		cityCrossovers.add(CrossoverMethod.AO);
 		cityCrossovers.add(CrossoverMethod.PMX);
 		cityCrossovers.add(CrossoverMethod.POX);
 		cityCrossovers.add(CrossoverMethod.PPOX);

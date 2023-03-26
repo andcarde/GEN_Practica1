@@ -12,6 +12,7 @@ import model.chromosome.GenI;
 import model.chromosome.TravellerChromosome;
 import model.mutation.CityMutationI;
 import model.random.RandomGenerator;
+import model.util.Iterator;
 
 public class PriorityOrderCrossover extends Crossover {
 

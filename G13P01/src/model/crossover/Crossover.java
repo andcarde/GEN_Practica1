@@ -31,8 +31,6 @@ public abstract class Crossover implements CrossoverI {
 			toCross.remove(toCross.size() - 1);
 		}
 		while (!toCross.isEmpty()) {
-			if (toCross.size() == 2)
-				System.out.println("oli");
 			ChromosomeI parent1 = toCross.get(0);
 			ChromosomeI parent2 = toCross.get(RandomGenerator.createAleatoryInt(toCross.size() - 1) + 1);
 			newborns.addAll(this.cross(parent1, parent2));

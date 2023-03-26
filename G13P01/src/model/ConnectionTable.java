@@ -18,7 +18,6 @@ public class ConnectionTable {
 			if (i == 25) continue;
 			connections.put(i, getAdyacents(i, c1, c2));
 		}
-		
 	}
 	
 	private List<Integer> getAdyacents(int city, ChromosomeI c1, ChromosomeI c2) {
@@ -26,8 +25,6 @@ public class ConnectionTable {
 		HashSet<Integer> set = new HashSet<>();
 		int index = c1.indexOf(city);
 		int der = 0, izq = 0;
-		if (index == -1)
-			System.out.println();
 		if (index == 0) 
 			izq = c1.getSize()-1;
 		else 
@@ -44,8 +41,6 @@ public class ConnectionTable {
 		}
 		
 		index = c2.indexOf(city);
-		if (index == -1)
-			System.out.println();
 		if (index == 0) 
 			izq = c1.getSize()-1;
 		else 
@@ -81,7 +76,6 @@ public class ConnectionTable {
      */
 	public int getLeastConnectedCity(int city, HashMap<Integer, Object> existence) {
 		int leastConnectedCity = -1;
-		try {
 		for (Integer gen : connections.get(city)) {
 			if (existence.containsValue(gen)) continue;
 			
@@ -89,9 +83,6 @@ public class ConnectionTable {
 				leastConnectedCity = gen;
 			
 		} 
-		} catch(Exception e) {
-			System.out.println(city);
-		}
 		return leastConnectedCity;
 	}
 

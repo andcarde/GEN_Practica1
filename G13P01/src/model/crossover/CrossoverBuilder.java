@@ -38,14 +38,14 @@ public class CrossoverBuilder {
 				return new CrossoverCycles(mold, crossoverProbability);
 			case ERX:
 				return new CrossoverRouteRecombination(mold, crossoverProbability);
-			// TODO case PA:
+			case AO:
+				return new AlternativeOrder(mold, crossoverProbability);
 			case PMX:
 				return new CrossoverPartialPairing(mold, crossoverProbability);
 			case OX:
 				return new OrderCrossover(mold, crossoverProbability);
 			case POX:
 				return new PriorityOrderCrossover(mold, crossoverProbability);
-			// TODO case PPOX:
 			default:
 				return null;
 			}
