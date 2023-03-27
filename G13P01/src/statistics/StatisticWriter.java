@@ -56,7 +56,7 @@ public class StatisticWriter {
 			}
 			writer.append("-----------------------------------------------------------------------------\r\n");
 			writer.append("\r\n");
-			writer.append("--------------------------- RANKING DE MUTACIONES -------------------------------\r\n");
+			writer.append("--------------------------- RANKING DE MUTACIONES ---------------------------\r\n");
 			for (int i = 0; i < mutationAverages.length; i++) {
 				writer.append((i+1)+"� Posici�n: " + mutationNames[i] + ". Valor: " + mutationAverages[i] + "\r\n");
 			}
