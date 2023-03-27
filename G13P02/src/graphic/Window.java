@@ -43,7 +43,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final double DEFAULT_ELITISM_RATE = 0;
 	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
 	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.AO;
-	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.HEURISTIC;
+	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.EUGENIC;
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
 	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
 	private static final int DEFAULT_PARAMETER_D = 2;
