@@ -12,7 +12,7 @@ public class StatisticWriter {
 	
 	public StatisticWriter() {
 		try {
-			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("prueba.txt", true), "UTF-8"));
+			writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("statistics.txt", true), "UTF-8"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
