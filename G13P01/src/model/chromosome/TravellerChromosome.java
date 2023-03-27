@@ -33,6 +33,9 @@ public class TravellerChromosome extends Chromosome {
 		super.genes = mutationMethod.act(this);
 	}
 	
+	/***
+	 * Translator of the values of the genes to the cities that they represent for the View.
+	 */
 	@Override
 	public String getGenesToString() {
 		String g = "";
@@ -49,6 +52,10 @@ public class TravellerChromosome extends Chromosome {
 		return g;
 	}
 	
+	/***
+	 * Initialize the values of the genes to a random city identificator between 0 and 26
+	 * less the 25 (Madrid).
+	 */
 	@Override
 	public void initialize() {
 		List<Integer> cities = new ArrayList<>();

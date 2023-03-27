@@ -5,12 +5,14 @@ import java.util.List;
 
 import model.chromosome.GenType;
 
-// ImplementaciÛn del Travelling Salesman Problem (TSP)
+// Implementation of the Traveling Salesman Problem (TSP)
 
 public class FunctionTSP extends Function {
 
 	private static final Integer NUM_OF_CITIES = 28;
+	// Place where Madrid is found in the list
 	private static final Integer MADRID_INDEX = 25;
+	// Matrix of distances between different nodes
 	private final static int[][] _DIST = {
 			{},
 			{171},
@@ -42,9 +44,9 @@ public class FunctionTSP extends Function {
 			{150,	75,		219,	516,	675,	590,	796,	638,	654,	613,	306,	357,	444,	1010,	292,	690,	278,	459,	628,	611,	340,	734,	583,	694,	912,	401,	407}
 			};
 	
-	private static String[] cityName = {"Albacete", "Alicante", "Almeria", "Avila", "Badajoz", "Barcelona", "Bilbao", "Burgos", "C·ceres",
-			"C·diz", "CastellÛn", "Ciudad Real", "CÛrdoba", "A CoruÒa", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", 
-			"Huesca", "JaÈn", "LeÛn", "LÈrida", "LogroÒo", "Lugo", "Madrid", "M·laga", "Murcia"};
+	private static String[] cityName = {"Albacete", "Alicante", "Almeria", "√Åvila", "Badajoz", "Barcelona", "Bilbao", "Burgos", "C√°ceres",
+			"C√°diz", "Castell√≥n", "Ciudad Real", "C√≥rdoba", "A Coru√±a", "Cuenca", "Gerona", "Granada", "Guadalajara", "Huelva", 
+			"Huesca", "Ja√©n", "Le√≥n", "L√©rida", "Logro√±o", "Lugo", "Madrid", "M√°laga", "Murcia"};
 	public FunctionTSP() {
 		super();
 		super.isMaxim = false;
@@ -76,11 +78,11 @@ public class FunctionTSP extends Function {
 		}
 		return value;
 	}
-
+	
 	@Override
 	public List<Variable> getVariables() {
 		List<Variable> variables = new ArrayList<>();
-		for (int i = 0; i < NUM_OF_CITIES-1; i++) {
+		for (int i = 0; i < NUM_OF_CITIES - 1; i++) {
 			String variableName = "x".concat(Integer.toString(i));
 			variables.add(new Variable(variableName));
 		}
@@ -100,5 +102,4 @@ public class FunctionTSP extends Function {
 	public static String toCityName(int index) {
 		return cityName[index];
 	}
-	
 }

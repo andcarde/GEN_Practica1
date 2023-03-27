@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 
 public class StatisticWriter {
 	
+	// Class used to perform the write in the destination file.
 	private BufferedWriter writer;
 	
 	public StatisticWriter() {
@@ -17,17 +18,33 @@ public class StatisticWriter {
 		}
 	}
     
+	/***
+	 * Writes in the destination file the result of the global test of a configuration (average of
+	 * individual test).
+	 * @param elitismRate
+	 * @param selectionMethod
+	 * @param crossoverMethod
+	 * @param mutationMethod
+	 * @param average
+	 */
     public void writeTest(String elitismRate, String selectionMethod, String crossoverMethod,
     		String mutationMethod, String average) {
 		try {
-			writer.append("Con el elitismo al " + elitismRate + "%" + ", la selección " 
-				+ selectionMethod + ", el cruce " + crossoverMethod + "\r\n y la mutación " + mutationMethod 
+			writer.append("Con el elitismo al " + elitismRate + "%" + ", la selecciï¿½n " 
+				+ selectionMethod + ", el cruce " + crossoverMethod + "\r\n y la mutaciï¿½n " + mutationMethod 
 				+ " da un valor medio en 10 pruebas de " + average + "\r\n");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
     
+    /**
+     * Writes in the destination file, the rankings of crossover methods and mutation methods.
+     * @param crossoverNames
+     * @param crossoverAverages
+     * @param mutationNames
+     * @param mutationAverages
+     */
 	public void writeTables(String[] crossoverNames, String[] crossoverAverages, String[] mutationNames,
 			String[] mutationAverages) {
 		try {
@@ -35,13 +52,13 @@ public class StatisticWriter {
 			writer.append("\r\n");
 			writer.append("--------------------------- RANKING DE CRUCES -------------------------------\r\n");
 			for (int i = 0; i < crossoverAverages.length; i++) {
-				writer.write((i+1)+"º Posición: " + crossoverNames[i] + ". Valor: " + crossoverAverages[i] + "\r\n");
+				writer.write((i+1)+"ï¿½ Posiciï¿½n: " + crossoverNames[i] + ". Valor: " + crossoverAverages[i] + "\r\n");
 			}
 			writer.append("-----------------------------------------------------------------------------\r\n");
 			writer.append("\r\n");
 			writer.append("--------------------------- RANKING DE MUTACIONES -------------------------------\r\n");
 			for (int i = 0; i < mutationAverages.length; i++) {
-				writer.append((i+1)+"º Posición: " + mutationNames[i] + ". Valor: " + mutationAverages[i] + "\r\n");
+				writer.append((i+1)+"ï¿½ Posiciï¿½n: " + mutationNames[i] + ". Valor: " + mutationAverages[i] + "\r\n");
 			}
 			writer.append("-----------------------------------------------------------------------------\r\n");
 			writer.append("\r\n");
@@ -51,13 +68,21 @@ public class StatisticWriter {
 		}
 
 	}
-
+	
+	/***
+	 * Writes the best configuration that has been found in the testing.
+	 * @param bestElitismRate
+	 * @param bestSelectionMethod
+	 * @param bestCrossoverMethod
+	 * @param bestMutationMethod
+	 * @param bestAverage
+	 */
 	public void writeBest(String bestElitismRate, String bestSelectionMethod, String bestCrossoverMethod,
 			String bestMutationMethod, String bestAverage) {
 		try {
 			writer.append("-----------------------------------------------------------------------------\r\n");
-			writer.write("Con el elitismo al " + bestElitismRate + "%" + ", la selección " 
-				+ bestSelectionMethod + ", el cruce " + bestCrossoverMethod + "\r\n y la mutación " + bestMutationMethod 
+			writer.write("Con el elitismo al " + bestElitismRate + "%" + ", la selecciï¿½n " 
+				+ bestSelectionMethod + ", el cruce " + bestCrossoverMethod + "\r\n y la mutaciï¿½n " + bestMutationMethod 
 				+ " hemos obtenido el mejor valor, el cual es " + bestAverage + "\r\n");
 			writer.append("-----------------------------------------------------------------------------\r\n");
 			writer.append("\r\n");

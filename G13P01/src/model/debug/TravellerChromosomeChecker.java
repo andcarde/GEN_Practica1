@@ -17,6 +17,12 @@ public class TravellerChromosomeChecker {
 			this.tc = (TravellerChromosome) tc;
 	}
 	
+	/***
+	 * Performs a series of checks to the chromosome. It has been used for debug
+	 * to ensure that a method does not violate postconditions. Returns is any
+	 * of the have been broken down.
+	 * @return isOk
+	 */
 	public boolean isOk() {
 		if (tc == null) {
 			System.out.println("The chromsome is not a TravellerChromosome");

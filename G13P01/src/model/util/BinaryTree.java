@@ -1,5 +1,9 @@
 package model.util;
 
+/***
+ * This class is not used in the project, but remains for further expansion.
+ */
+
 public class BinaryTree<T> {
 	
 	private Node<T> root;
@@ -12,7 +16,7 @@ public class BinaryTree<T> {
 		if (this.root == null)
 			this.root = new Node<>(d, element);
 		else {
-			// Falta insertar los nodos e equilibrar el árbol.
+			// It's necessary to insert the nodes to balance the tree
 		}
 	}
 	

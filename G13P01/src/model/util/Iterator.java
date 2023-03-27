@@ -20,6 +20,12 @@ public class Iterator {
 		this.position = position;
 	}
 	
+	/***
+	 * Returns the value of the genoma list and updates the index
+	 * to the next position. When position reach the end of the array
+	 * starts in the first position again.
+	 * @return value
+	 */
 	public Double next() {
 		position++;
 		if (position == genoma.size())

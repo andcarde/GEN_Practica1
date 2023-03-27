@@ -32,8 +32,11 @@ public class AlternativeOrder extends Crossover {
 		List<Double> parent2Genome = new ArrayList<>();
 		for (GenI gen : genes)
 			parent2Genome.add((Double) gen.getGenome());
-		//Creamos su cruce
+		
+		// The sons are generated through the cross of their parents
 		List<List<Double>> sonsGenome = specificCross(parent1Genome, parent2Genome);
+		
+		// The lists of values have to change his type from Double to Object for compatibility reasons.
 		List<List<Object>> sonsObjectGenome = new ArrayList<>();
 		for (List<Double> sonGenome : sonsGenome) {
 			List<Object> objectGenome = new ArrayList<>();
@@ -41,6 +44,8 @@ public class AlternativeOrder extends Crossover {
 				objectGenome.add(d);
 			sonsObjectGenome.add(objectGenome);
 		}
+		
+		// The lists of values are transform into TravellerChromosome types.
 		List<ChromosomeI> sons = new ArrayList<>();
 		CityMutationI mutation = ((TravellerChromosome) parent1).getMutation();
 		for (List<Object> sonGenome : sonsObjectGenome) {
@@ -51,6 +56,11 @@ public class AlternativeOrder extends Crossover {
 		return sons;
 	}
 	
+	/***
+	 * The forward map links the genome values towards his order from back to front.
+	 * @param genome
+	 * @return
+	 */
 	private Map<Double, Double> createForwardMap(List<Double> genome) {
 		Map<Double, Double> map = new HashMap<>();
 		Double key, value;
@@ -63,6 +73,11 @@ public class AlternativeOrder extends Crossover {
 		return map;
 	}
 	
+	/***
+	 * The forward map links the genome values towards his order from front to back.
+	 * @param genome
+	 * @return
+	 */
 	private Map<Double, Double> createBackwardMap(List<Double> genome) {
 		Map<Double, Double> map = new HashMap<>();
 		Double key, value;
@@ -78,19 +93,31 @@ public class AlternativeOrder extends Crossover {
 	private List<Double> generateSon(boolean forward, List<Double> parent,
 			Map<Double, Double> map1, Map<Double, Double> map2) {
 		List<Double> son = new ArrayList<>();
+		
+		// First value initialization.
 		Double value;
 		if (forward)
 			value = parent.get(0);
 		else
 			value = parent.get(parent.size() - 1);
 		Set<Double> set = new TreeSet<>();
+		
+		// The first value is added to the son.
 		set.add(value);
 		son.add(value);
+		
+		/* The map iterators are generated with the same "value" and "set" for a
+		 * map according with the indicated parent
+		 */
 		MapIterator map1Iterator = new MapIterator(map1, value, set);
 		MapIterator map2Iterator = new MapIterator(map2, value, set);
+		
+		/* Se intercala el orden de ciudades del padre 1 con el orden del padre 2,
+		 * insertando la siguiente ciudad a la añadida por el otro progenitor. Si la siguiente
+		 * ciudad ya ha sido añadida por el otro padre se pasa a la siguiente dentro del orden
+		 * del padre al que le toca añadir ciudad.
+		 */
 		boolean turn = true;
-		//Por cada ciudad, se va intercalando el siguiente gen que hay que a�adir,
-		//y si ya se ha a�adido, se pasa al siguiente
 		for (int i = 0; i < mold.getSize() - 1; i++) {
 			if (turn)
 				son.add(map1Iterator.next());
@@ -98,6 +125,8 @@ public class AlternativeOrder extends Crossover {
 				son.add(map2Iterator.next());
 			turn = !turn;
 		}
+		
+		// If the sense is from front to back, the son list is inverted.
 		if (!forward)
 			Collections.reverse(son);
 		return son;
@@ -105,18 +134,25 @@ public class AlternativeOrder extends Crossover {
 	
 	private List<List<Double>> specificCross(List<Double> parent1Genome, List<Double> parent2Genome) {
 		Map<Double, Double> parent1Map, parent2Map;
+		
+		// Randomly it will go forward or backward to favor generic diversity.
 		boolean forward = RandomGenerator.createAleatoryBoolean();
+		
+		// Los mapas son creados a partir del genoma de los padres, dependiendo del valor
+		// de forward irá hacia adelante o hacia atrás.
 		if (forward) {
-			//Se crea un mapa, el cual tiene la ciudad actual junto a la siguiente ciudad
-			//ya sea en el caso de ir hacia delante o detras
 			parent1Map = createForwardMap(parent1Genome);
 			parent2Map = createForwardMap(parent2Genome);
 		} else {
 			parent1Map = createBackwardMap(parent1Genome);
 			parent2Map = createBackwardMap(parent2Genome);
 		}
+		
+		// Sons are being generated.
 		List<Double> son1Genome = generateSon(forward, parent1Genome, parent2Map, parent1Map);
 		List<Double> son2Genome = generateSon(forward, parent2Genome, parent1Map, parent2Map);
+		
+		// The sons are returned.
 		List<List<Double>> sonsGenome = new ArrayList<>();
 		sonsGenome.add(son1Genome);
 		sonsGenome.add(son2Genome);

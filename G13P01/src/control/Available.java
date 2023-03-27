@@ -11,10 +11,19 @@ import model.mutation.MutationMethod;
 
 class Available {
 
+	// Instance (Singleton pattern)
 	private static Available available;
+	
+	// Map of available mutation method for each fitness function
 	private Map<FitnessFunction, List<MutationMethod>> availableMutations;
+	
+	// Map of available crossover method for each fitness function
 	private Map<FitnessFunction, List<CrossoverMethod>> availableCrossovers;
 	
+	/***
+	 * All the available mutation and crossover method for each function is
+	 * inserted in his correspondent map.
+	 */
 	private Available() {
 		this.availableMutations = new HashMap<>();
 		this.availableCrossovers = new HashMap<>();
@@ -65,6 +74,12 @@ class Available {
 		}
 	}
 	
+	/***
+	 * Returns is the received mutationMethod is available for the received function.
+	 * @param function
+	 * @param mutationMethod
+	 * @return
+	 */
 	static boolean isMutationAvailable(FitnessFunction function , MutationMethod mutationMethod) {
 		if (Available.available == null)
 			Available.available = new Available();
@@ -75,6 +90,12 @@ class Available {
 		return false;
 	}
 	
+	/***
+	 * Returns is the received mutationMethod is available for the received crossover.
+	 * @param function
+	 * @param crossoverMethod
+	 * @return
+	 */
 	static boolean isCrossoverAvailable(FitnessFunction function, CrossoverMethod crossoverMethod) {
 		if (Available.available == null)
 			Available.available = new Available();

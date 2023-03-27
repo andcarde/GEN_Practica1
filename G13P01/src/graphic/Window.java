@@ -132,7 +132,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		initTournamentParameters(contentPane);
 		initGraphicPanel();
 		initResultTextArea();
-		initScrollPane();
+		// initScrollPane();
 		initStartButton();
 	}
 	
@@ -344,10 +344,13 @@ public class Window extends JFrame implements RequestMaker, Client {
 		contentPane.add(textValue);	
 	}
 	
+	/* ++ The scroll pane is not necessary in our view +++++++++++++++++++++++++
 	private void initScrollPane() {
-		//scroll = new JScrollPane(textValue);
-        //scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scroll = new JScrollPane(textValue);
+        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 	}
+	++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+	*/
 
 	private void start() {
 		try {
@@ -371,7 +374,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
 		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
-		plot.addLinePlot("presión selectiva", Color.black, gens, selectivePressure);
+		plot.addLinePlot("presiï¿½n selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}

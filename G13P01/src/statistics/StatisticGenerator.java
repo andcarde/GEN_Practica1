@@ -20,6 +20,7 @@ import model.util.Pair;
 
 public class StatisticGenerator implements RequestMaker, Client {
 	
+	// ------------------------- CONFIGURATION CONSTANTS -----------------------------
 	private static final double PRECISION = 0.001;
 	private static final double CROSSOVER_RATE = 60;
 	private static final double MUTATION_RATE = 5;
@@ -32,6 +33,9 @@ public class StatisticGenerator implements RequestMaker, Client {
 	private static final int TRUNCATION_PERCENTAGE = 25;
 	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.CITIES;
 	
+	// -------------------------- PERMUTATIONS ----------------------------------------
+	
+	// -- Crossover method permutations
 	private static final CrossoverMethod[] crossoverMethodArray = {
 			CrossoverMethod.AO,
 			CrossoverMethod.CO,
@@ -41,6 +45,8 @@ public class StatisticGenerator implements RequestMaker, Client {
 			CrossoverMethod.PMX,
 			CrossoverMethod.POX
 	};
+	
+	// -- Mutation method permutations
 	private static final MutationMethod[] mutationMethodArray = {
 			MutationMethod.EUGENIC,
 			MutationMethod.EXCHANGE,
@@ -48,31 +54,47 @@ public class StatisticGenerator implements RequestMaker, Client {
 			MutationMethod.INSERTION,
 			MutationMethod.INVERSE
 	};
+	
+	// -- Selection method permutations
 	private static final SelectionMethod[] selectionMethodArray = { 
 			SelectionMethod.RANKING,
 			SelectionMethod.ROULETTE,
 			SelectionMethod.PROBABILISTIC_TOURNAMENT
 	};
+	
+	// Elitism permutations
 	private static final double[] elitismRateArray = {0, 5};
 	
+	// Total number of tests to execute
 	private static final int TOTAL = crossoverMethodArray.length * mutationMethodArray.length *
 			selectionMethodArray.length * elitismRateArray.length;
 	
+	// ---------------------------- INFORMATION TO ACHIVE -----------------------
+	
+	// -- Score of the average of each crossover method
 	private Map<CrossoverMethod, Double> crossoverResult;
+	
+	// -- Score of the average of each mutation method
 	private Map<MutationMethod, Double> mutationResult;
 	
+	// +++++++++++++++++++++++++++++++++++++++++++
+	// -- Best configuration
 	private double bestAverage;
 	private double bestElitismRate;
 	private SelectionMethod bestSelectionMethod;
 	private CrossoverMethod bestCrossoverMethod;
 	private MutationMethod bestMutationMethod;
+	// +++++++++++++++++++++++++++++++++++++++++++
 	
+	// ------------------------- INFORMATION OF THE CURRENT TEST -----------------
 	private double average;
 	
 	private double elitismRate;
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
 	private MutationMethod mutationMethod;
+	// ----------------------------------------------------------------------------
+	
 	private StatisticWriter statisticWriter;
 	
 	public StatisticGenerator() {
@@ -82,6 +104,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 		this.statisticWriter = new StatisticWriter();
 	}
 	
+	/***
+	 * Testing begins, there will be as many as permutations of the options in the
+	 * configuration (elitism, selection, crossbreeding, and mutation) times 10, given
+	 * that it is averaged.
+	 */
 	public void run() {
 		for (CrossoverMethod c : crossoverMethodArray)
 			crossoverResult.put(c, 0.0);
@@ -121,7 +148,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 		uploadEnd();
 		System.out.println("Statistics Completed!");
 	}
-	
+	/***
+	 * The Statistical Writer is instructed to insert a row with the test configuration
+	 * (elitism, selection, crossover, and mutation) and the result. In addition, the best
+	 * setting is overwritten if the current result is the best found.
+	 */
 	private void uploadTest() {
 		crossoverResult.put(crossoverMethod, crossoverResult.get(crossoverMethod) + average);
 		mutationResult.put(mutationMethod, mutationResult.get(mutationMethod) + average);
@@ -144,6 +175,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 
 	}
 	
+	/***
+	 * The Statistical Writer is instructed to insert a ranking with the selection methods
+	 * and other ranking with the mutation methods, it will also have to write the best
+	 * configuration obtained.
+	 */
 	private void uploadEnd() {
 		List<Pair<String, Double>> crossoverList = new ArrayList<>();
 		List<Pair<String, Double>> mutationList = new ArrayList<>();
@@ -192,6 +228,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 		);
 	}
 	
+	// ---------------------- RequestMaker METHODS -----------------------------
 	@Override
 	public String getPopulationAmount() {
 		return String.valueOf(POPULATION_AMOUNT);
@@ -261,7 +298,13 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public String getTruncationPercentage() {
 		return String.valueOf(TRUNCATION_PERCENTAGE);
 	}
+	// ------------- END of RequestMaker METHODS -----------------------------
 	
+	/***
+	 * Client Method Implementation. It obtains the phenotype of the absolute leader
+	 * of the current execution. This value is accumulated in average until NUMBER_TEST
+	 * is executes times.
+	 */
 	@Override
 	public void paintResult(double[] generationAverage, double[] generationLeaders,
 			double[] absoluteLeaders, double[] selectivePressure, String bestChromosomeToString) {

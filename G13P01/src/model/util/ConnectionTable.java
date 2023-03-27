@@ -11,6 +11,7 @@ import model.random.RandomGenerator;
 public class ConnectionTable {
 	
 	private HashMap<Integer, List<Integer>> connections;
+	
 	public ConnectionTable(ChromosomeI c1, ChromosomeI c2) {
 		connections = new HashMap<>();
 		for (int i = 0; i <= c1.getSize(); i++) {

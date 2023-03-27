@@ -32,6 +32,10 @@ public class OrdinalCoding extends Crossover {
 		return sons;
 	}
 	
+	/***
+	 * Dinamic list is initialized to contain all the valid city identifiers.
+	 * @return
+	 */
 	private List<Integer> initializeList() {
 		List<Integer> dynamic_list = new ArrayList<>();
 		for (int i = 0; i < 28; i++) {
@@ -41,6 +45,12 @@ public class OrdinalCoding extends Crossover {
 		return dynamic_list;
 	}
 	
+	/***
+	 * The cities identificators in the genes are transformed into relative positions.
+	 * @param chromsome
+	 * @param parent
+	 * @return
+	 */
 	private ChromosomeI coding(ChromosomeI chromsome, ChromosomeI parent) {
 		List<Integer> dynamic_list = initializeList();
 		for (int i = 0; i < parent.getSize(); i++) {
@@ -53,6 +63,11 @@ public class OrdinalCoding extends Crossover {
 		return chromsome;
 	}
 	
+	/***
+	 * The relative positions in the genes are transformed into cities identificators.
+	 * @param chromsome
+	 * @return
+	 */
 	private ChromosomeI decoding(ChromosomeI chromsome) {
 		List<Integer> dynamic_list = initializeList();
 		for (int i = 0; i < chromsome.getSize(); i++) {
@@ -65,6 +80,13 @@ public class OrdinalCoding extends Crossover {
 		return chromsome;
 	}
 	
+	/***
+	 * The one point crossover takes place in the parents that have relative positions
+	 * in his genes instead of cities identificator.
+	 * @param parent1
+	 * @param parent2
+	 * @return
+	 */
 	private List<ChromosomeI> onePointCrossover(ChromosomeI parent1, ChromosomeI parent2) {
 		List<ChromosomeI> sons = new ArrayList<>();
 		ChromosomeI son1 = parent1.copy();

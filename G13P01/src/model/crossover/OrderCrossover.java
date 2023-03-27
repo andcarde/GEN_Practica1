@@ -56,6 +56,8 @@ public class OrderCrossover extends Crossover {
 		Double[] son1Array = new Double[mold.getSize()], son2Array = new Double[mold.getSize()];
 		List<Double> son1Genome = Arrays.asList(son1Array), son2Genome = Arrays.asList(son2Array);
 		Double d;
+		
+		// The values of the central genes are set into the sons
 		for (int i = lowerBound; i <= upperBound; i++) {
 			d = parent1Genome.get(i);
 			son2Set.add(d);
@@ -64,8 +66,12 @@ public class OrderCrossover extends Crossover {
 			son1Set.add(d);
 			son1Genome.set(i, d);
 		}
+		
+		// Initialization of the parent iterators
 		Iterator parent1Iterator = new Iterator(parent1Genome, upperBound);
 		Iterator parent2Iterator = new Iterator(parent2Genome, upperBound);
+		
+		// The values of the right genes are set into the sons
 		for (int i = upperBound + 1; i < mold.getSize(); i++) {
 			d = parent1Iterator.next();
 			while (son1Set.contains(d))
@@ -76,6 +82,8 @@ public class OrderCrossover extends Crossover {
 				d = parent2Iterator.next();
 			son2Genome.set(i, d);
 		}
+		
+		// The values of the left genes are set into the sons
 		for (int i = 0; i < lowerBound; i++) {
 			d = parent1Iterator.next();
 			while (son1Set.contains(d))
@@ -86,6 +94,8 @@ public class OrderCrossover extends Crossover {
 				d = parent2Iterator.next();
 			son2Genome.set(i, d);
 		}
+		
+		// The sons are returned
 		List<List<Double>> sonsGenome = new ArrayList<>();
 		sonsGenome.add(son1Genome);
 		sonsGenome.add(son2Genome);

@@ -49,13 +49,17 @@ public class PriorityOrderCrossover extends Crossover {
 	}
 	
 	private List<List<Double>> specificCross(List<Double> parent1Genome, List<Double> parent2Genome) {
+		// Generation of the priority positions (2).
 		int priorityPosition1 = RandomGenerator.createAleatoryInt(mold.getSize());
 		int priorityPosition2 = RandomGenerator.createAleatoryInt(mold.getSize() - 1);
 		if (priorityPosition2 >= priorityPosition1)
 			priorityPosition2++;
+		
 		Double[] son1Array = new Double[mold.getSize()], son2Array = new Double[mold.getSize()];
 		List<Double> son1Genome = Arrays.asList(son1Array), son2Genome = Arrays.asList(son2Array);
 		Set<Double> son1Set = new TreeSet<>(), son2Set = new TreeSet<>();
+		
+		// Assignment of the priority positions to the sons.
 		Double d;
 		d = parent2Genome.get(priorityPosition1);
 		son1Genome.set(priorityPosition1, d);
@@ -69,8 +73,14 @@ public class PriorityOrderCrossover extends Crossover {
 		d = parent1Genome.get(priorityPosition2);
 		son2Genome.set(priorityPosition2, d);
 		son2Set.add(d);
+		
+		// Initialization of the parent iterators
 		Iterator parent1Iterator = new Iterator(parent1Genome, mold.getSize() - 1);
 		Iterator parent2Iterator = new Iterator(parent2Genome, mold.getSize() - 1);
+		
+		/* The positions of the corresponding parent are set in 
+		 * the appropiate son using the iterators.
+		 */
 		for (int i = 0; i < mold.getSize(); i++) {
 			if (i != priorityPosition1 && i != priorityPosition2) {
 				d = parent1Iterator.next();
@@ -83,6 +93,8 @@ public class PriorityOrderCrossover extends Crossover {
 				son2Genome.set(i, d);
 			}
 		}
+		
+		// The sons are returned
 		List<List<Double>> sonsGenome = new ArrayList<>();
 		sonsGenome.add(son1Genome);
 		sonsGenome.add(son2Genome);

@@ -15,6 +15,11 @@ public class MapIterator {
 		this.set = set;
 	}
 	
+	/***
+	 * Returns the next city of the parent genome that is not contained in the set.
+	 * It also add the value to the set.
+	 * @return value
+	 */
 	public Double next() {
 		do {
 			value = map.get(value);
