@@ -23,12 +23,15 @@ public class CityInverseMutation implements CityMutationI {
 			while (lower_bound == upper_bound) {
 				upper_bound = RandomGenerator.createAleatoryInt(genes.size());
 			}
-			
+			//Hallamos los dos puntos del tramo
 			if (lower_bound > upper_bound) {
 				int tmp = lower_bound;
 				lower_bound = upper_bound;
 				upper_bound = tmp;
 			}
+			
+			//Los intercambiamos uno a uno con respecto al que esta 
+			//en la posición inversa del tramo
 			int i = lower_bound; int j = upper_bound;
 			while (i < j) {
 				GenI gen1 = genes.get(i).copy();

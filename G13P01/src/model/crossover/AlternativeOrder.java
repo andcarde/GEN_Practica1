@@ -32,6 +32,7 @@ public class AlternativeOrder extends Crossover {
 		List<Double> parent2Genome = new ArrayList<>();
 		for (GenI gen : genes)
 			parent2Genome.add((Double) gen.getGenome());
+		//Creamos su cruce
 		List<List<Double>> sonsGenome = specificCross(parent1Genome, parent2Genome);
 		List<List<Object>> sonsObjectGenome = new ArrayList<>();
 		for (List<Double> sonGenome : sonsGenome) {
@@ -88,6 +89,8 @@ public class AlternativeOrder extends Crossover {
 		MapIterator map1Iterator = new MapIterator(map1, value, set);
 		MapIterator map2Iterator = new MapIterator(map2, value, set);
 		boolean turn = true;
+		//Por cada ciudad, se va intercalando el siguiente gen que hay que añadir,
+		//y si ya se ha añadido, se pasa al siguiente
 		for (int i = 0; i < mold.getSize() - 1; i++) {
 			if (turn)
 				son.add(map1Iterator.next());
@@ -104,6 +107,8 @@ public class AlternativeOrder extends Crossover {
 		Map<Double, Double> parent1Map, parent2Map;
 		boolean forward = RandomGenerator.createAleatoryBoolean();
 		if (forward) {
+			//Se crea un mapa, el cual tiene la ciudad actual junto a la siguiente ciudad
+			//ya sea en el caso de ir hacia delante o detras
 			parent1Map = createForwardMap(parent1Genome);
 			parent2Map = createForwardMap(parent2Genome);
 		} else {

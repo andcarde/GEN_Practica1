@@ -18,11 +18,14 @@ public class CityExchangeMutation implements CityMutationI {
 	public List<GenI>  act(ChromosomeI chromosome) { 
 		List<GenI> genes = chromosome.getGenes();
 		if (RandomGenerator.createAleatoryBoolean(mutationProbability)) {
+			//Obtenemos los dos indices
 			int first_to_move = RandomGenerator.createAleatoryInt(genes.size());
 			int second_to_move = RandomGenerator.createAleatoryInt(genes.size());
 			while (second_to_move == first_to_move) {
 				second_to_move = RandomGenerator.createAleatoryInt(genes.size());
 			}
+			
+			//Se intercambian de posicion
 			GenI gen1 = genes.get(first_to_move).copy();
 			gen1.setName(genes.get(second_to_move).getName());
 			GenI gen2 = genes.get(second_to_move).copy();

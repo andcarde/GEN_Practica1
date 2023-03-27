@@ -20,10 +20,12 @@ public class CrossoverRouteRecombination extends Crossover {
 
 	@Override
 	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
+		//Cremamos las conexiones
 		ConnectionTable connections = new ConnectionTable(parent1, parent2);
 		List<ChromosomeI> sons = new ArrayList<>();
 		int cur_city = Converter.DoubleToInt((Double) parent1.getGen(0).getGenome());
 		Set<Integer> cities_left = new HashSet<>();
+		//Gaurdamos las ciudad que faltan por guardar
 		for (int i = 1; i < parent1.getSize(); i++) {
 			cities_left.add(Converter.DoubleToInt((Double) parent1.getGen(i).getGenome()));
 		}
@@ -32,16 +34,22 @@ public class CrossoverRouteRecombination extends Crossover {
 			s1.put(i, cur_city);
 			cities_left.remove(cur_city);
 			cur_city = connections.getLeastConnectedCity(cur_city, s1);
+			//Avanzamos a la siguiente ciudad adyacente con menos numero
+			//de ciudades conectadas
 			if (cur_city == -1 && i < parent1.getSize() -1) {
+				//Si todas sus ciudades estan visitadas, accedemos a la lista anterior
+				//donde guardabamos las ciudades que quedan por visitar
 				cur_city = (int) cities_left.toArray()[0];
 			}
 		}
 		ChromosomeI son1 = parent1.copy();
 		for (int i = 0; i < s1.size(); i++) {
+			//Lo guardamos en el cromosoma
 			son1.getGen(i).assimilate(s1.get(i));
 		}
 		
 		cities_left.clear();
+		//Lo mismo para el otro hijo
 		cur_city = Converter.DoubleToInt((Double) parent2.getGen(0).getGenome());
 		for (int i = 1; i < parent2.getSize(); i++) {
 			cities_left.add(Converter.DoubleToInt((Double) parent2.getGen(i).getGenome()));
