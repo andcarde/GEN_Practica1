@@ -1,20 +1,20 @@
 package model.tree;
 
-public class ArithmeticNode<T> {
+public class ArithmeticNode {
 
 	private ArithmeticEnum knot;
-	private ArithmeticNode<T> leftBranch;
-	private ArithmeticNode<T> rightBranch;
-	private T fruit;
+	private ArithmeticNode leftBranch;
+	private ArithmeticNode rightBranch;
+	private TerminalEnum fruit;
 	
-	ArithmeticNode(ArithmeticEnum knot, ArithmeticNode<T> leftBranch, ArithmeticNode<T> rightBranch) {
+	ArithmeticNode(ArithmeticEnum knot, ArithmeticNode leftBranch, ArithmeticNode rightBranch) {
 		this.knot = knot;
 		this.leftBranch = leftBranch;
 		this.rightBranch = rightBranch;
 		this.fruit = null;
 	}
 	
-	ArithmeticNode(ArithmeticEnum knot, T fruit) {
+	ArithmeticNode(ArithmeticEnum knot, TerminalEnum fruit) {
 		this.knot = knot;
 		this.leftBranch = null;
 		this.rightBranch = null;
@@ -29,15 +29,23 @@ public class ArithmeticNode<T> {
 		return this.knot;
 	}
 	
-	ArithmeticNode<T> getLeftBranch() {
+	ArithmeticNode getLeftBranch() {
 		return this.leftBranch;
 	}
 	
-	ArithmeticNode<T> getRightBranch() {
+	ArithmeticNode getRightBranch() {
 		return this.rightBranch;
 	}
 	
-	T getFruit() {
+	public double getValue(double xvalue) {
+		if (isLeaf()) {
+			if (fruit == TerminalEnum.x) return xvalue;
+			else return TerminalEnum.valueToInt(fruit);
+		}
+		return ArithmeticEnum.calculate(leftBranch.getValue(xvalue), knot, rightBranch.getValue(xvalue));
+	}
+	
+	TerminalEnum getFruit() {
 		return this.fruit;
 	}
 }

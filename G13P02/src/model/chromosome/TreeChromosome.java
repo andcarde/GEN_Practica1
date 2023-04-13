@@ -3,6 +3,7 @@ package model.chromosome;
 import model.MoldI;
 import model.fitness.FunctionTSP;
 import model.mutation.CityMutationI;
+import model.tree.ArithmeticNode;
 import model.util.Converter;
 
 public class TreeChromosome extends Chromosome {
@@ -54,7 +55,6 @@ public class TreeChromosome extends Chromosome {
 	 */
 	@Override
 	public void initialize() {
-		
 	}
 
 	public CityMutationI getMutation() {
@@ -64,6 +64,14 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public int indexOf(int city) {
 		return 0;
+	}
+
+	public ArithmeticNode getRaiz() {
+		return raiz;
+	}
+
+	public void setRaiz(ArithmeticNode raiz) {
+		this.raiz = raiz;
 	}
 
 
