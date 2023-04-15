@@ -23,7 +23,7 @@ public class TreeChromosome {
 	}
 	
 	public void mutate() {
-		raiz = mutationMethod.act(this).getRaiz();
+		raiz = mutationMethod.act(this);
 	}
 
 	public String getGenesToString() {

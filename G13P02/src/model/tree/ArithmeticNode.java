@@ -82,6 +82,18 @@ public class ArithmeticNode {
 		return rightBranch.getNode(n - leftBranch.getNumSons() - 2);
 	}
 	
+	public void setNode(int index, ArithmeticNode node) {
+		if (index == 0) {
+			fruit = node.fruit; 
+			knot = node.knot;
+			leftBranch = node.leftBranch; 
+			rightBranch = node.rightBranch;
+			return;
+		}
+		if (index <= leftBranch.getNumSons() + 1) leftBranch.setNode(index-1, node);
+		else rightBranch.setNode(index - leftBranch.getNumSons() - 2, node);
+	}
+
 	public double getValue(double xvalue) {
 		if (isLeaf()) {
 			if (fruit == TerminalEnum.x) return xvalue;
@@ -111,4 +123,5 @@ public class ArithmeticNode {
 	public ArithmeticNode copy() {
 		return new ArithmeticNode(this);
 	}
+
 }
