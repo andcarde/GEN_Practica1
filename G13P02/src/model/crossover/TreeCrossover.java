@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.chromosome.practice3.TreeChromosome;
+import model.gen.practice3.ArithmeticNode;
 import model.random.RandomGenerator;
-import model.tree.ArithmeticNode;
 
 public class TreeCrossover {
 	

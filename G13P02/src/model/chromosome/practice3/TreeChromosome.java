@@ -1,19 +1,23 @@
 package model.chromosome.practice3;
 
+import model.MoldI;
+import model.chromosome.Chromosome;
+import model.gen.practice3.ArithmeticNode;
 import model.mutation.MutationI;
 import model.mutation.practice3.TreeMutationI;
-import model.tree.ArithmeticNode;
 
-public class TreeChromosome {
+public class TreeChromosome extends Chromosome {
 
 	private final TreeMutationI mutationMethod;
 	private ArithmeticNode raiz;
 	
-	public TreeChromosome(TreeMutationI mutationMethod) {
+	public TreeChromosome(MoldI mold, TreeMutationI mutationMethod) {
+		super(mold);
 		this.mutationMethod = mutationMethod;
 	}
 	
 	public TreeChromosome(TreeChromosome chromosome) {
+		super(chromosome);
 		this.mutationMethod = chromosome.mutationMethod;
 		this.raiz = chromosome.raiz.copy();
 	}
@@ -44,5 +48,13 @@ public class TreeChromosome {
 	
 	public Double getValue(Double x, ArithmeticNode node) {
 		return node.getValue(x);
+	}
+
+	@Override
+	public void initialize() {}
+
+	@Override
+	public int indexOf(int city) {
+		return 0;
 	}
 }

@@ -1,10 +1,10 @@
 package model.mutation.practice3;
 
 import model.chromosome.practice3.TreeChromosome;
+import model.gen.practice3.ArithmeticEnum;
+import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.TerminalEnum;
 import model.random.RandomGenerator;
-import model.tree.ArithmeticEnum;
-import model.tree.ArithmeticNode;
-import model.tree.TerminalEnum;
 
 public class FunctionalTreeMutation implements TreeMutationI {
 	
