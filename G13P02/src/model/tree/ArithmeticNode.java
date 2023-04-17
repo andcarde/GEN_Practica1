@@ -1,6 +1,8 @@
 package model.tree;
 
-public class ArithmeticNode {
+import model.fitness.practice3.Callback;
+
+public class ArithmeticNode implements Callback {
 
 	private int numSons;
 	private ArithmeticEnum knot;
@@ -93,7 +95,8 @@ public class ArithmeticNode {
 		if (index <= leftBranch.getNumSons() + 1) leftBranch.setNode(index-1, node);
 		else rightBranch.setNode(index - leftBranch.getNumSons() - 2, node);
 	}
-
+	
+	@Override
 	public double getValue(double xvalue) {
 		if (isLeaf()) {
 			if (fruit == TerminalEnum.x) return xvalue;
@@ -123,5 +126,4 @@ public class ArithmeticNode {
 	public ArithmeticNode copy() {
 		return new ArithmeticNode(this);
 	}
-
 }

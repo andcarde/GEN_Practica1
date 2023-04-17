@@ -1,6 +1,13 @@
 package model.mutation;
 
-import model.chromosome.GenType;
+import model.gen.practice1.GenType;
+import model.mutation.practice1.BasicBinaryMutation;
+import model.mutation.practice1.BasicRealMutation;
+import model.mutation.practice2.CityEugenicMutation;
+import model.mutation.practice2.CityExchangeMutation;
+import model.mutation.practice2.CityHeuristicMutation;
+import model.mutation.practice2.CityInsertionMutation;
+import model.mutation.practice2.CityInverseMutation;
 
 public class MutationBuilder {
 
@@ -9,7 +16,7 @@ public class MutationBuilder {
 			case BINARY:
 				return new BasicBinaryMutation(mutationProbability);
 			case REAL:
-				return new BasicRealMutation(mutationProbability); 
+				return new BasicRealMutation(mutationProbability);
 			case CITY:
 				switch(mutationMethod) {
 					case EXCHANGE:

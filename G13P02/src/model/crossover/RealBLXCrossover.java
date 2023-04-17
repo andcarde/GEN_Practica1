@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.chromosome.BoundedChromosome;
-import model.chromosome.BoundedGenI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
+import model.chromosome.practice1.BoundedChromosome;
+import model.gen.practice1.BoundedGenI;
 import model.random.RandomGenerator;
 
 public class RealBLXCrossover extends Crossover {

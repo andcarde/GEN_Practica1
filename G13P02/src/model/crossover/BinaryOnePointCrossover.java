@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.chromosome.BinaryGenI;
-import model.chromosome.BoundedChromosome;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
+import model.chromosome.practice1.BoundedChromosome;
+import model.gen.practice1.BinaryGenI;
 import model.random.RandomGenerator;
 
 public class BinaryOnePointCrossover extends Crossover {

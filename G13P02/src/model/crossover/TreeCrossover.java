@@ -3,7 +3,7 @@ package model.crossover;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.chromosome.TreeChromosome;
+import model.chromosome.practice3.TreeChromosome;
 import model.random.RandomGenerator;
 import model.tree.ArithmeticNode;
 

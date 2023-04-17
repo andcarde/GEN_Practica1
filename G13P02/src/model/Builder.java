@@ -6,23 +6,22 @@ import java.util.List;
 import java.util.Map;
 
 import control.Request;
-import model.chromosome.BinaryGen;
-import model.chromosome.CityGen;
-import model.chromosome.GenI;
-import model.chromosome.GenType;
-import model.chromosome.RealGen;
 import model.crossover.CrossoverBuilder;
 import model.crossover.CrossoverI;
-import model.fitness.DoubleVariable;
 import model.fitness.Fitness;
 import model.fitness.FunctionBuilder;
 import model.fitness.Variable;
-import model.mutation.BinaryMutationBuilder;
-import model.mutation.BinaryMutationI;
+import model.fitness.practice1.DoubleVariable;
+import model.gen.practice1.BinaryGen;
+import model.gen.practice1.GenI;
+import model.gen.practice1.GenType;
+import model.gen.practice1.RealGen;
+import model.gen.practice2.CityGen;
 import model.mutation.MutationBuilder;
 import model.mutation.MutationI;
-import model.mutation.RealMutationBuilder;
-import model.mutation.RealMutationI;
+import model.mutation.practice1.BinaryMutationI;
+import model.mutation.practice1.RealMutationI;
+import model.mutation.practice1.UnitaryMutationBuilder;
 import model.selection.SelectionBuilder;
 import model.selection.SelectionI;
 
@@ -50,9 +49,11 @@ public class Builder {
 		List<GenI> moldGenes = new ArrayList<>();
 		for (Variable var : variables) {
 			if (function.getGenType() == GenType.BINARY)
-				moldGenes.add(BinaryGen.build((DoubleVariable) var, buildBinaryMutation(request)));
+				moldGenes.add(BinaryGen.build((DoubleVariable) var,
+						(BinaryMutationI) buildUnitaryMutation(request,  function.getGenType())));
 			else if (function.getGenType() == GenType.REAL)
-				moldGenes.add(RealGen.build((DoubleVariable) var, buildRealMutation(request)));
+				moldGenes.add(RealGen.build((DoubleVariable) var,
+						(RealMutationI) buildUnitaryMutation(request, function.getGenType())));
 			else if (function.getGenType() == GenType.CITY)
 				moldGenes.add(CityGen.build(var));
 		}
@@ -68,15 +69,11 @@ public class Builder {
 				request.getCrossoverProbability(), mold, genType);
 	}
 	
-	private static BinaryMutationI buildBinaryMutation(Request request) {
-		return BinaryMutationBuilder.build(request.getMutationMethod(), request.getMutationProbability());
-	}
-	
-	private static RealMutationI buildRealMutation(Request request) {
-		return RealMutationBuilder.build(request.getMutationMethod(), request.getMutationProbability());
-	}
-	
 	private static MutationI buildMutation(Request request, GenType gen) {
 		return MutationBuilder.build(gen, request.getMutationMethod(), request.getMutationProbability());
+	}
+	
+	private static MutationI buildUnitaryMutation(Request request, GenType gen) {
+		return UnitaryMutationBuilder.build(gen, request.getMutationProbability());
 	}
 }

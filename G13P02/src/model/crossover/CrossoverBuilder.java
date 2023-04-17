@@ -1,7 +1,7 @@
 package model.crossover;
 
 import model.MoldI;
-import model.chromosome.GenType;
+import model.gen.practice1.GenType;
 
 public class CrossoverBuilder {
 

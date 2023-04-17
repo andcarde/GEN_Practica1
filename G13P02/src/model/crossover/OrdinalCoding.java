@@ -5,7 +5,7 @@ import java.util.List;
 
 import model.MoldI;
 import model.chromosome.ChromosomeI;
-import model.chromosome.GenI;
+import model.gen.practice1.GenI;
 import model.random.RandomGenerator;
 import model.util.Converter;
 

@@ -1,6 +1,7 @@
 package model.tree;
 
 public enum TerminalEnum {
+	
 	x, min2, min1, zero, one, two;
 
 	public static double valueToInt(TerminalEnum fruit) {
@@ -18,6 +19,5 @@ public enum TerminalEnum {
 		default:
 			return -3;
 		}
-		
 	}
 }

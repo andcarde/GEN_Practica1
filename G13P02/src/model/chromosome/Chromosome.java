@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.fitness.Input;
+import model.fitness.DoubleInput;
+import model.gen.practice1.GenI;
 
 public abstract class Chromosome implements ChromosomeI {
 	
@@ -32,7 +33,7 @@ public abstract class Chromosome implements ChromosomeI {
 	
 	@Override
 	public void evaluate() {
-		Input input = new Input();
+		DoubleInput input = new DoubleInput();
 		for (GenI gen : genes)
 			input.put(gen.getName(), gen.getValue());
 		this.phenotype = this.mold.getFunction().getValue(input);

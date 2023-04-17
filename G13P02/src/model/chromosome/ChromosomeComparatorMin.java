@@ -14,5 +14,4 @@ public class ChromosomeComparatorMin implements Comparator<ChromosomeI> {
 		
 		return 0;
 	}
-
 }

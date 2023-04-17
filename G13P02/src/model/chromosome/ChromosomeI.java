@@ -3,6 +3,7 @@ package model.chromosome;
 import java.util.List;
 
 import model.MoldI;
+import model.gen.practice1.GenI;
 
 public interface ChromosomeI {
 

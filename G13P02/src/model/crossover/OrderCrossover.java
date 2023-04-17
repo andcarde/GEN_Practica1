@@ -8,9 +8,9 @@ import java.util.TreeSet;
 
 import model.MoldI;
 import model.chromosome.ChromosomeI;
-import model.chromosome.GenI;
-import model.chromosome.TravellerChromosome;
-import model.mutation.CityMutationI;
+import model.chromosome.practice2.TravellerChromosome;
+import model.gen.practice1.GenI;
+import model.mutation.practice2.CityMutationI;
 import model.random.RandomGenerator;
 import model.util.Iterator;
 

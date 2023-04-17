@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.chromosome.BoundedChromosome;
 import model.chromosome.ChromosomeI;
-import model.chromosome.GenType;
-import model.chromosome.TravellerChromosome;
-import model.mutation.CityMutationI;
+import model.chromosome.practice1.BoundedChromosome;
+import model.chromosome.practice2.TravellerChromosome;
+import model.gen.practice1.GenType;
 import model.mutation.MutationI;
+import model.mutation.practice2.CityMutationI;
 
 public class Initializer {
 

@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import model.chromosome.ChromosomeI;
-import model.chromosome.GenI;
-import model.chromosome.TravellerChromosome;
+import model.chromosome.practice2.TravellerChromosome;
+import model.gen.practice1.GenI;
 
 public class TravellerChromosomeChecker {
 
