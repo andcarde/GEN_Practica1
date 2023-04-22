@@ -3,6 +3,7 @@ package model.initialization;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Executor;
 import model.MoldI;
 import model.chromosome.ChromosomeI;
 import model.chromosome.practice1.BoundedChromosome;
@@ -23,7 +24,7 @@ public class Initializer {
 	 * @param mutation
 	 * @return the population
 	 */
-	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation) {
+	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation, Executor exe) {
 		List<ChromosomeI> population = new ArrayList<>();
 		switch (genType) {
 		case BINARY:

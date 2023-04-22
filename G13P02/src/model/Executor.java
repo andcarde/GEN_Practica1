@@ -99,10 +99,11 @@ public class Executor {
 		
 	}
 
+	//Hay que pasarle al treechromosome el executor despues de inicializarse
 	private void initilize() {
 		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
 		else comparator = new ChromosomeComparatorMin();
-		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation);
+		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation, this);
 		for (ChromosomeI chromosome : population)
 			chromosome.initialize();
 	}
@@ -174,6 +175,10 @@ public class Executor {
 			
 			selectivePressure[generation] = generationLeaders[generation] / generationAverage[generation];
 		}
+	}
+	
+	public List<ChromosomeI> getPopulation() {
+		return population;
 	}
 
 	public double[] getGenerationAverage() { return generationAverage; }

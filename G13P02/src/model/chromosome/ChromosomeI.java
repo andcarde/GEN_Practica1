@@ -22,4 +22,5 @@ public interface ChromosomeI {
 	void setGen(int i, GenI gen);
 	void assimilate(List<Object> genome);
 	int indexOf(int city);
+	double getBasicValue();
 }

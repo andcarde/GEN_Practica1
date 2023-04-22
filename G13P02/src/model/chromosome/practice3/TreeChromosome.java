@@ -1,15 +1,19 @@
 package model.chromosome.practice3;
 
+import model.Executor;
 import model.MoldI;
 import model.chromosome.Chromosome;
 import model.gen.practice3.ArithmeticNode;
 import model.mutation.MutationI;
 import model.mutation.practice3.TreeMutationI;
+import model.util.Covariance;
+import model.util.Variance;
 
 public class TreeChromosome extends Chromosome {
 
 	private final TreeMutationI mutationMethod;
 	private ArithmeticNode raiz;
+	private Executor executor;
 	
 	public TreeChromosome(MoldI mold, TreeMutationI mutationMethod) {
 		super(mold);
@@ -26,8 +30,30 @@ public class TreeChromosome extends Chromosome {
 		return new TreeChromosome(this);
 	}
 	
+	public Integer getSize() {
+		return raiz.getNumSons();
+	}
+	
+	public double getBasicValue() {
+		if (phenotype == null) evaluate();
+		return phenotype;
+	}
+	
+	public void setExecutor(Executor exe) {
+		executor = exe;
+	}
+	
 	public void mutate() {
 		raiz = mutationMethod.act(this);
+	}
+	
+	
+	
+	@Override
+	public Double getValue() {
+		if (phenotype == null) evaluate();
+		double k = Covariance.calculate(executor.getPopulation())/Variance.calculate(executor.getPopulation());
+		return this.phenotype + k*raiz.getNumSons();
 	}
 
 	public String getGenesToString() {

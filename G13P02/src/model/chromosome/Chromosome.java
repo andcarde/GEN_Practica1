@@ -90,4 +90,9 @@ public abstract class Chromosome implements ChromosomeI {
 	public void setGen(int i, GenI gen) {
 		this.genes.set(i, gen);
 	}
+	
+	@Override
+	public double getBasicValue() {
+		return 0;
+	}
 }
