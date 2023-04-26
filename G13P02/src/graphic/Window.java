@@ -36,18 +36,14 @@ import model.selection.SelectionMethod;
 
 public class Window extends JFrame implements RequestMaker, Client {
 	
-	private static final double DEFAULT_PRECISION = 0.001;
 	private static final double DEFAULT_CROSSOVER_RATE = 60;
 	private static final double DEFAULT_MUTATION_RATE = 5;
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
-	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
-	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.AO;
-	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.EUGENIC;
-	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
-	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
-	private static final int DEFAULT_PARAMETER_D = 2;
+	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CrossoverTree;
+	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.TERMINAL;
+
 	
 	private static final long serialVersionUID = 8815627840243675666L;
 	
@@ -126,11 +122,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initSettings(contentPane);
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
-		initFunctionParameters(contentPane);
-		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initMethodPanel(contentPane);
-		contentPane.addHeight(BIG_VERTICAL_MARGIN);
-		initTournamentParameters(contentPane);
 		initGraphicPanel();
 		initResultTextArea();
 		// initScrollPane();
@@ -176,54 +168,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 		return comboBox;
 	}
 	
-	private void initTournamentParameters(MyPanel superPanel) {
-		tournamentPanel = new MyPanel(null, Window.LEFT_MARGIN);
-		tournamentPanel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
-		tournamentPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
-		tournamentPanel.setVisible(false);
-		
-		tournamentPanel.addHeight(VERTICAL_MARGIN);
-		createLabel("Contestants Amount", tournamentPanel);
-		tournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
-		contestantsAmountTF = createTextField(String.valueOf(Window.DEFAULT_CONTESTANTS_AMOUNT), tournamentPanel);
-		
-		probabilisticTournamentPanel = new MyPanel(null, 0);
-		probabilisticTournamentPanel.setLocation(tournamentPanel.getInnerLeftMargin(), tournamentPanel.getMyHeight());
-		probabilisticTournamentPanel.setVisible(false);
-		
-		probabilisticTournamentPanel.addHeight(VERTICAL_MARGIN);
-		createLabel("Champion Probability", probabilisticTournamentPanel);
-		probabilisticTournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
-		championPercentageTF = createTextField(String.valueOf(Window.DEFAULT_CHAMPION_PROBABILITY),
-				probabilisticTournamentPanel);
-		
-		probabilisticTournamentPanel.setSize(MAX_WIDTH,
-				probabilisticTournamentPanel.getMyHeight());
-		tournamentPanel.add(probabilisticTournamentPanel);
-		tournamentPanel.addHeight(probabilisticTournamentPanel.getMyHeight());
-		tournamentPanel.addHeight(VERTICAL_MARGIN);
-		
-		tournamentPanel.setSize(Window.PANEL_WIDTH, tournamentPanel.getMyHeight());
-		superPanel.add(tournamentPanel);
-		superPanel.addHeight(tournamentPanel.getMyHeight());
-	}
-	
-	private void initFunctionParameters(MyPanel superPanel) {
-		function4Panel = new MyPanel(null, Window.LEFT_MARGIN);
-		function4Panel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
-		function4Panel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
-		function4Panel.setVisible(false);
-		
-		function4Panel.addHeight(VERTICAL_MARGIN);
-		createLabel("Parameter d", function4Panel);
-		function4Panel.addHeight(SMALL_VERTICAL_MARGIN);
-		fuction4DimensionTF = createTextField(String.valueOf(Window.DEFAULT_PARAMETER_D), function4Panel);
-		function4Panel.addHeight(VERTICAL_MARGIN);
-		
-		function4Panel.setSize(Window.PANEL_WIDTH, function4Panel.getMyHeight());
-		superPanel.add(function4Panel);
-		superPanel.addHeight(function4Panel.getMyHeight());
-	}
 
 	public void initSettings(MyPanel superPanel) {
 		createLabel("Population Amount", superPanel);
@@ -242,10 +186,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		mutationRateSpinner = createSpinner(Window.DEFAULT_MUTATION_RATE, superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
-		createLabel("Precision", superPanel);
-		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
-		precisionTF = createTextField(String.valueOf(Window.DEFAULT_PRECISION), superPanel);
-		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Elitism Rate (%)", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		elitismRateSpinner = createSpinner(Window.DEFAULT_ELITISM_RATE, superPanel);
@@ -262,13 +202,7 @@ public class Window extends JFrame implements RequestMaker, Client {
         });
 		functionCB.setSelectedItem(FitnessFunction.CITIES.toString());
 		
-		superPanel.addHeight(VERTICAL_MARGIN);
-		createLabel("Truncation Rate (%)", superPanel);
-		labelTruncPos = superPanel.getComponentCount()-1;
-		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
-		truncationSpinner = createSpinner(Window.DEFAULT_TRUNCATION_AMOUNT, superPanel);
-		superPanel.getComponent(labelTruncPos).setVisible(false);
-		truncationSpinner.setVisible(false);
+		
 	}
 	
 	private void initGraphicPanel() {
