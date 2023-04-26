@@ -15,15 +15,11 @@ public class Request {
 	private Integer generationAmount;
 	private Double crossoverProbability;
 	private Double mutationProbability;
-	private Double precision;
-	private Double truncation = 0.0;
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
 	private MutationMethod mutationMethod;
 	private Integer elitismRate;
 	private FitnessFunction fitnessFunction;
-	private Integer fuction4Dimension;
-	private TournamentRequest tournamentRequest;
 	
 	public Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.errors = new ArrayList<>();
@@ -56,37 +52,10 @@ public class Request {
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
 		}
-		try {
-			this.precision = Double.valueOf(requestMaker.getPrecision());
-		} catch (NumberFormatException nfe) {
-			this.errors.add("The precision must be a rational number.");
-		}
+		
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
-		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
-				this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
-			try {
-				Integer contestantsAmount = Integer.valueOf(requestMaker.getContestantsAmount());
-				this.tournamentRequest = new TournamentRequest(contestantsAmount);
-			} catch (NumberFormatException nfe) {
-				this.errors.add("The contestants amount must be an integer.");
-			}
-			if (this.selectionMethod  == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
-				try {
-					Double championProbability = Double.valueOf(requestMaker.getChampionPercentage()) / 100;
-					if (this.tournamentRequest != null)
-						this.tournamentRequest.setChampionProbability(championProbability);
-				} catch (NumberFormatException nfe) {
-					this.errors.add("The champion probability must be a rational number.");
-				}
-			}
-		}
-		if (this.selectionMethod == SelectionMethod.TRUNCATION) {
-			try {
-				truncation = Double.valueOf(requestMaker.getTruncationPercentage())/100;
-			} catch (NumberFormatException nfe) {
-				this.errors.add("The truncation amount must be an integer.");
-			}
-		}		
+		
+			
 		this.crossoverMethod = CrossoverMethod.valueOf(CrossoverMethod.class, requestMaker.getCrossoverMethod());
 		this.mutationMethod = MutationMethod.valueOf(MutationMethod.class, requestMaker.getMutationMethod());
 		try {
@@ -95,12 +64,7 @@ public class Request {
 			this.errors.add("The elitism rate must be a rational number.");
 		}
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());
-		if (this.fitnessFunction == FitnessFunction.FUNCTION4a || this.fitnessFunction == FitnessFunction.FUNCTION4b)
-			try {
-				this.fuction4Dimension = Integer.valueOf(requestMaker.getFuction4Dimension());
-			} catch (NumberFormatException nfe) {
-				this.errors.add("The parameter d of function 4 must be an integer.");
-			}
+		
 	}
 	
 	public void checkValidity() {
@@ -112,32 +76,8 @@ public class Request {
 			errors.add("The crossover probability must be between 0 and 100 (both included).");
 		if (this.mutationProbability < 0 || this.mutationProbability > 1)
 			errors.add("The mutation probability must be between 0 and 100 (both included).");
-		if (this.precision <= 0)
-			errors.add("The precision must be a positive rational number.");
 		if (this.elitismRate < 0 || this.elitismRate > 100)
 			errors.add("The elitism rate must be between 0 and 100 (both included).");
-		if (this.fitnessFunction == FitnessFunction.FUNCTION4b || this.fitnessFunction == FitnessFunction.FUNCTION4a)
-			if (this.fuction4Dimension <= 0)
-				errors.add("The parameter d of function 4 must be a positive integer.");
-		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
-				this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
-			Integer contestantsAmount = this.tournamentRequest.getContestantsAmount();
-			if (contestantsAmount <= 0)
-				errors.add("The contestants amount must be a positive integer.");
-			if (contestantsAmount > this.populationAmount)
-				errors.add("The amount of contestants must be equal or lower than the population amount.");
-			if (this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
-				Double championProbability = this.tournamentRequest.getChampionProbability();
-				if (championProbability < 0 || championProbability > 1)
-					errors.add("The champion probability must be between 0 and 100 (both included).");
-			}
-		}
-		if (this.fitnessFunction != FitnessFunction.FUNCTION4b) {
-			if (this.crossoverMethod == CrossoverMethod.ARITHMETIC)
-				errors.add("The crossover method Arithmetic is only available for the function 4b");
-			else if (this.crossoverMethod == CrossoverMethod.BLX_ALPHA)
-				errors.add("The crossover method BLXalpha is only available for the function 4b");
-		}
 		if (!Available.isCrossoverAvailable(fitnessFunction, crossoverMethod)) {
 			errors.add("The crossover method " + this.crossoverMethod.name() +
 					" is not available for the function " + fitnessFunction.name());
@@ -164,10 +104,6 @@ public class Request {
 		return mutationProbability;
 	}
 
-	public Double getPrecision() {
-		return precision;
-	}
-
 	public SelectionMethod getSelectionMethod() {
 		return selectionMethod;
 	}
@@ -188,15 +124,4 @@ public class Request {
 		return fitnessFunction;
 	}
 
-	public Integer getFuction4Dimension() {
-		return fuction4Dimension;
-	}
-
-	public TournamentRequest getTournamentRequest() {
-		return tournamentRequest;
-	}
-
-	public Double getTruncationAmount() {
-		return truncation;
-	}
 }
