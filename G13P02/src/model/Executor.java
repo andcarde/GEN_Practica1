@@ -191,17 +191,15 @@ public class Executor {
 			+ " con los parámetros: \n\r" + intergenerationLeader.getGenesToString();
 	}
 
-	//TODO
+	
 	public double[] getIdealFunction() {
-		//if (mold.getFunction().equals(FitnessFunction.ADAPTATION)) return mold.getFunction().getIdealFunction();
-		return null;
+		return mold.getFunction().getIdealFunction();
 	}
-	//TODO
+
 	public double[] getbestFunction() {
-		//if (mold.getFunction().equals(FitnessFunction.ADAPTATION)) return intergenerationLeader.
-		return null;
+		return mold.getFunction().getFunction(intergenerationLeader.getRaiz());
 	}
-	//TODO
+	
 	public double[] getXValues() {
 		return ((AdaptationFunction) mold.getFunction()).getXValues();
 	}

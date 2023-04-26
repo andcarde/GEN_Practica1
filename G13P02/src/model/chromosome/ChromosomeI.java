@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.MoldI;
 import model.gen.practice1.GenI;
+import model.gen.practice3.ArithmeticNode;
 
 public interface ChromosomeI {
 
@@ -23,4 +24,5 @@ public interface ChromosomeI {
 	void assimilate(List<Object> genome);
 	int indexOf(int city);
 	double getBasicValue();
+	ArithmeticNode getRaiz();
 }
