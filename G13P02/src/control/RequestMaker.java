@@ -25,12 +25,11 @@ public interface RequestMaker {
 	
 	String getFitnessFunction();
 	
-	// Integer
 	String getContestantsAmount();
-	
+		
 	// Double
 	String getChampionPercentage();
-
+		
 	// String
 	String getTruncationPercentage();
 }

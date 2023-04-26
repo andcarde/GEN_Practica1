@@ -63,6 +63,9 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int VERTICAL_MARGIN = 5;
 	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
+	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
+	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
+	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -93,7 +96,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private MyPanel contentPane;
-	private JTextField populationAmountTF, generationAmountTF;
+	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
@@ -122,7 +125,8 @@ public class Window extends JFrame implements RequestMaker, Client {
 		initSettings(contentPane);
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initMethodPanel(contentPane);
-		initGraphicPanel();
+		contentPane.addHeight(BIG_VERTICAL_MARGIN);
+		initTournamentParameters(contentPane);		initGraphicPanel();
 		initResultTextArea();
 		// initScrollPane();
 		initStartButton();
@@ -193,7 +197,13 @@ public class Window extends JFrame implements RequestMaker, Client {
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		functionCB = createComboBox(FitnessFunction.class, superPanel);
 		
-		
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Truncation Rate (%)", superPanel);
+		labelTruncPos = superPanel.getComponentCount()-1;
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		truncationSpinner = createSpinner(Window.DEFAULT_TRUNCATION_AMOUNT, superPanel);
+		superPanel.getComponent(labelTruncPos).setVisible(false);
+		truncationSpinner.setVisible(false);
 		
 	}
 	
@@ -258,6 +268,39 @@ public class Window extends JFrame implements RequestMaker, Client {
 		methodPanel.setSize(Window.PANEL_WIDTH, methodPanel.getMyHeight());
 		superPanel.addHeight(methodPanel.getMyHeight());
 	}
+	
+	private void initTournamentParameters(MyPanel superPanel) {
+		tournamentPanel = new MyPanel(null, Window.LEFT_MARGIN);
+		tournamentPanel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
+		tournamentPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
+		tournamentPanel.setVisible(false);
+		
+		tournamentPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Contestants Amount", tournamentPanel);
+		tournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		contestantsAmountTF = createTextField(String.valueOf(Window.DEFAULT_CONTESTANTS_AMOUNT), tournamentPanel);
+		
+		probabilisticTournamentPanel = new MyPanel(null, 0);
+		probabilisticTournamentPanel.setLocation(tournamentPanel.getInnerLeftMargin(), tournamentPanel.getMyHeight());
+		probabilisticTournamentPanel.setVisible(false);
+		
+		probabilisticTournamentPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Champion Probability", probabilisticTournamentPanel);
+		probabilisticTournamentPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		championPercentageTF = createTextField(String.valueOf(Window.DEFAULT_CHAMPION_PROBABILITY),
+				probabilisticTournamentPanel);
+		
+		probabilisticTournamentPanel.setSize(MAX_WIDTH,
+				probabilisticTournamentPanel.getMyHeight());
+		tournamentPanel.add(probabilisticTournamentPanel);
+		tournamentPanel.addHeight(probabilisticTournamentPanel.getMyHeight());
+		tournamentPanel.addHeight(VERTICAL_MARGIN);
+		
+		tournamentPanel.setSize(Window.PANEL_WIDTH, tournamentPanel.getMyHeight());
+		superPanel.add(tournamentPanel);
+		superPanel.addHeight(tournamentPanel.getMyHeight());
+	}
+
 
 	private void initStartButton() {
 		JButton btnStart = new JButton("Start Genetic Algorithm");
@@ -364,6 +407,22 @@ public class Window extends JFrame implements RequestMaker, Client {
 	@Override
 	public String getCrossoverMethod() {
 		return this.crossCB.getSelectedItem().toString();
+	}
+
+	@Override
+	public String getContestantsAmount() {
+		return contestantsAmountTF.getText();
+	}
+
+	@Override
+	public String getChampionPercentage() {
+		return championPercentageTF.getText();
+	}
+
+	@Override
+	public String getTruncationPercentage() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -22,7 +22,6 @@ public class Request {
 	private MutationMethod mutationMethod;
 	private Integer elitismRate;
 	private FitnessFunction fitnessFunction;
-	private Integer fuction4Dimension;
 	private TournamentRequest tournamentRequest;
 	
 	public Request(RequestMaker requestMaker) throws InvalidInputException {
@@ -55,6 +54,11 @@ public class Request {
 			this.mutationProbability = Double.valueOf(requestMaker.getMutationPercentage()) / 100;
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
+		}
+		try {
+			this.precision = Double.valueOf(requestMaker.getPrecision());
+		} catch (NumberFormatException nfe) {
+			this.errors.add("The precision must be a rational number.");
 		}
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
@@ -166,10 +170,6 @@ public class Request {
 
 	public FitnessFunction getFitnessFunction() {
 		return fitnessFunction;
-	}
-
-	public Integer getFuction4Dimension() {
-		return fuction4Dimension;
 	}
 
 	public TournamentRequest getTournamentRequest() {
