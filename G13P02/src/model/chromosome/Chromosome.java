@@ -6,6 +6,7 @@ import java.util.List;
 import model.MoldI;
 import model.fitness.DoubleInput;
 import model.gen.practice1.GenI;
+import model.gen.practice3.ArithmeticNode;
 
 public abstract class Chromosome implements ChromosomeI {
 	
@@ -94,5 +95,9 @@ public abstract class Chromosome implements ChromosomeI {
 	@Override
 	public double getBasicValue() {
 		return 0;
+	}
+	
+	public ArithmeticNode getRaiz() {
+		return null;
 	}
 }

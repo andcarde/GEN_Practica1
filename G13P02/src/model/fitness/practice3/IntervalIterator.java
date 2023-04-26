@@ -21,4 +21,9 @@ public class IntervalIterator {
 	public boolean hasNext() {
 		return pointer < upperLimit;
 	}
+
+	public double getPointer() {
+		return pointer;
+	}
+	
 }

@@ -8,6 +8,7 @@ import model.fitness.Function;
 import model.fitness.Input;
 import model.fitness.Variable;
 import model.gen.practice1.GenType;
+import model.gen.practice3.ArithmeticNode;
 
 public class AdaptationFunction extends Function {
 
@@ -16,9 +17,11 @@ public class AdaptationFunction extends Function {
 	private static double X_BELOW_LIMIT = -1;
 	private static double X_UPPER_LIMIT = 1;
 	private static double X_STEP = (X_UPPER_LIMIT - X_BELOW_LIMIT) / (DATASET_SIZE - 1);
-	
+	private double[] xValues, targetFunction;
 	public AdaptationFunction() {
 		super.isMaxim = true;
+		xValues = new double[DATASET_SIZE];
+		targetFunction = new double[DATASET_SIZE];
 	}
 	
 	@Override
@@ -28,7 +31,10 @@ public class AdaptationFunction extends Function {
 		Callback callback = input.get("tree");
 		IntervalIterator ii = new IntervalIterator(X_BELOW_LIMIT, X_UPPER_LIMIT, X_STEP);
 		for (int i = 0; i < DATASET_SIZE; i++) {
-			d += Math.pow((callback.getValue(ii.next()) - ObjetiveFunction.getValue(ii.next())), 2);
+			double value = ii.next();
+			xValues[i] = value;
+			targetFunction[i] = ObjetiveFunction.getValue(value);
+			d += Math.pow((callback.getValue(value) - ObjetiveFunction.getValue(value)), 2);
 			Math.pow(i, 2);
 		}
 		d /= DATASET_SIZE;
@@ -47,4 +53,21 @@ public class AdaptationFunction extends Function {
 	public GenType getGenType() {
 		return GenType.TREE;
 	}
+	
+	@Override
+	public double[] getFunction(ArithmeticNode node) { 
+		double[] ret = new double[DATASET_SIZE];
+		IntervalIterator ii = new IntervalIterator(X_BELOW_LIMIT, X_UPPER_LIMIT, X_STEP);
+		for (int i = 0; i < DATASET_SIZE; i++) {
+			ret[i] = node.getValue(ii.next());
+		} 
+		return ret;
+	}
+
+	
+	@Override
+	public double[] getXValues() { return xValues; }
+
+	@Override
+	public double[] getIdealFunction() { return targetFunction; }
 }
