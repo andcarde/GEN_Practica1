@@ -1,4 +1,4 @@
-package model.gen.practice1;
+package model.gen.practice3;
 
 public interface GenI {
 

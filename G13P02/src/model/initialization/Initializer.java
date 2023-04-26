@@ -8,9 +8,10 @@ import model.MoldI;
 import model.chromosome.ChromosomeI;
 import model.chromosome.practice1.BoundedChromosome;
 import model.chromosome.practice2.TravellerChromosome;
-import model.gen.practice1.GenType;
+import model.gen.practice3.GenType;
 import model.mutation.MutationI;
 import model.mutation.practice2.CityMutationI;
+import model.mutation.practice3.TreeMutationI;
 
 public class Initializer {
 
@@ -24,20 +25,14 @@ public class Initializer {
 	 * @param mutation
 	 * @return the population
 	 */
-	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation, Executor exe) {
+	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation, int maxDepth) {
 		List<ChromosomeI> population = new ArrayList<>();
 		switch (genType) {
-		case BINARY:
-		case REAL:
-			for (int i = 0; i < populationAmount; i++) {
-				population.add(new BoundedChromosome(mold));
-			}
-			break;
-		case CITY:
-			for (int i = 0; i < populationAmount; i++) {
-				population.add(new TravellerChromosome(mold, (CityMutationI) mutation));
-			}
-			break;
+		case TREE:
+			switch()
+			TreeInitializer.
+			MoldI mold, int maxDepth, int populationAmount,
+			TreeMutationI mutationMethod
 		default:
 			break;
 		}

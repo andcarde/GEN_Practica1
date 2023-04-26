@@ -9,8 +9,8 @@ import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
-import model.fitness.FitnessFunction;
-import model.gen.practice1.GenType;
+import model.fitness.practice3.AdaptationFunction;
+import model.gen.practice3.GenType;
 import model.initialization.Initializer;
 import model.mutation.MutationI;
 import model.selection.SelectionI;
@@ -99,8 +99,7 @@ public class Executor {
 		}
 		
 	}
-
-	//Hay que pasarle al treechromosome el executor despues de inicializarse
+	
 	private void initilize() {
 		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
 		else comparator = new ChromosomeComparatorMin();
@@ -204,7 +203,6 @@ public class Executor {
 	}
 	//TODO
 	public double[] getXValues() {
-		// TODO Auto-generated method stub
-		return null;
+		return ((AdaptationFunction) mold.getFunction()).getXValues();
 	}
 }
