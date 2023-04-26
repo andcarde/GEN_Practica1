@@ -93,14 +93,13 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private MyPanel contentPane;
-	private JTextField populationAmountTF, generationAmountTF, precisionTF;
+	private JTextField populationAmountTF, generationAmountTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
 	private MyPanel tournamentPanel, probabilisticTournamentPanel, function4Panel;
 	
 	private MyPanel methodPanel;
-	private JTextField contestantsAmountTF, championPercentageTF, fuction4DimensionTF;
 	private JComboBox<String> crossCB, selectionCB, mutationCB;
 	
 	private double[] gens;
@@ -350,11 +349,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 
 	@Override
-	public String getPrecision() {
-		return this.precisionTF.getText();
-	}
-
-	@Override
 	public String getSelectionMethod() {
 		return (String) selectionCB.getSelectedItem();
 	}
@@ -375,27 +369,9 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 
 	@Override
-	public String getContestantsAmount() throws NumberFormatException {
-		return this.contestantsAmountTF.getText();
-	}
-
-	@Override
-	public String getChampionPercentage() {
-		return this.championPercentageTF.getText();
-	}
-
-	@Override
-	public String getFuction4Dimension() throws NumberFormatException {
-		return this.fuction4DimensionTF.getText();
-	}
-
-	@Override
 	public String getCrossoverMethod() {
 		return this.crossCB.getSelectedItem().toString();
 	}
 
-	@Override
-	public String getTruncationPercentage() {
-		return truncationSpinner.getValue().toString();
-	}
+
 }

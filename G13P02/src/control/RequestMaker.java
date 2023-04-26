@@ -15,7 +15,6 @@ public interface RequestMaker {
 	String getMutationPercentage();
 	
 	// Double
-	String getPrecision();
 	
 	String getSelectionMethod();
 	
@@ -28,15 +27,5 @@ public interface RequestMaker {
 	
 	String getFitnessFunction();
 	
-	// Integer
-	String getContestantsAmount();
-	
-	// Double
-	String getChampionPercentage();
-	
-	// Integer
-	String getFuction4Dimension();
 
-	// String
-	String getTruncationPercentage();
 }
