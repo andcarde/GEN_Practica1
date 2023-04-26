@@ -97,7 +97,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
-	private MyPanel tournamentPanel, probabilisticTournamentPanel, function4Panel;
+	private MyPanel tournamentPanel, probabilisticTournamentPanel;
 	
 	private MyPanel methodPanel;
 	private JComboBox<String> crossCB, selectionCB, mutationCB;
@@ -192,14 +192,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		createLabel("Function", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		functionCB = createComboBox(FitnessFunction.class, superPanel);
-		functionCB.addItemListener(new ItemListener() {
-            @Override
-            public void itemStateChanged(ItemEvent e) {
-            	if (e.getItem().equals(FitnessFunction.FUNCTION4a.name()) || e.getItem().equals(FitnessFunction.FUNCTION4b.name()))
-            		function4Panel.setVisible(e.getStateChange() == ItemEvent.SELECTED);
-            }
-        });
-		functionCB.setSelectedItem(FitnessFunction.CITIES.toString());
+		
 		
 		
 	}

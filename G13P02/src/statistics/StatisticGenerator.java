@@ -21,17 +21,12 @@ import model.util.Pair;
 public class StatisticGenerator implements RequestMaker, Client {
 	
 	// ------------------------- CONFIGURATION CONSTANTS -----------------------------
-	private static final double PRECISION = 0.001;
 	private static final double CROSSOVER_RATE = 60;
 	private static final double MUTATION_RATE = 5;
 	private static final int POPULATION_AMOUNT = 200;
 	private static final int GENERATION_AMOUNT = 100;
 	private static final int TEST_NUMBER = 10;
-	private static final int CONTESTANT_AMOUNT = 3;
-	private static final int CHAMPION_PERCENTAGE = 70;
-	private static final int FUNCTION4_DIMENSION = 2;
-	private static final int TRUNCATION_PERCENTAGE = 25;
-	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.CITIES;
+	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.ADAPTATION;
 	
 	// -------------------------- PERMUTATIONS ----------------------------------------
 	
@@ -249,10 +244,6 @@ public class StatisticGenerator implements RequestMaker, Client {
 		return String.valueOf(MUTATION_RATE);
 	}
 
-	@Override
-	public String getPrecision() {
-		return String.valueOf(PRECISION);
-	}
 
 	@Override
 	public String getSelectionMethod() {
@@ -279,25 +270,6 @@ public class StatisticGenerator implements RequestMaker, Client {
 		return FITNESS_FUNCTION.name();
 	}
 
-	@Override
-	public String getContestantsAmount() {
-		return String.valueOf(CONTESTANT_AMOUNT);
-	}
-
-	@Override
-	public String getChampionPercentage() {
-		return String.valueOf(CHAMPION_PERCENTAGE);
-	}
-
-	@Override
-	public String getFuction4Dimension() {
-		return String.valueOf(FUNCTION4_DIMENSION);
-	}
-
-	@Override
-	public String getTruncationPercentage() {
-		return String.valueOf(TRUNCATION_PERCENTAGE);
-	}
 	// ------------- END of RequestMaker METHODS -----------------------------
 	
 	/***
