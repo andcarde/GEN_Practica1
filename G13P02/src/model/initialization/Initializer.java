@@ -3,14 +3,13 @@ package model.initialization;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Executor;
 import model.MoldI;
 import model.chromosome.ChromosomeI;
-import model.chromosome.practice1.BoundedChromosome;
-import model.chromosome.practice2.TravellerChromosome;
+import model.chromosome.practice3.TreeChromosome;
 import model.gen.practice3.GenType;
+import model.initialization.practice3.GrowPopulationInitializer;
+import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationI;
-import model.mutation.practice2.CityMutationI;
 import model.mutation.practice3.TreeMutationI;
 
 public class Initializer {
@@ -25,14 +24,23 @@ public class Initializer {
 	 * @param mutation
 	 * @return the population
 	 */
-	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation, int maxDepth) {
+	public static List<ChromosomeI> act(GenType genType, Integer populationAmount, MoldI mold, MutationI mutation, int maxDepth, TreeInitializerEnum tie) {
 		List<ChromosomeI> population = new ArrayList<>();
 		switch (genType) {
 		case TREE:
-			switch()
-			TreeInitializer.
-			MoldI mold, int maxDepth, int populationAmount,
-			TreeMutationI mutationMethod
+			TreeMutationI treeMutation = (TreeMutationI) mutation;
+			switch(tie) {
+				case FULL:
+					break;
+				case GROW:
+					List<TreeChromosome> populationTree = new GrowPopulationInitializer(mold, maxDepth, populationAmount, treeMutation).initialize();
+					for (ChromosomeI chr : populationTree)
+						population.add(chr);
+				case RAMPED_AND_HALP:
+					break;
+				default:
+					break;
+			}
 		default:
 			break;
 		}

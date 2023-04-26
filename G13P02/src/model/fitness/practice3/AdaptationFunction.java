@@ -7,8 +7,8 @@ import model.fitness.CallbackInput;
 import model.fitness.Function;
 import model.fitness.Input;
 import model.fitness.Variable;
-import model.gen.practice1.GenType;
 import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.GenType;
 
 public class AdaptationFunction extends Function {
 

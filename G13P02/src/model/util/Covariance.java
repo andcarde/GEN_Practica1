@@ -3,7 +3,6 @@ package model.util;
 import java.util.List;
 
 import model.chromosome.ChromosomeI;
-import model.chromosome.practice3.TreeChromosome;
 
 public class Covariance {
 	
@@ -21,5 +20,4 @@ public class Covariance {
 		}	
 		return value/population.size();
 	}
-
 }

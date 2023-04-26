@@ -2,8 +2,8 @@ package model.fitness;
 
 import java.util.List;
 
-import model.gen.practice1.GenType;
 import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.GenType;
 
 public interface Fitness {
 

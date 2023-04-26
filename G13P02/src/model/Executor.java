@@ -12,6 +12,7 @@ import model.crossover.CrossoverI;
 import model.fitness.practice3.AdaptationFunction;
 import model.gen.practice3.GenType;
 import model.initialization.Initializer;
+import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationI;
 import model.selection.SelectionI;
 
@@ -24,8 +25,10 @@ public class Executor {
 	private final MoldI mold;
 	private final SelectionI selection;
 	private final CrossoverI crossover;
-	private GenType genType;
-	private MutationI mutation;
+	private final int maxDepth;
+	private final GenType genType;
+	private final MutationI mutation;
+	private TreeInitializerEnum treeInitializerEnum;
 	// ------------------------------------------------------------------
 	
 	private List<ChromosomeI> population;
@@ -56,6 +59,8 @@ public class Executor {
 		this.crossover = (CrossoverI) config.get("crossover");
 		this.genType = (GenType) config.get("gen_type");
 		this.mutation = (MutationI) config.get("mutation");
+		this.treeInitializerEnum = (TreeInitializerEnum)config.get("tree_initializer");
+		this.maxDepth = (Integer) config.get("max_depth");
 		
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
@@ -103,7 +108,7 @@ public class Executor {
 	private void initilize() {
 		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
 		else comparator = new ChromosomeComparatorMin();
-		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation, this);
+		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation, maxDepth, treeInitializerEnum);
 		for (ChromosomeI chromosome : population)
 			chromosome.initialize();
 	}
@@ -190,7 +195,6 @@ public class Executor {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
 			+ " con los parámetros: \n\r" + intergenerationLeader.getGenesToString();
 	}
-
 	
 	public double[] getIdealFunction() {
 		return mold.getFunction().getIdealFunction();

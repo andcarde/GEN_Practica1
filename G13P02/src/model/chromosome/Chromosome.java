@@ -5,8 +5,8 @@ import java.util.List;
 
 import model.MoldI;
 import model.fitness.DoubleInput;
-import model.gen.practice1.GenI;
 import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.GenI;
 
 public abstract class Chromosome implements ChromosomeI {
 	
@@ -38,11 +38,6 @@ public abstract class Chromosome implements ChromosomeI {
 		for (GenI gen : genes)
 			input.put(gen.getName(), gen.getValue());
 		this.phenotype = this.mold.getFunction().getValue(input);
-	}
-
-	@Override
-	public Integer getSize() {
-		return this.mold.getSize();
 	}
 
 	@Override

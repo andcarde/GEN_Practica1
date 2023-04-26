@@ -3,8 +3,8 @@ package model.chromosome;
 import java.util.List;
 
 import model.MoldI;
-import model.gen.practice1.GenI;
 import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.GenI;
 
 public interface ChromosomeI {
 
