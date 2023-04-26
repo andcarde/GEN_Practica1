@@ -52,7 +52,6 @@ public class Request {
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
 		}
-		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
 		this.crossoverMethod = CrossoverMethod.valueOf(CrossoverMethod.class, requestMaker.getCrossoverMethod());
 		this.mutationMethod = MutationMethod.valueOf(MutationMethod.class, requestMaker.getMutationMethod());
 		try {
@@ -74,12 +73,6 @@ public class Request {
 			errors.add("The mutation probability must be between 0 and 100 (both included).");
 		if (this.elitismRate < 0 || this.elitismRate > 100)
 			errors.add("The elitism rate must be between 0 and 100 (both included).");
-		if (this.fitnessFunction != FitnessFunction.FUNCTION4b) {
-			if (this.crossoverMethod == CrossoverMethod.ARITHMETIC)
-				errors.add("The crossover method Arithmetic is only available for the function 4b");
-			else if (this.crossoverMethod == CrossoverMethod.BLX_ALPHA)
-				errors.add("The crossover method BLXalpha is only available for the function 4b");
-		}
 		if (!Available.isCrossoverAvailable(fitnessFunction, crossoverMethod)) {
 			errors.add("The crossover method " + this.crossoverMethod.name() +
 					" is not available for the function " + fitnessFunction.name());
@@ -106,10 +99,6 @@ public class Request {
 		return mutationProbability;
 	}
 
-	public Double getPrecision() {
-		return precision;
-	}
-
 	public SelectionMethod getSelectionMethod() {
 		return selectionMethod;
 	}
@@ -130,15 +119,4 @@ public class Request {
 		return fitnessFunction;
 	}
 
-	public Integer getFuction4Dimension() {
-		return fuction4Dimension;
-	}
-
-	public TournamentRequest getTournamentRequest() {
-		return tournamentRequest;
-	}
-
-	public Double getTruncationAmount() {
-		return truncation;
-	}
 }

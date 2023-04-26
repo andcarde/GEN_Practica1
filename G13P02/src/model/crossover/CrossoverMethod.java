@@ -5,7 +5,7 @@ public enum CrossoverMethod {
 	// Binary or Real Chromosome
 	ONE_POINT, UNIFORM, ARITHMETIC, BLX_ALPHA,
 	// City Chromosome
-	PMX, OX, POX, CX, ERX, CO, AO;
+	PMX, OX, POX, CX, ERX, CO, AO, 
 	
 	/* PMX: Partial Pairing
 	 * OX: Order
@@ -15,4 +15,6 @@ public enum CrossoverMethod {
 	 * CO: Ordinal Codification
 	 * AO: Alternative Order Crossover (Método propio)
 	 * */
+	
+	CrossoverTree;
 }
