@@ -5,11 +5,11 @@ import model.gen.practice3.ArithmeticNode;
 import model.gen.practice3.TerminalEnum;
 import model.random.RandomGenerator;
 
-public class TerminalFunction implements TreeMutationI {
+public class TerminalTreeMutation implements TreeMutationI {
 	
 	private double probability;
 	
-	public TerminalFunction(double probability) {
+	public TerminalTreeMutation(double probability) {
 		this.probability = probability;
 	}
 

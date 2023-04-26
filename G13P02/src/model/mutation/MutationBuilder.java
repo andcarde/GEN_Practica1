@@ -1,39 +1,27 @@
 package model.mutation;
 
-import model.gen.practice1.GenType;
-import model.mutation.practice1.BasicBinaryMutation;
-import model.mutation.practice1.BasicRealMutation;
-import model.mutation.practice2.CityEugenicMutation;
-import model.mutation.practice2.CityExchangeMutation;
-import model.mutation.practice2.CityHeuristicMutation;
-import model.mutation.practice2.CityInsertionMutation;
-import model.mutation.practice2.CityInverseMutation;
+import model.gen.practice3.GenType;
+import model.mutation.practice3.ContractionTreeMutation;
+import model.mutation.practice3.FunctionalTreeMutation;
+import model.mutation.practice3.PermutationTreeMutation;
+import model.mutation.practice3.TerminalTreeMutation;
 
 public class MutationBuilder {
 
 	public static MutationI build(GenType gentype, MutationMethod mutationMethod, Double mutationProbability) {
 		switch(gentype) {
-			case BINARY:
-				return new BasicBinaryMutation(mutationProbability);
-			case REAL:
-				return new BasicRealMutation(mutationProbability);
-			case CITY:
-				switch(mutationMethod) {
-					case EXCHANGE:
-						return new CityExchangeMutation(mutationProbability);
-					case INVERSE:
-						return new CityInverseMutation(mutationProbability);
-					case INSERTION:
-						return new CityInsertionMutation(mutationProbability);
-					case EUGENIC:
-						return new CityEugenicMutation(mutationProbability);
-					case HEURISTIC:
-						return new CityHeuristicMutation(mutationProbability);
-					default:
-						return null;
+			case TREE:
+				switch (mutationMethod) {
+					case FUNCTIONAL:
+						return new FunctionalTreeMutation(mutationProbability);
+					case HOIST:
+						return new ContractionTreeMutation(mutationProbability);
+					case PERMUTATION:
+						return new PermutationTreeMutation(mutationProbability);
+					case TERMINAL:
+						return new TerminalTreeMutation(mutationProbability);
 				}
-			default:
-				return null;
 		}
+		return null;
 	}
 }

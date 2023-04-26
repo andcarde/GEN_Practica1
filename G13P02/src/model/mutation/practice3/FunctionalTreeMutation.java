@@ -3,7 +3,6 @@ package model.mutation.practice3;
 import model.chromosome.practice3.TreeChromosome;
 import model.gen.practice3.ArithmeticEnum;
 import model.gen.practice3.ArithmeticNode;
-import model.gen.practice3.TerminalEnum;
 import model.random.RandomGenerator;
 
 public class FunctionalTreeMutation implements TreeMutationI {

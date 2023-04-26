@@ -35,8 +35,7 @@ public class Builder {
 	}
 	
 	private static MoldI buildMold(Request request) {
-		Fitness function = FunctionBuilder.build(request.getFitnessFunction(),
-				request.getPrecision(), request.getFuction4Dimension());
+		Fitness function = FunctionBuilder.build(request.getFitnessFunction());
 		List<GenI> moldGenes = new ArrayList<>();
 		return new Mold(function, moldGenes);
 	}
