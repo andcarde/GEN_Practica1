@@ -129,7 +129,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 							try {
 								Request request = new Request(this);
 								Controller.getInstance().execute(request);
-								Controller.getInstance().updateView(this);
+								Controller.getInstance().updateView(this, false);
 							} catch (InvalidInputException iie) {}
 						}
 						average /= 10;
@@ -309,5 +309,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public void paintResult(double[] generationAverage, double[] generationLeaders,
 			double[] absoluteLeaders, double[] selectivePressure, String bestChromosomeToString) {
 		average += absoluteLeaders[GENERATION_AMOUNT - 1];
+	}
+
+	@Override
+	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {
+		// TODO Auto-generated method stub
+		
 	}
 }
