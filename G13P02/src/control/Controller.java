@@ -36,7 +36,7 @@ public class Controller {
 	 * selective pressure and the best chromosome in a print line form.
 	 * @param client
 	 */
-	public void updateView(Client client) {
+	public void updateView(Client client, boolean isP3) {
 		client.paintResult(
 				executor.getGenerationAverage(),
 				executor.getGenerationLeaders(),
@@ -44,5 +44,11 @@ public class Controller {
 				executor.getSelectivePressure(),
 				executor.getBestChromosomeToString()
 		);
+		if (isP3) {
+			client.paintP3Graphics(
+					executor.getIdealFunction(), 
+					executor.getbestFunction(), 
+					executor.getXValues());
+		}
 	}
 }

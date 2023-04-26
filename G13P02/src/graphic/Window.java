@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -107,7 +108,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private JComboBox<String> crossCB, selectionCB, mutationCB;
 	
 	private double[] gens;
-	private Plot2DPanel plot;
+	private Plot2DPanel plot, plotP3;
 	private JTextArea textValue;
 	private int labelTruncPos;
 
@@ -115,7 +116,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	 * Create the frame.
 	 */
 	public Window() {
-		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 02>");
+		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 03>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1197, 703);
 		contentPane = new MyPanel(null, Window.OUTER_LEFT_MARGIN);
@@ -271,16 +272,22 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private void initGraphicPanel() {
-		JPanel graphicPanel = new JPanel();
-		graphicPanel.setBackground(new Color(222, 221, 218));
-		graphicPanel.setBounds(287, 41, 835, 450);
-		contentPane.add(graphicPanel);
+		JTabbedPane generalPanel = new JTabbedPane();
+		generalPanel.setBackground(new Color(222, 221, 218));
+		generalPanel.setBounds(287, 41, 835, 450);
+		contentPane.add(generalPanel);
 		plot = new Plot2DPanel();
 		plot.addLegend("SOUTH");
-		graphicPanel.add(plot);
+		generalPanel.addTab("Progresion", plot);
 		plot.setBounds(228, 12, 430, 315);
 		plot.setPreferredSize(new Dimension(835, 450));
 		plot.setVisible(false);
+		plotP3 = new Plot2DPanel();
+		plot.addLegend("SOUTH");
+		generalPanel.addTab("Resultado Final", plotP3);
+		plotP3.setBounds(228, 12, 430, 315);
+		plotP3.setPreferredSize(new Dimension(835, 450));
+		plotP3.setVisible(false);
 	}
 	
 	private void initMethodPanel(MyPanel superPanel) {
@@ -360,7 +367,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 			for (int i = 0; i < generationAmount; i++)
 				gens[i] = i;
 			Controller.getInstance().execute(request);
-			Controller.getInstance().updateView(this);
+			Controller.getInstance().updateView(this, functionCB.getSelectedItem() == FitnessFunction.ADAPTATION);
 		} catch (InvalidInputException iie) {
 			JOptionPane.showMessageDialog(this, iie.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -377,6 +384,15 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plot.addLinePlot("presi�n selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
+	}
+	
+	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {
+		plot.resetMapData();
+		plot.setVisible(true);
+		plot.removeAllPlots();
+		plot.addLinePlot("Funcion Objetivo", Color.red, xvalues, idealFunction);
+		plot.addLinePlot("Funcion Obtenida", Color.blue, xvalues, obtainedFunction);
+		plot.repaint();
 	}
 	
 	@Override

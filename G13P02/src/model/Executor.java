@@ -9,6 +9,7 @@ import model.chromosome.ChromosomeComparator;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
+import model.fitness.FitnessFunction;
 import model.gen.practice1.GenType;
 import model.initialization.Initializer;
 import model.mutation.MutationI;
@@ -189,5 +190,21 @@ public class Executor {
 	public String getBestChromosomeToString() {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
 			+ " con los parámetros: \n\r" + intergenerationLeader.getGenesToString();
+	}
+
+	//TODO
+	public double[] getIdealFunction() {
+		//if (mold.getFunction().equals(FitnessFunction.ADAPTATION)) return mold.getFunction().getIdealFunction();
+		return null;
+	}
+	//TODO
+	public double[] getbestFunction() {
+		//if (mold.getFunction().equals(FitnessFunction.ADAPTATION)) return intergenerationLeader.
+		return null;
+	}
+	//TODO
+	public double[] getXValues() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -9,4 +9,6 @@ public interface Client {
 
 	void paintResult(double[] generationAverage, double[] generationLeaders, double[] absoluteLeaders,
 			double[] selectivePressure, String bestChromosomeToString);
+	
+	void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues);
 }
