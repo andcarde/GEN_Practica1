@@ -239,7 +239,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public String getMutationPercentage() {
 		return String.valueOf(MUTATION_RATE);
 	}
-
+	
 	@Override
 	public String getSelectionMethod() {
 		return selectionMethod.name();
@@ -264,7 +264,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public String getFitnessFunction() {
 		return FITNESS_FUNCTION.name();
 	}
-
+	
 	@Override
 	public String getContestantsAmount() {
 		return String.valueOf(CONTESTANT_AMOUNT);
@@ -279,6 +279,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public String getTruncationPercentage() {
 		return String.valueOf(TRUNCATION_PERCENTAGE);
 	}
+	
 	// ------------- END of RequestMaker METHODS -----------------------------
 	
 	/***
