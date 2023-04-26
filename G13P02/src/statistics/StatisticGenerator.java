@@ -21,7 +21,6 @@ import model.util.Pair;
 public class StatisticGenerator implements RequestMaker, Client {
 	
 	// ------------------------- CONFIGURATION CONSTANTS -----------------------------
-	private static final double PRECISION = 0.001;
 	private static final double CROSSOVER_RATE = 60;
 	private static final double MUTATION_RATE = 5;
 	private static final int POPULATION_AMOUNT = 200;
@@ -29,30 +28,22 @@ public class StatisticGenerator implements RequestMaker, Client {
 	private static final int TEST_NUMBER = 10;
 	private static final int CONTESTANT_AMOUNT = 3;
 	private static final int CHAMPION_PERCENTAGE = 70;
-	private static final int FUNCTION4_DIMENSION = 2;
 	private static final int TRUNCATION_PERCENTAGE = 25;
-	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.CITIES;
+	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.ADAPTATION;
 	
 	// -------------------------- PERMUTATIONS ----------------------------------------
 	
 	// -- Crossover method permutations
 	private static final CrossoverMethod[] crossoverMethodArray = {
-			CrossoverMethod.AO,
-			CrossoverMethod.CO,
-			CrossoverMethod.CX,
-			CrossoverMethod.ERX,
-			CrossoverMethod.OX,
-			CrossoverMethod.PMX,
-			CrossoverMethod.POX
+			CrossoverMethod.CROSSOVER_TREE
 	};
 	
 	// -- Mutation method permutations
 	private static final MutationMethod[] mutationMethodArray = {
-			MutationMethod.EUGENIC,
-			MutationMethod.EXCHANGE,
-			MutationMethod.HEURISTIC,
-			MutationMethod.INSERTION,
-			MutationMethod.INVERSE
+			MutationMethod.FUNCTIONAL,
+			MutationMethod.HOIST,
+			MutationMethod.PERMUTATION,
+			MutationMethod.TERMINAL
 	};
 	
 	// -- Selection method permutations
@@ -250,11 +241,6 @@ public class StatisticGenerator implements RequestMaker, Client {
 	}
 
 	@Override
-	public String getPrecision() {
-		return String.valueOf(PRECISION);
-	}
-
-	@Override
 	public String getSelectionMethod() {
 		return selectionMethod.name();
 	}
@@ -287,11 +273,6 @@ public class StatisticGenerator implements RequestMaker, Client {
 	@Override
 	public String getChampionPercentage() {
 		return String.valueOf(CHAMPION_PERCENTAGE);
-	}
-
-	@Override
-	public String getFuction4Dimension() {
-		return String.valueOf(FUNCTION4_DIMENSION);
 	}
 
 	@Override
