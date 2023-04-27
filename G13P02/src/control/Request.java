@@ -23,6 +23,7 @@ public class Request {
 	private Integer elitismRate;
 	private FitnessFunction fitnessFunction;
 	private TournamentRequest tournamentRequest;
+	private boolean bloating;
 	
 	public Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.errors = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Request {
 	}
 	
 	private void initializeAttributes(RequestMaker requestMaker) {
+		this.bloating = requestMaker.isBloatingActive();
 		try {
 			this.populationAmount = Integer.valueOf(requestMaker.getPopulationAmount());
 		} catch (NumberFormatException nfe) {
@@ -54,11 +56,6 @@ public class Request {
 			this.mutationProbability = Double.valueOf(requestMaker.getMutationPercentage()) / 100;
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
-		}
-		try {
-			this.precision = Double.valueOf(requestMaker.getPrecision());
-		} catch (NumberFormatException nfe) {
-			this.errors.add("The precision must be a rational number.");
 		}
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
@@ -178,5 +175,9 @@ public class Request {
 
 	public Double getTruncationAmount() {
 		return truncation;
+	}
+	
+	public boolean isBloatingActive() {
+		return bloating;
 	}
 }

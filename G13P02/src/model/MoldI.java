@@ -12,4 +12,6 @@ public interface MoldI {
 	List<GenI> getGenes();
 	
 	Integer getNumGenes();
+	
+	boolean getBloating();
 }

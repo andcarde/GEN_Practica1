@@ -9,10 +9,12 @@ public class Mold implements MoldI {
 	
 	private final Fitness function;
 	private final List<GenI> moldGenes;
+	private boolean bloating;
 	
-	public Mold(Fitness function, List<GenI> moldGenes) {
+	public Mold(Fitness function, List<GenI> moldGenes, boolean bloating) {
 		this.function = function;
 		this.moldGenes = moldGenes;
+		this.bloating = bloating;
 	}
 	
 	@Override
@@ -28,5 +30,10 @@ public class Mold implements MoldI {
 	@Override
 	public Integer getNumGenes() {
 		return this.moldGenes.size();
+	}
+
+	@Override
+	public boolean getBloating() {
+		return bloating;
 	}
 }

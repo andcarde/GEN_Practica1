@@ -10,6 +10,7 @@ import java.awt.event.ItemListener;
 import java.util.Arrays;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -41,7 +42,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
-	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CrossoverTree;
+	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CROSSOVER_TREE;
 	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.TERMINAL;
 
 	
@@ -55,6 +56,8 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int TEXT_FIELD_WIDTH = 150;
 	private static final int SPINNER_HIGH_SIZE = 20;
 	private static final int SPINNER_WIDTH = 80;
+	private static final int CHECKBOX_HIGH_SIZE = 20;
+	private static final int CHECKBOX_WIDTH = 80;
 	private static final int COMBO_BOX_HEIGHT = 20;
 	private static final int COMBO_BOX_WIDTH = 200;
 	private static final int MAX_WIDTH = OBTAIN_MAX_WIDTH();
@@ -66,6 +69,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
 	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
+	private static final boolean DEFAULT_BLOATING_CHECK = true;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -104,6 +108,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	
 	private MyPanel methodPanel;
 	private JComboBox<String> crossCB, selectionCB, mutationCB;
+	private JCheckBox bloating;
 	
 	private double[] gens;
 	private Plot2DPanel plot, plotP3;
@@ -171,6 +176,16 @@ public class Window extends JFrame implements RequestMaker, Client {
 		return comboBox;
 	}
 	
+	private JCheckBox createCheckBox(boolean isChecked, MyPanel panel) {
+		JCheckBox checkBox = new JCheckBox();
+		checkBox.setBounds(panel.innerLeftMargin, panel.getMyHeight(),
+				CHECKBOX_WIDTH, CHECKBOX_HIGH_SIZE);
+		panel.addHeight(SPINNER_HIGH_SIZE);
+		checkBox.setSelected(isChecked);
+		panel.add(checkBox);
+		return checkBox;
+	}
+	
 
 	public void initSettings(MyPanel superPanel) {
 		createLabel("Population Amount", superPanel);
@@ -192,6 +207,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 		createLabel("Elitism Rate (%)", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		elitismRateSpinner = createSpinner(Window.DEFAULT_ELITISM_RATE, superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Activate Bloating", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		bloating = createCheckBox(Window.DEFAULT_BLOATING_CHECK, superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Function", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
@@ -421,8 +440,12 @@ public class Window extends JFrame implements RequestMaker, Client {
 
 	@Override
 	public String getTruncationPercentage() {
-		// TODO Auto-generated method stub
-		return null;
+		return truncationSpinner.getValue().toString();
+	}
+
+	@Override
+	public boolean isBloatingActive() {
+		return bloating.isSelected();
 	}
 
 

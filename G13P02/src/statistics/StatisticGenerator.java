@@ -30,6 +30,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	private static final int CHAMPION_PERCENTAGE = 70;
 	private static final int TRUNCATION_PERCENTAGE = 25;
 	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.ADAPTATION;
+	private static final boolean BLOATING_VALUE = true;
 	
 	// -------------------------- PERMUTATIONS ----------------------------------------
 	
@@ -72,6 +73,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	// -- Best configuration
 	private double bestAverage;
 	private double bestElitismRate;
+	private boolean bestBloating;
 	private SelectionMethod bestSelectionMethod;
 	private CrossoverMethod bestCrossoverMethod;
 	private MutationMethod bestMutationMethod;
@@ -297,5 +299,11 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public boolean isBloatingActive() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

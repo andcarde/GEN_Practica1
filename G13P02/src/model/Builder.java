@@ -31,13 +31,14 @@ public class Builder {
 		config.put("crossover", buildCrossover(request, mold, mold.getFunction().getGenType()));
 		config.put("mutation", buildMutation(request, mold.getFunction().getGenType()));
 		config.put("gen_type", mold.getFunction().getGenType());
+		config.put("bloating", mold.getBloating());
 		return config;
 	}
 	
 	private static MoldI buildMold(Request request) {
 		Fitness function = FunctionBuilder.build(request.getFitnessFunction());
 		List<GenI> moldGenes = new ArrayList<>();
-		return new Mold(function, moldGenes);
+		return new Mold(function, moldGenes, request.isBloatingActive());
 	}
 	
 	private static SelectionI buildSelection(Request request) {

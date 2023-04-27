@@ -32,4 +32,6 @@ public interface RequestMaker {
 		
 	// String
 	String getTruncationPercentage();
+	
+	boolean isBloatingActive();
 }

@@ -61,7 +61,6 @@ public class Executor {
 		this.mutation = (MutationI) config.get("mutation");
 		this.treeInitializerEnum = (TreeInitializerEnum)config.get("tree_initializer");
 		this.maxDepth = (Integer) config.get("max_depth");
-		
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
 		

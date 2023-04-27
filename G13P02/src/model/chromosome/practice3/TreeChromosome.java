@@ -52,6 +52,7 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public Double getValue() {
 		if (phenotype == null) evaluate();
+		if (!mold.getBloating()) return phenotype;
 		double k = Covariance.calculate(executor.getPopulation())/Variance.calculate(executor.getPopulation());
 		return this.phenotype + k*raiz.getNumSons();
 	}
