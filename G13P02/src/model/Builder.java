@@ -22,6 +22,7 @@ import model.selection.SelectionI;
 public class Builder {
 
 	private static MoldI mold;
+	
 	public static Map<String, Object> build(Request request) {
 		Map<String, Object> config = new HashMap<>();
 		config.put("generation_amount", request.getGenerationAmount());

@@ -18,16 +18,19 @@ public class AdaptationFunction extends Function {
 	private static double X_UPPER_LIMIT = 1;
 	private static double X_STEP = (X_UPPER_LIMIT - X_BELOW_LIMIT) / (DATASET_SIZE - 1);
 	private double[] xValues, targetFunction;
+	
 	public AdaptationFunction() {
 		super.isMaxim = true;
 		xValues = new double[DATASET_SIZE];
 		targetFunction = new double[DATASET_SIZE];
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Double getValue(Input<?> inputG) {
 		Double d = 0.0;
-		CallbackInput input = (CallbackInput) inputG;
+		Input<Callback> inputGC = (Input<Callback>) inputG;
+		CallbackInput input = (CallbackInput) inputGC;
 		Callback callback = input.get("tree");
 		IntervalIterator ii = new IntervalIterator(X_BELOW_LIMIT, X_UPPER_LIMIT, X_STEP);
 		for (int i = 0; i < DATASET_SIZE; i++) {
@@ -58,16 +61,14 @@ public class AdaptationFunction extends Function {
 	public double[] getFunction(ArithmeticNode node) { 
 		double[] ret = new double[DATASET_SIZE];
 		IntervalIterator ii = new IntervalIterator(X_BELOW_LIMIT, X_UPPER_LIMIT, X_STEP);
-		for (int i = 0; i < DATASET_SIZE; i++) {
+		for (int i = 0; i < DATASET_SIZE; i++)
 			ret[i] = node.getValue(ii.next());
-		} 
 		return ret;
 	}
-
 	
 	@Override
 	public double[] getXValues() { return xValues; }
-
+	
 	@Override
 	public double[] getIdealFunction() { return targetFunction; }
 }

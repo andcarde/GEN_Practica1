@@ -1,5 +1,6 @@
 package control;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,17 @@ class Available {
 	private Available() {
 		this.availableMutations = new HashMap<>();
 		this.availableCrossovers = new HashMap<>();
+		
+		List<MutationMethod> mutationMethods = new ArrayList<>();
+		List<CrossoverMethod> crossoverMethods = new ArrayList<>();
+		
+		for (MutationMethod mm : MutationMethod.values())
+			mutationMethods.add(mm);
+		for (CrossoverMethod cm : CrossoverMethod.values())
+			crossoverMethods.add(cm);
+		
+		availableMutations.put(FitnessFunction.ADAPTATION, mutationMethods);
+		availableCrossovers.put(FitnessFunction.ADAPTATION, crossoverMethods);
 	}
 	
 	/***

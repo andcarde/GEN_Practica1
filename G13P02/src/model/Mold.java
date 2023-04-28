@@ -10,6 +10,7 @@ public class Mold implements MoldI {
 	private final Fitness function;
 	private final List<GenI> moldGenes;
 	private boolean bloating;
+	private Executor executor;
 	
 	public Mold(Fitness function, List<GenI> moldGenes, boolean bloating) {
 		this.function = function;
@@ -35,5 +36,15 @@ public class Mold implements MoldI {
 	@Override
 	public boolean getBloating() {
 		return bloating;
+	}
+
+	@Override
+	public Executor getExecutor() {
+		return this.executor;
+	}
+	
+	@Override
+	public void setExecutor(Executor executor) {
+		this.executor = executor;
 	}
 }

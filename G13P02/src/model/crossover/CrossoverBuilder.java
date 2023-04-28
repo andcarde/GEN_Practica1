@@ -10,9 +10,10 @@ public class CrossoverBuilder {
 		switch (genType) {
 		case TREE:
 			switch (selectionMethod) {
-			
-			default:
-				return null;
+				case CROSSOVER_TREE:
+					return new TreeCrossover(mold, crossoverProbability);
+				default:
+					return null;
 			}
 		default:
 			return null;

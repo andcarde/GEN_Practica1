@@ -470,6 +470,4 @@ public class Window extends JFrame implements RequestMaker, Client {
 	public Integer getMaxDepth() {
 		return Integer.parseInt(DepthTF.getText());
 	}
-
-
 }

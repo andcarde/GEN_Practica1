@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.fitness.DoubleInput;
 import model.gen.practice3.ArithmeticNode;
 import model.gen.practice3.GenI;
 
@@ -30,14 +29,6 @@ public abstract class Chromosome implements ChromosomeI {
 		for (GenI gen : chromosome.genes)
 			this.genes.add(gen.copy());
 		this.mold = chromosome.mold;
-	}
-	
-	@Override
-	public void evaluate() {
-		DoubleInput input = new DoubleInput();
-		for (GenI gen : genes)
-			input.put(gen.getName(), gen.getValue());
-		this.phenotype = this.mold.getFunction().getValue(input);
 	}
 
 	@Override

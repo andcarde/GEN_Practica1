@@ -17,10 +17,9 @@ public class TerminalTreeMutation implements TreeMutationI {
 	public ArithmeticNode act(TreeChromosome treeChromosome) {
 		ArithmeticNode node = treeChromosome.getRaiz().copy();
 		if (RandomGenerator.createAleatoryBoolean(probability)) {
-			int index = 0;
+			int index;
 			do {
 				index = RandomGenerator.createAleatoryInt(node.getNumSons());
-				
 			} while (!node.getNode(index).isLeaf());
 			node.getNode(index).setFruit(TerminalEnum.values()[RandomGenerator.createAleatoryInt(TerminalEnum.values().length)]);
 		}

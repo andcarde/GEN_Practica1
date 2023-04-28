@@ -14,4 +14,8 @@ public interface MoldI {
 	Integer getNumGenes();
 	
 	boolean getBloating();
+
+	Executor getExecutor();
+
+	void setExecutor(Executor executor);
 }

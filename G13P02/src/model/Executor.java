@@ -5,12 +5,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
-import model.chromosome.practice3.TreeChromosome;
 import model.crossover.CrossoverI;
 import model.fitness.practice3.AdaptationFunction;
 import model.initialization.practice3.TreePopulationInitializer;
 import model.selection.SelectionI;
+import model.util.Cast;
 
 public class Executor {
 
@@ -26,8 +28,8 @@ public class Executor {
 	private TreePopulationInitializer initialization;
 	// ------------------------------------------------------------------
 	
-	private List<TreeChromosome> population;
-	private List<TreeChromosome> elitism;
+	private List<ChromosomeI> population;
+	private List<ChromosomeI> elitism;
 	
 	// MODEL STATISTICS -------------------------------------------------
 	private double[] generationAverage;
@@ -50,6 +52,7 @@ public class Executor {
 		this.POPULATION_AMOUNT = (Integer) config.get("population_amount");
 		this.ELITISM_AMOUNT = (Integer) config.get("elitism_amount") * POPULATION_AMOUNT / 100;
 		this.mold = (MoldI) config.get("mold");
+		mold.setExecutor(this);
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
 		/*this.genType = (GenType) config.get("gen_type");
@@ -57,6 +60,11 @@ public class Executor {
 		this.initialization = (TreePopulationInitializer) config.get("initialization");
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
+		
+		if (this.mold.getFunction().isMaximization())
+			this.comparator = new ChromosomeComparator();
+		else
+			this.comparator = new ChromosomeComparatorMin();
 		
 		this.population = new ArrayList<>();
 		elitism = new ArrayList<>();
@@ -71,60 +79,40 @@ public class Executor {
 		initilize();
 		basicEvaluation();
 		for (int i = 0; i < GENERATION_AMOUNT; i++) {
-			population.sort(comparator);
 			extractElitism();
 			select();
 			cross();
 			mutate();
-			population.sort(comparator);
-			insertElitism();
 			evaluate(i);
+			insertElitism();
 		}
 	}
 	
 	private void insertElitism() {
-		for (int i = 0; i < elitism.size(); i++) {
-			population.remove(population.size()-1);
+		population.sort(comparator);
+		for (int i = 0; i < ELITISM_AMOUNT; i++)
+			population.remove(population.size() - 1);
+		for (int i = 0; i < ELITISM_AMOUNT; i++)
 			population.add(elitism.get(i));
-			population.sort(comparator);
-		}
 	}
 
 	private void extractElitism() {
+		population.sort(comparator);
 		elitism.clear();
-		for (int i = 0; i < ELITISM_AMOUNT; i++) {
+		for (int i = 0; i < ELITISM_AMOUNT; i++)
 			elitism.add(population.get(i).copy());
-		}
-		
 	}
 	
 	private void initilize() {
-		population = initialization.initialize();
+		population = Cast.castTreeToChromosome(initialization.initialize());
 	}
 	
 	private void select() {
-		List<ChromosomeI> ret = new ArrayList<>();
-		for (ChromosomeI c : population) {
-			ret.add(c);
-		}
-		ret = selection.act(ret);
-		population.clear();
-		for (ChromosomeI c : ret) {
-			population.add((TreeChromosome) c);
-		}
-		
+		population = selection.act(population);
 	}
 	
 	private void cross() {
-		List<ChromosomeI> ret = new ArrayList<>();
-		for (ChromosomeI c : population) {
-			ret.add(c);
-		}
-		ret = crossover.act(ret);
-		population.clear();
-		for (ChromosomeI c : ret) {
-			population.add((TreeChromosome) c);
-		}
+		population = crossover.act(population);
 	}
 	
 	private void mutate() {
@@ -188,7 +176,7 @@ public class Executor {
 		}
 	}
 	
-	public List<TreeChromosome> getPopulation() {
+	public List<ChromosomeI> getPopulation() {
 		return population;
 	}
 
