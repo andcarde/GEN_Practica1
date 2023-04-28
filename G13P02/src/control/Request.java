@@ -17,7 +17,6 @@ public class Request {
 	private Integer maxDepth;
 	private Double crossoverProbability;
 	private Double mutationProbability;
-	private Double precision;
 	private Double truncation = 0.0;
 	private TreeInitializerEnum initializationMethod;
 	private SelectionMethod selectionMethod;
@@ -112,8 +111,6 @@ public class Request {
 			errors.add("The crossover probability must be between 0 and 100 (both included).");
 		if (this.mutationProbability < 0 || this.mutationProbability > 1)
 			errors.add("The mutation probability must be between 0 and 100 (both included).");
-		if (this.precision <= 0)
-			errors.add("The precision must be a positive rational number.");
 		if (this.elitismRate < 0 || this.elitismRate > 100)
 			errors.add("The elitism rate must be between 0 and 100 (both included).");
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
@@ -155,10 +152,6 @@ public class Request {
 		return mutationProbability;
 	}
 
-	public Double getPrecision() {
-		return precision;
-	}
-	
 	public TreeInitializerEnum getInitalizationMethod() {
 		return initializationMethod;
 	}

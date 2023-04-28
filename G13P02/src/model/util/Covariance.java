@@ -3,10 +3,11 @@ package model.util;
 import java.util.List;
 
 import model.chromosome.ChromosomeI;
+import model.chromosome.practice3.TreeChromosome;
 
 public class Covariance {
 	
-	public static double calculate(List<ChromosomeI> population) {
+	public static double calculate(List<TreeChromosome> population) {
 		double value = 0, averageSize = 0, averagefitness = 0;
 		for (ChromosomeI tree : population) {
 			averagefitness += tree.getBasicValue();
