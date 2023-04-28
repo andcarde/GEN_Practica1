@@ -32,6 +32,7 @@ import control.Request;
 import control.RequestMaker;
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
+import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 
@@ -42,6 +43,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
+	private static final TreeInitializerEnum DEFAULT_INITIALIZATION_METHOD = TreeInitializerEnum.GROW;
 	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CROSSOVER_TREE;
 	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.TERMINAL;
 
@@ -70,6 +72,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;
 	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
 	private static final boolean DEFAULT_BLOATING_CHECK = true;
+	private static final int DEFAULT_MAX_DEPTH = 4;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -100,14 +103,14 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private MyPanel contentPane;
-	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF;
+	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
 	private MyPanel tournamentPanel, probabilisticTournamentPanel;
 	
 	private MyPanel methodPanel;
-	private JComboBox<String> crossCB, selectionCB, mutationCB;
+	private JComboBox<String> initCB, crossCB, selectionCB, mutationCB;
 	private JCheckBox bloating;
 	
 	private double[] gens;
@@ -131,7 +134,8 @@ public class Window extends JFrame implements RequestMaker, Client {
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initMethodPanel(contentPane);
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
-		initTournamentParameters(contentPane);		initGraphicPanel();
+		initTournamentParameters(contentPane);		
+		initGraphicPanel();
 		initResultTextArea();
 		// initScrollPane();
 		initStartButton();
@@ -196,6 +200,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		generationAmountTF = createTextField(String.valueOf(Window.DEFAULT_GENERATION_AMOUNT), superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Maximun Depth", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		DepthTF = createTextField(String.valueOf(Window.DEFAULT_MAX_DEPTH), superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Crossover Rate (%)", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		crossoverRateSpinner = createSpinner(Window.DEFAULT_CROSSOVER_RATE, superPanel);
@@ -252,6 +260,11 @@ public class Window extends JFrame implements RequestMaker, Client {
 		methodPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
 		superPanel.add(methodPanel);
 		
+		createLabel("Initialization Method", methodPanel);
+		initCB = createComboBox(TreeInitializerEnum.class, methodPanel);
+		initCB.setSelectedItem(DEFAULT_INITIALIZATION_METHOD.toString());
+		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);
+
 		createLabel("Selection Method", methodPanel);
 		selectionCB = createComboBox(SelectionMethod.class, methodPanel);
 		selectionCB.addItemListener(new ItemListener() {
@@ -446,6 +459,16 @@ public class Window extends JFrame implements RequestMaker, Client {
 	@Override
 	public boolean isBloatingActive() {
 		return bloating.isSelected();
+	}
+
+	@Override
+	public String getInitializationMethod() {
+		return initCB.getSelectedItem().toString();
+	}
+
+	@Override
+	public Integer getMaxDepth() {
+		return Integer.parseInt(DepthTF.getText());
 	}
 
 

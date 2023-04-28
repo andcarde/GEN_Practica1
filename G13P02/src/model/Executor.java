@@ -5,15 +5,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import model.chromosome.ChromosomeComparator;
-import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
+import model.chromosome.practice3.TreeChromosome;
 import model.crossover.CrossoverI;
 import model.fitness.practice3.AdaptationFunction;
-import model.gen.practice3.GenType;
-import model.initialization.Initializer;
-import model.initialization.practice3.TreeInitializerEnum;
-import model.mutation.MutationI;
+import model.initialization.practice3.TreePopulationInitializer;
 import model.selection.SelectionI;
 
 public class Executor {
@@ -25,14 +21,13 @@ public class Executor {
 	private final MoldI mold;
 	private final SelectionI selection;
 	private final CrossoverI crossover;
-	private final int maxDepth;
-	private final GenType genType;
-	private final MutationI mutation;
-	private TreeInitializerEnum treeInitializerEnum;
+	/*private final GenType genType;
+	private final MutationI mutation;*/
+	private TreePopulationInitializer initialization;
 	// ------------------------------------------------------------------
 	
-	private List<ChromosomeI> population;
-	private List<ChromosomeI> elitism;
+	private List<TreeChromosome> population;
+	private List<TreeChromosome> elitism;
 	
 	// MODEL STATISTICS -------------------------------------------------
 	private double[] generationAverage;
@@ -57,10 +52,9 @@ public class Executor {
 		this.mold = (MoldI) config.get("mold");
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
-		this.genType = (GenType) config.get("gen_type");
-		this.mutation = (MutationI) config.get("mutation");
-		this.treeInitializerEnum = (TreeInitializerEnum)config.get("tree_initializer");
-		this.maxDepth = (Integer) config.get("max_depth");
+		/*this.genType = (GenType) config.get("gen_type");
+		this.mutation = (MutationI) config.get("mutation");*/
+		this.initialization = (TreePopulationInitializer) config.get("initialization");
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
 		
@@ -105,19 +99,32 @@ public class Executor {
 	}
 	
 	private void initilize() {
-		if (mold.getFunction().isMaximization()) comparator = new ChromosomeComparator();
-		else comparator = new ChromosomeComparatorMin();
-		population = Initializer.act(genType, POPULATION_AMOUNT, mold, mutation, maxDepth, treeInitializerEnum);
-		for (ChromosomeI chromosome : population)
-			chromosome.initialize();
+		population = initialization.initialize();
 	}
 	
 	private void select() {
-		population = selection.act(population);
+		List<ChromosomeI> ret = new ArrayList<>();
+		for (ChromosomeI c : population) {
+			ret.add(c);
+		}
+		ret = selection.act(ret);
+		population.clear();
+		for (ChromosomeI c : ret) {
+			population.add((TreeChromosome) c);
+		}
+		
 	}
 	
 	private void cross() {
-		population = crossover.act(population);
+		List<ChromosomeI> ret = new ArrayList<>();
+		for (ChromosomeI c : population) {
+			ret.add(c);
+		}
+		ret = crossover.act(ret);
+		population.clear();
+		for (ChromosomeI c : ret) {
+			population.add((TreeChromosome) c);
+		}
 	}
 	
 	private void mutate() {
@@ -181,7 +188,7 @@ public class Executor {
 		}
 	}
 	
-	public List<ChromosomeI> getPopulation() {
+	public List<TreeChromosome> getPopulation() {
 		return population;
 	}
 

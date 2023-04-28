@@ -14,6 +14,8 @@ public interface RequestMaker {
 	// Integer
 	String getMutationPercentage();
 	
+	String getInitializationMethod();
+	
 	String getSelectionMethod();
 	
 	String getCrossoverMethod();
@@ -34,4 +36,6 @@ public interface RequestMaker {
 	String getTruncationPercentage();
 	
 	boolean isBloatingActive();
+
+	Integer getMaxDepth();
 }

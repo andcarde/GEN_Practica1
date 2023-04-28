@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
+import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 
@@ -13,10 +14,12 @@ public class Request {
 	private List<String> errors;
 	private Integer populationAmount;
 	private Integer generationAmount;
+	private Integer maxDepth;
 	private Double crossoverProbability;
 	private Double mutationProbability;
 	private Double precision;
 	private Double truncation = 0.0;
+	private TreeInitializerEnum initializationMethod;
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
 	private MutationMethod mutationMethod;
@@ -38,6 +41,11 @@ public class Request {
 	private void initializeAttributes(RequestMaker requestMaker) {
 		this.bloating = requestMaker.isBloatingActive();
 		try {
+			maxDepth = requestMaker.getMaxDepth();
+		} catch (NumberFormatException nfe) {
+			this.errors.add("The population amount must be an integer.");
+		}
+		try {
 			this.populationAmount = Integer.valueOf(requestMaker.getPopulationAmount());
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The population amount must be an integer.");
@@ -57,6 +65,7 @@ public class Request {
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
 		}
+		this.initializationMethod = TreeInitializerEnum.valueOf(TreeInitializerEnum.class, requestMaker.getInitializationMethod());
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
 				this.selectionMethod == SelectionMethod.PROBABILISTIC_TOURNAMENT) {
@@ -94,6 +103,7 @@ public class Request {
 	}
 	
 	public void checkValidity() {
+		if (maxDepth < 2 || maxDepth > 5) errors.add("The maximun depth must be between 2 adn 5 (both included).");
 		if (this.populationAmount <= 0)
 			errors.add("The population amount must be a positive integer.");
 		if (this.generationAmount <= 0)
@@ -148,6 +158,10 @@ public class Request {
 	public Double getPrecision() {
 		return precision;
 	}
+	
+	public TreeInitializerEnum getInitalizationMethod() {
+		return initializationMethod;
+	}
 
 	public SelectionMethod getSelectionMethod() {
 		return selectionMethod;
@@ -180,4 +194,10 @@ public class Request {
 	public boolean isBloatingActive() {
 		return bloating;
 	}
+
+	public int getMaxDepth() {
+		return maxDepth;
+	}
+
+	
 }

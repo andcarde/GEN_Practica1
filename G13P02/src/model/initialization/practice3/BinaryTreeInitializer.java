@@ -1,6 +1,5 @@
 package model.initialization.practice3;
 
-import model.Executor;
 import model.MoldI;
 import model.chromosome.practice3.TreeChromosome;
 import model.gen.practice3.ArithmeticNode;
@@ -12,7 +11,6 @@ public abstract class BinaryTreeInitializer implements TreeInitializer {
 	protected final TreeMutationI mutationMethod;
 	protected final int maxDepth;
 	protected int depth;
-	protected Executor exe;
 	
 	public BinaryTreeInitializer(MoldI mold, int maxDepth, TreeMutationI mutationMethod) {
 		this.mold = mold;

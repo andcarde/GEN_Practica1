@@ -306,4 +306,16 @@ public class StatisticGenerator implements RequestMaker, Client {
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	@Override
+	public String getInitializationMethod() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getMaxDepth() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

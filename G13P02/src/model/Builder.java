@@ -12,8 +12,10 @@ import model.fitness.Fitness;
 import model.fitness.FunctionBuilder;
 import model.gen.practice3.GenI;
 import model.gen.practice3.GenType;
+import model.initialization.practice3.InitializerBuilder;
+import model.initialization.practice3.TreePopulationInitializer;
 import model.mutation.MutationBuilder;
-import model.mutation.MutationI;
+import model.mutation.practice3.TreeMutationI;
 import model.selection.SelectionBuilder;
 import model.selection.SelectionI;
 
@@ -30,6 +32,7 @@ public class Builder {
 		config.put("selection", buildSelection(request));
 		config.put("crossover", buildCrossover(request, mold, mold.getFunction().getGenType()));
 		config.put("mutation", buildMutation(request, mold.getFunction().getGenType()));
+		config.put("initialization", buildInitializer(request, mold, (TreeMutationI) config.get("mutation")));
 		config.put("gen_type", mold.getFunction().getGenType());
 		config.put("bloating", mold.getBloating());
 		return config;
@@ -41,6 +44,10 @@ public class Builder {
 		return new Mold(function, moldGenes, request.isBloatingActive());
 	}
 	
+	private static TreePopulationInitializer buildInitializer(Request request, MoldI mold, TreeMutationI mutation) {
+		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(), request.getPopulationAmount(), mutation);
+	}
+	
 	private static SelectionI buildSelection(Request request) {
 		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(), mold.getFunction().isMaximization(),request.getTruncationAmount());
 	}
@@ -50,7 +57,7 @@ public class Builder {
 				request.getCrossoverProbability(), mold, genType);
 	}
 	
-	private static MutationI buildMutation(Request request, GenType gen) {
+	private static TreeMutationI buildMutation(Request request, GenType gen) {
 		return MutationBuilder.build(gen, request.getMutationMethod(), request.getMutationProbability());
 	}
 }
