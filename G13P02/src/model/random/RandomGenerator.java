@@ -4,12 +4,20 @@ import java.util.Random;
 
 public class RandomGenerator {
 
-	private static final Long seed = 534538184710L;
+	private static Long seed;
 	private static Random random;
+	
+	
+	public static void setSeed(Long seed) {
+		RandomGenerator.seed = seed;
+	}
 	
 	private static Random getRandom() {
 		if (RandomGenerator.random == null)
-			RandomGenerator.random = new Random(RandomGenerator.seed);
+			if (seed == null)
+				RandomGenerator.random = new Random();
+			else
+				RandomGenerator.random = new Random(RandomGenerator.seed);
 		return RandomGenerator.random;
 	}
 	

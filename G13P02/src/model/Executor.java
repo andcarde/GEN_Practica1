@@ -52,7 +52,6 @@ public class Executor {
 		this.POPULATION_AMOUNT = (Integer) config.get("population_amount");
 		this.ELITISM_AMOUNT = (Integer) config.get("elitism_amount") * POPULATION_AMOUNT / 100;
 		this.mold = (MoldI) config.get("mold");
-		mold.setExecutor(this);
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
 		/*this.genType = (GenType) config.get("gen_type");

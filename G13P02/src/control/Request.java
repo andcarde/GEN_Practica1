@@ -26,6 +26,7 @@ public class Request {
 	private FitnessFunction fitnessFunction;
 	private TournamentRequest tournamentRequest;
 	private boolean bloating;
+	private Long seed;
 	
 	public Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.errors = new ArrayList<>();
@@ -63,6 +64,13 @@ public class Request {
 			this.mutationProbability = Double.valueOf(requestMaker.getMutationPercentage()) / 100;
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The mutation probability must be a rational number.");
+		}
+		try {
+			String seedString = requestMaker.getSeed();
+			if (!seedString.equals(""))
+				this.seed = Long.valueOf(seedString);
+		} catch (NumberFormatException nfe) {
+			this.errors.add("The input seed not match as a the Java's Long type");
 		}
 		this.initializationMethod = TreeInitializerEnum.valueOf(TreeInitializerEnum.class, requestMaker.getInitializationMethod());
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
@@ -192,5 +200,7 @@ public class Request {
 		return maxDepth;
 	}
 
-	
+	public Long getSeed() {
+		return seed;
+	}
 }

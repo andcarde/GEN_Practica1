@@ -38,4 +38,6 @@ public interface RequestMaker {
 	boolean isBloatingActive();
 
 	Integer getMaxDepth();
+
+	String getSeed();
 }

@@ -4,12 +4,11 @@ import model.MoldI;
 import model.gen.practice3.ArithmeticEnum;
 import model.gen.practice3.ArithmeticNode;
 import model.gen.practice3.TerminalEnum;
-import model.mutation.practice3.TreeMutationI;
 
 public class FullInitializer extends BinaryTreeInitializer {
 	
-	public FullInitializer(MoldI mold, int maxDepth, TreeMutationI mutationMethod) {
-		super(mold, maxDepth, mutationMethod);
+	public FullInitializer(MoldI mold, int maxDepth) {
+		super(mold, maxDepth);
 	}
 	
 	protected ArithmeticNode initNode() {

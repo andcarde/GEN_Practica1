@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.fitness.Fitness;
 import model.gen.practice3.GenI;
+import model.mutation.MutationI;
 
 public interface MoldI {
 
@@ -15,7 +16,7 @@ public interface MoldI {
 	
 	boolean getBloating();
 
-	Executor getExecutor();
+	MutationI getMutation();
 
-	void setExecutor(Executor executor);
+	int getPopulationAmount();
 }

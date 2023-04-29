@@ -4,13 +4,12 @@ import model.MoldI;
 import model.gen.practice3.ArithmeticEnum;
 import model.gen.practice3.ArithmeticNode;
 import model.gen.practice3.TerminalEnum;
-import model.mutation.practice3.TreeMutationI;
 import model.random.RandomGenerator;
 
 public class GrowInitializer extends BinaryTreeInitializer {
 	
-	public GrowInitializer(MoldI mold, int maxDepth, TreeMutationI mutationMethod) {
-		super(mold, maxDepth, mutationMethod);
+	public GrowInitializer(MoldI mold, int maxDepth) {
+		super(mold, maxDepth);
 	}
 	
 	protected ArithmeticNode initNode() {

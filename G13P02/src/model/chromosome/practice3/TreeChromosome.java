@@ -5,20 +5,20 @@ import java.util.List;
 import model.Executor;
 import model.MoldI;
 import model.chromosome.Chromosome;
+import model.chromosome.ChromosomeI;
 import model.fitness.CallbackInput;
 import model.gen.practice3.ArithmeticNode;
 import model.mutation.MutationI;
-import model.mutation.practice3.TreeMutationI;
 import model.util.Cast;
 import model.util.Covariance;
 import model.util.Variance;
 
 public class TreeChromosome extends Chromosome {
 
-	private final TreeMutationI mutationMethod;
+	private final MutationI mutationMethod;
 	private ArithmeticNode raiz;
 	
-	public TreeChromosome(MoldI mold, TreeMutationI mutationMethod) {
+	public TreeChromosome(MoldI mold, MutationI mutationMethod) {
 		super(mold);
 		this.mutationMethod = mutationMethod;
 	}
@@ -42,16 +42,16 @@ public class TreeChromosome extends Chromosome {
 		return phenotype;
 	}
 	
-	public void mutate() {
-		raiz = mutationMethod.act(this);
+	public ChromosomeI createMutatedCopy() {
+		return this.mold.getMutation().act(this);
 	}
 	
 	@Override
 	public Double getValue() {
 		if (phenotype == null) evaluate();
 		if (!mold.getBloating()) return phenotype;
-		Executor executor = this.mold.getExecutor();
-		List<TreeChromosome> population = Cast.castChromosomeToTree(executor.getPopulation());
+		int populationAmount =  this.mold.getPopulationAmount();
+		List<TreeChromosome> population = Cast.castChromosomeToTree(populationAmount);
 		double k = Covariance.calculate(population) / Variance.calculate(population);
 		return this.phenotype + k*raiz.getNumSons();
 	}
@@ -89,5 +89,10 @@ public class TreeChromosome extends Chromosome {
 		CallbackInput input = new CallbackInput();
 		input.put("tree", raiz);
 		this.phenotype = this.mold.getFunction().getValue(input);
+	}
+	
+	@Override
+	public String toString() {
+		return this.raiz.toString();
 	}
 }

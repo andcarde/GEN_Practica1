@@ -3,28 +3,25 @@ package model.initialization.practice3;
 import model.MoldI;
 import model.chromosome.practice3.TreeChromosome;
 import model.gen.practice3.ArithmeticNode;
-import model.mutation.practice3.TreeMutationI;
 
 public abstract class BinaryTreeInitializer implements TreeInitializer {
 
 	protected final MoldI mold;
-	protected final TreeMutationI mutationMethod;
 	protected final int maxDepth;
 	protected int depth;
 	
-	public BinaryTreeInitializer(MoldI mold, int maxDepth, TreeMutationI mutationMethod) {
+	public BinaryTreeInitializer(MoldI mold, int maxDepth) {
 		this.mold = mold;
 		this.maxDepth =  maxDepth;
 		this.depth = 0;
-		this.mutationMethod = mutationMethod;
 	}
 	
 	@Override
 	public TreeChromosome initialize() {
-		TreeChromosome chromosome = new TreeChromosome(mold, mutationMethod);
+		TreeChromosome chromosome = new TreeChromosome(mold, mold.getMutation());
 		chromosome.setRaiz(initNode());
 		return chromosome;
 	}
-
+	
 	protected abstract ArithmeticNode initNode();
 }

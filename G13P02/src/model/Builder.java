@@ -15,7 +15,8 @@ import model.gen.practice3.GenType;
 import model.initialization.practice3.InitializerBuilder;
 import model.initialization.practice3.TreePopulationInitializer;
 import model.mutation.MutationBuilder;
-import model.mutation.practice3.TreeMutationI;
+import model.mutation.MutationI;
+import model.random.RandomGenerator;
 import model.selection.SelectionBuilder;
 import model.selection.SelectionI;
 
@@ -24,29 +25,32 @@ public class Builder {
 	private static MoldI mold;
 	
 	public static Map<String, Object> build(Request request) {
+		RandomGenerator.setSeed(request.getSeed());
+		
 		Map<String, Object> config = new HashMap<>();
 		config.put("generation_amount", request.getGenerationAmount());
 		config.put("population_amount", request.getPopulationAmount());
 		config.put("elitism_amount", request.getElitismProbability());
-		mold = buildMold(request);
+		MutationI mutation = buildMutation(request, mold.getFunction().getGenType());
+		config.put("mutation", mutation);
+		mold = buildMold(request, mutation);
 		config.put("mold", mold);
 		config.put("selection", buildSelection(request));
 		config.put("crossover", buildCrossover(request, mold, mold.getFunction().getGenType()));
-		config.put("mutation", buildMutation(request, mold.getFunction().getGenType()));
-		config.put("initialization", buildInitializer(request, mold, (TreeMutationI) config.get("mutation")));
+		config.put("initialization", buildInitializer(request, mold));
 		config.put("gen_type", mold.getFunction().getGenType());
 		config.put("bloating", mold.getBloating());
 		return config;
 	}
 	
-	private static MoldI buildMold(Request request) {
+	private static MoldI buildMold(Request request, MutationI mutation) {
 		Fitness function = FunctionBuilder.build(request.getFitnessFunction());
 		List<GenI> moldGenes = new ArrayList<>();
-		return new Mold(function, moldGenes, request.isBloatingActive());
+		return new Mold(function, moldGenes, request.isBloatingActive(), mutation, request.getPopulationAmount());
 	}
 	
-	private static TreePopulationInitializer buildInitializer(Request request, MoldI mold, TreeMutationI mutation) {
-		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(), request.getPopulationAmount(), mutation);
+	private static TreePopulationInitializer buildInitializer(Request request, MoldI mold) {
+		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(), request.getPopulationAmount());
 	}
 	
 	private static SelectionI buildSelection(Request request) {
@@ -58,7 +62,7 @@ public class Builder {
 				request.getCrossoverProbability(), mold, genType);
 	}
 	
-	private static TreeMutationI buildMutation(Request request, GenType gen) {
+	private static MutationI buildMutation(Request request, GenType gen) {
 		return MutationBuilder.build(gen, request.getMutationMethod(), request.getMutationProbability());
 	}
 }

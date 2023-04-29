@@ -5,7 +5,7 @@ import model.random.RandomGenerator;
 public enum TerminalEnum {
 	
 	x, min2, min1, zero, one, two;
-
+	
 	public static int valueToInt(TerminalEnum terminalEnum) {
 		switch(terminalEnum) {
 			case min2:
@@ -19,7 +19,7 @@ public enum TerminalEnum {
 			case two:
 				return 2;
 			default:
-				return -3;
+				return Integer.MAX_VALUE;
 		}
 	}
 	
