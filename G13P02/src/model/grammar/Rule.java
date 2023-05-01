@@ -52,7 +52,17 @@ public class Rule {
 					stack.push(leftBranch);
 			}
 		}
-		
+		return codons;
+	}
+	
+	public static List<Integer> wrapCodons(int numWraps, List<Integer> originalCodons) {
+		List<Integer> codons = new ArrayList<>();
+		final int codonsLength = originalCodons.size() / numWraps;
+		for (int i = 0; i < codonsLength; i++) {
+			
+		}
+		if (originalCodons.size() % numWraps != 0)
+		for ()
 		return codons;
 	}
 }
