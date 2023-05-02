@@ -31,7 +31,7 @@ public class Builder {
 		config.put("generation_amount", request.getGenerationAmount());
 		config.put("population_amount", request.getPopulationAmount());
 		config.put("elitism_amount", request.getElitismProbability());
-		MutationI mutation = buildMutation(request, mold.getFunction().getGenType());
+		MutationI mutation = buildMutation(request, GenType.TREE);
 		config.put("mutation", mutation);
 		mold = buildMold(request, mutation);
 		config.put("mold", mold);
