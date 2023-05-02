@@ -11,7 +11,8 @@ public class PermutationTreeMutation extends TreeMutation {
 	@Override
 	protected void mutateNode(ArithmeticNode node) {
 		ArithmeticNode selectedNode =  node.getRandomNoTerminalNode();
-		ArithmeticNode leftBranch = selectedNode.getLeftBranch();
+		if (selectedNode == null) return;
+		ArithmeticNode leftBranch = selectedNode.getLeftBranch().copy();
 		selectedNode.setLeftBranch(selectedNode.getRightBranch());
 		selectedNode.setRightBranch(leftBranch);
 	}
