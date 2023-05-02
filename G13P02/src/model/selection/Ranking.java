@@ -22,11 +22,11 @@ public class Ranking implements SelectionI {
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		if (isMaxim) population.sort(new ChromosomeComparator());
 		else population.sort(new ChromosomeComparatorMin());
-		List<Pair<Double,Double>>  aux = puntuacion(population);
+		List<Pair<Double, Double>> aux = puntuacion(population);
 		return rouletteWithRanking(population, aux);
 	}
 	
-	private List<Pair<Double,Double>>  puntuacion(List<ChromosomeI> population) {
+	private List<Pair<Double,Double>> puntuacion(List<ChromosomeI> population) {
 		List<Pair<Double,Double>> ret = new ArrayList<>();
 		double accPunc = 0.0;
 		for (int i = 0; i < population.size(); ++i) {
@@ -69,5 +69,4 @@ public class Ranking implements SelectionI {
 		if (val < 0) return -val;
 		return val;
 	}
-
 }

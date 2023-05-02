@@ -13,6 +13,8 @@ import model.fitness.practice3.AdaptationFunction;
 import model.initialization.practice3.TreePopulationInitializer;
 import model.selection.SelectionI;
 import model.util.Cast;
+import model.util.Covariance;
+import model.util.Variance;
 
 public class Executor {
 
@@ -135,13 +137,16 @@ public class Executor {
 
 	private void evaluate(int generation) {
 		if (population.size() >= 0) {
+			double k = Covariance.calculate(population) / Variance.calculate(population);
+			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
 			ChromosomeI leader = population.get(0);
-			double fitnessSum = leader.getValue();
+			double fitnessSum = 0;
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization()) || (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
+				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization())
+						|| (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
 					leader = chromosome.copy();
 				fitnessSum += chromosome.getValue();
 			}

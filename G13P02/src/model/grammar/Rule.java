@@ -13,11 +13,13 @@ import model.gen.practice3.TerminalEnum;
 
 public class Rule {
 	
+	String first = "exp";
+	String waitingFirs = "<op>";
 	/*
 	 * Símbolo inicial: <exp>
-	<op> ::= |*| or |+| or |-|
-	<sym> ::= |-2| or |-1| or |0| or |1| or |2| or |x|
-	<exp> ::= <op>(<exp>, <exp>) or <sym>
+	 * <op> ::= |*| or |+| or |-|
+	 * <sym> ::= |-2| or |-1| or |0| or |1| or |2| or |x| or |no|
+	 * <exp> ::= <op>(<exp>, <exp>) or <sym>
 	*/
 	
 	public static List<Integer> treeToCodons(ArithmeticNode raiz) {

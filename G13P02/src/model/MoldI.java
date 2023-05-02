@@ -19,4 +19,8 @@ public interface MoldI {
 	MutationI getMutation();
 
 	int getPopulationAmount();
+	
+	void setK(double k);
+	
+	double getK();
 }

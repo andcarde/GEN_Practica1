@@ -24,4 +24,5 @@ public interface ChromosomeI {
 	int indexOf(int city);
 	double getBasicValue();
 	ArithmeticNode getRaiz();
+	void mutate();
 }

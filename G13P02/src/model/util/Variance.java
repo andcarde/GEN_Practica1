@@ -3,11 +3,10 @@ package model.util;
 import java.util.List;
 
 import model.chromosome.ChromosomeI;
-import model.chromosome.practice3.TreeChromosome;
 
 public class Variance {
 	
-	public static double calculate(List<TreeChromosome> population) {
+	public static double calculate(List<ChromosomeI> population) {
 		double value = 0, averageSize = 0;
 		for (ChromosomeI tree : population) {
 			averageSize += tree.getSize();

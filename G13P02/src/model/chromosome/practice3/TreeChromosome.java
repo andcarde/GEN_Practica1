@@ -1,17 +1,11 @@
 package model.chromosome.practice3;
 
-import java.util.List;
-
-import model.Executor;
 import model.MoldI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.fitness.CallbackInput;
 import model.gen.practice3.ArithmeticNode;
 import model.mutation.MutationI;
-import model.util.Cast;
-import model.util.Covariance;
-import model.util.Variance;
 
 public class TreeChromosome extends Chromosome {
 
@@ -48,12 +42,9 @@ public class TreeChromosome extends Chromosome {
 	
 	@Override
 	public Double getValue() {
+		// Necesario para corregir algún error inesperado
 		if (phenotype == null) evaluate();
-		if (!mold.getBloating()) return phenotype;
-		int populationAmount =  this.mold.getPopulationAmount();
-		List<TreeChromosome> population = Cast.castChromosomeToTree(populationAmount);
-		double k = Covariance.calculate(population) / Variance.calculate(population);
-		return this.phenotype + k*raiz.getNumSons();
+			return phenotype;
 	}
 
 	public String getGenesToString() {
@@ -89,10 +80,17 @@ public class TreeChromosome extends Chromosome {
 		CallbackInput input = new CallbackInput();
 		input.put("tree", raiz);
 		this.phenotype = this.mold.getFunction().getValue(input);
+		if (mold.getBloating())
+			this.phenotype += mold.getK() * raiz.getNumSons();
 	}
 	
 	@Override
 	public String toString() {
 		return this.raiz.toString();
+	}
+
+	@Override
+	public void mutate() {
+		this.mold.getMutation().act(this);
 	}
 }

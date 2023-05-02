@@ -14,6 +14,7 @@ import control.Request;
 import control.RequestMaker;
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
+import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
 import model.util.Pair;
@@ -31,6 +32,8 @@ public class StatisticGenerator implements RequestMaker, Client {
 	private static final int TRUNCATION_PERCENTAGE = 25;
 	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.ADAPTATION;
 	private static final boolean BLOATING_VALUE = true;
+	private static final int MAX_DEPTH = 5;
+	private static final TreeInitializerEnum initializationMethod = TreeInitializerEnum.RAMPED_AND_HALP;
 	
 	// -------------------------- PERMUTATIONS ----------------------------------------
 	
@@ -73,7 +76,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	// -- Best configuration
 	private double bestAverage;
 	private double bestElitismRate;
-	private boolean bestBloating;
+	// private boolean bestBloating;
 	private SelectionMethod bestSelectionMethod;
 	private CrossoverMethod bestCrossoverMethod;
 	private MutationMethod bestMutationMethod;
@@ -303,19 +306,21 @@ public class StatisticGenerator implements RequestMaker, Client {
 
 	@Override
 	public boolean isBloatingActive() {
-		// TODO Auto-generated method stub
-		return false;
+		return BLOATING_VALUE;
 	}
 
 	@Override
 	public String getInitializationMethod() {
-		// TODO Auto-generated method stub
-		return null;
+		return initializationMethod.name();
 	}
 
 	@Override
 	public Integer getMaxDepth() {
-		// TODO Auto-generated method stub
+		return MAX_DEPTH;
+	}
+
+	@Override
+	public String getSeed() {
 		return null;
 	}
 }
