@@ -103,7 +103,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private MyPanel contentPane;
-	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF;
+	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF, seedTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
@@ -219,6 +219,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 		createLabel("Activate Bloating", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		bloating = createCheckBox(Window.DEFAULT_BLOATING_CHECK, superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Seed: ", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		seedTF = createTextField("", superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Function", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
@@ -469,5 +473,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 	@Override
 	public Integer getMaxDepth() {
 		return Integer.parseInt(DepthTF.getText());
+	}
+
+	@Override
+	public String getSeed() {
+		return seedTF.getText();
 	}
 }

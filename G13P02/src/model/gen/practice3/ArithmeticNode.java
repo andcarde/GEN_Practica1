@@ -80,6 +80,7 @@ public class ArithmeticNode implements Callback {
 	}
 	
 	public int getNumSons() {
+		updateSons();
 		return this.numSons;
 	}
 	
@@ -182,7 +183,9 @@ public class ArithmeticNode implements Callback {
 	}
 	
 	public ArithmeticNode getRandomNoTerminalNode() {
+		updateSons();
 		ArithmeticNode selectedNode;
+		if (numSons == 0) return null;
 		do {
 			int index = RandomGenerator.createAleatoryInt(numSons);
 			selectedNode = this.getNode(index);
