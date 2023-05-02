@@ -12,6 +12,7 @@ public class ContractionTreeMutation extends TreeMutation {
 	@Override
 	protected void mutateNode(ArithmeticNode node) {
 		ArithmeticNode selectedNode =  node.getRandomNoTerminalNode();
+		if (selectedNode == null) return;
 		selectedNode.toTerminalNode(TerminalEnum.getRandom());
 	}
 }

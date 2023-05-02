@@ -20,7 +20,7 @@ public class AdaptationFunction extends Function {
 	private double[] xValues, targetFunction;
 	
 	public AdaptationFunction() {
-		super.isMaxim = true;
+		super.isMaxim = false;
 		xValues = new double[DATASET_SIZE];
 		targetFunction = new double[DATASET_SIZE];
 	}

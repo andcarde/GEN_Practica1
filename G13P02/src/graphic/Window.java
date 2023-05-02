@@ -250,7 +250,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plot.setPreferredSize(new Dimension(835, 450));
 		plot.setVisible(false);
 		plotP3 = new Plot2DPanel();
-		plot.addLegend("SOUTH");
+		plotP3.addLegend("SOUTH");
 		generalPanel.addTab("Resultado Final", plotP3);
 		plotP3.setBounds(228, 12, 430, 315);
 		plotP3.setPreferredSize(new Dimension(835, 450));
@@ -372,7 +372,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 			for (int i = 0; i < generationAmount; i++)
 				gens[i] = i;
 			Controller.getInstance().execute(request);
-			Controller.getInstance().updateView(this, functionCB.getSelectedItem() == FitnessFunction.ADAPTATION);
+			Controller.getInstance().updateView(this, functionCB.getSelectedItem().equals(FitnessFunction.ADAPTATION.name()));
 		} catch (InvalidInputException iie) {
 			JOptionPane.showMessageDialog(this, iie.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
 		}
@@ -386,18 +386,18 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
 		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
-		plot.addLinePlot("presi�n selectiva", Color.black, gens, selectivePressure);
+		plot.addLinePlot("presion selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}
 	
 	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {
-		plot.resetMapData();
-		plot.setVisible(true);
-		plot.removeAllPlots();
-		plot.addLinePlot("Funcion Objetivo", Color.red, xvalues, idealFunction);
-		plot.addLinePlot("Funcion Obtenida", Color.blue, xvalues, obtainedFunction);
-		plot.repaint();
+		plotP3.resetMapData();
+		plotP3.setVisible(true);
+		plotP3.removeAllPlots();
+		plotP3.addLinePlot("Funcion Objetivo", Color.red, xvalues, idealFunction);
+		plotP3.addLinePlot("Funcion Obtenida", Color.blue, xvalues, obtainedFunction);
+		plotP3.repaint();
 	}
 	
 	@Override

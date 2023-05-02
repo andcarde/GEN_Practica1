@@ -28,11 +28,11 @@ public class TreeChromosome extends Chromosome {
 	}
 	
 	public Integer getSize() {
-		return raiz.getNumSons();
+		return raiz.getNumSons()+1;
 	}
 	
 	public double getBasicValue() {
-		if (phenotype == null) evaluate();
+		if (phenotype == null || Double.isNaN(phenotype)) evaluate();
 		return phenotype;
 	}
 	
@@ -43,8 +43,9 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public Double getValue() {
 		// Necesario para corregir algún error inesperado
-		if (phenotype == null) evaluate();
-			return phenotype;
+		if (phenotype == null || Double.isNaN(phenotype)) 
+			evaluate();
+		return phenotype;
 	}
 
 	public String getGenesToString() {

@@ -138,6 +138,7 @@ public class Executor {
 	private void evaluate(int generation) {
 		if (population.size() >= 0) {
 			double k = Covariance.calculate(population) / Variance.calculate(population);
+			if (Double.isNaN(k)) k = 0;
 			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
