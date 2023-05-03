@@ -1,10 +1,13 @@
 package model.chromosome.practice3;
 
+import java.util.List;
+
 import model.MoldI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.fitness.CallbackInput;
 import model.gen.practice3.ArithmeticNode;
+import model.gen.practice3.BinaryGen;
 
 public class TreeChromosome extends Chromosome {
 	
@@ -77,5 +80,10 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public void mutate() {
 		this.mold.getMutation().act(this);
+	}
+
+	@Override
+	public List<BinaryGen> getGenes() {
+		return null;
 	}
 }

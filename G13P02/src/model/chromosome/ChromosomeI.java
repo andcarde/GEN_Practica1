@@ -1,6 +1,9 @@
 package model.chromosome;
 
+import java.util.List;
+
 import model.MoldI;
+import model.gen.practice3.BinaryGen;
 
 public interface ChromosomeI {
 
@@ -23,4 +26,6 @@ public interface ChromosomeI {
 	double getBasicValue();
 	
 	void mutate();
+	
+	List<BinaryGen> getGenes();
 }

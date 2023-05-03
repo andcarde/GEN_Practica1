@@ -36,4 +36,9 @@ public class BinaryGen {
 	public List<Boolean> getBits() {
 		return bits;
 	}
+	public Object assimilate(Object genome1) {
+		BinaryGen aux = (BinaryGen) genome1;
+		bits = aux.getBits();
+		return this;
+	}
 }

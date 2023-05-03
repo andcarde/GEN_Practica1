@@ -49,4 +49,23 @@ public class CodonChromosome extends TreeChromosome {
 	public CodonChromosome copy() {
 		return new CodonChromosome(this);
 	}
+	
+	@Override
+	public List<BinaryGen> getGenes() {
+		return genes;
+	}
+	
+	public void setGen(int i, Object gen) {
+		genes.set(i, (BinaryGen) gen);
+		
+	}
+
+	public void assimilate(List<Object> genomes) {
+		genes.clear();
+		for (int i = 0; i < genomes.size(); i++) {
+			genes.add((BinaryGen) genomes.get(i));
+		}
+		
+	}
 }
+
