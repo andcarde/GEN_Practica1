@@ -160,9 +160,14 @@ public class Request {
 		if (genType == GenType.BINARY) {
 			if (mutationMethod != MutationMethod.BINARY) 
 				errors.add("This mutation method isn't available for the gen type binary");
+			if (crossoverMethod == CrossoverMethod.CROSSOVER_TREE)
+				errors.add("This crossover method isn't available for the gen type binary");
+
 			
 		}
 		if (genType == GenType.TREE) {
+			if (mutationMethod == MutationMethod.BINARY) 
+				errors.add("This mutation method isn't available for the gen type tree");
 			if (crossoverMethod != CrossoverMethod.CROSSOVER_TREE) 
 				errors.add("This crossover method isn't available for the gen type tree");
 			
