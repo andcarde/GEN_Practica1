@@ -67,7 +67,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int PANEL_WIDTH = MAX_WIDTH + 2 * LEFT_MARGIN;
 	private static final int BORDER_THICKNESS = 1;
 	private static final int VERTICAL_MARGIN = 5;
-	private static final int BIG_VERTICAL_MARGIN = 10;
 	private static final int SMALL_VERTICAL_MARGIN = 1;
 	private static final int DEFAULT_TRUNCATION_AMOUNT = 25;
 	private static final int DEFAULT_CONTESTANTS_AMOUNT = 3;

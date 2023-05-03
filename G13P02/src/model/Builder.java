@@ -9,8 +9,6 @@ import model.crossover.CrossoverI;
 import model.fitness.Fitness;
 import model.fitness.FunctionBuilder;
 import model.gen.practice3.GenType;
-import model.initialization.practice3.InitializerBuilder;
-import model.initialization.practice3.TreePopulationInitializer;
 import model.mutation.MutationBuilder;
 import model.mutation.MutationI;
 import model.random.RandomGenerator;
@@ -47,12 +45,6 @@ public class Builder {
 		Fitness function = FunctionBuilder.build(request.getFitnessFunction(), request.getGenType());
 		return new Mold(function, request.isBloatingActive(), mutation, request.getPopulationAmount(), maxHeight,
 				numWraps);
-	}
-	
-	private static TreePopulationInitializer buildInitializer(Request request, MoldI mold) {
-		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(),
-				request.getPopulationAmount());
-		
 	}
 	
 	private static SelectionI buildSelection(Request request) {
