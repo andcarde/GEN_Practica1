@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
+import model.gen.practice3.GenType;
 import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
@@ -18,6 +19,7 @@ public class Request {
 	private Double crossoverProbability;
 	private Double mutationProbability;
 	private Double truncation = 0.0;
+	private GenType genType;
 	private TreeInitializerEnum initializationMethod;
 	private SelectionMethod selectionMethod;
 	private CrossoverMethod crossoverMethod;
@@ -49,7 +51,7 @@ public class Request {
 		try {
 			wraps = Integer.valueOf(requestMaker.getWraps());
 		} catch (NumberFormatException nfe) {
-			this.errors.add("The population amount must be an integer between 1 and 3.");
+			this.errors.add("The number of wraps must be an integer between 1 and 3.");
 		}
 		try {
 			this.populationAmount = Integer.valueOf(requestMaker.getPopulationAmount());
@@ -78,6 +80,8 @@ public class Request {
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The input seed not match as a the Java's Long type");
 		}
+		genType = GenType.valueOf(GenType.class, requestMaker.getGenType());
+		
 		this.initializationMethod = TreeInitializerEnum.valueOf(TreeInitializerEnum.class, requestMaker.getInitializationMethod());
 		this.selectionMethod = SelectionMethod.valueOf(SelectionMethod.class, requestMaker.getSelectionMethod());
 		if (this.selectionMethod == SelectionMethod.DETERMINISTIC_TOURNAMENT ||
@@ -112,13 +116,14 @@ public class Request {
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The elitism rate must be a rational number.");
 		}
+		
 		this.fitnessFunction = FitnessFunction.valueOf(FitnessFunction.class, requestMaker.getFitnessFunction());
 	}
 	
 	public void checkValidity() {
 		if (maxDepth < 2 || maxDepth > 5)
 			errors.add("The maximun depth must be between 2 adn 5 (both included).");
-		if (wraps < 1 || maxDepth > 3)
+		if (wraps < 1 || wraps > 3)
 			errors.add("The population amount must be an integer between 1 and 3.");
 		if (this.populationAmount <= 0)
 			errors.add("The population amount must be a positive integer.");
@@ -151,6 +156,18 @@ public class Request {
 			errors.add("The mutation method " + this.mutationMethod.name() +
 					" is not available for the function " + fitnessFunction.name());
 		}
+		
+		if (genType == GenType.BINARY) {
+			if (mutationMethod != MutationMethod.BINARY) 
+				errors.add("This mutation method isn't available for the gen type binary");
+			
+		}
+		if (genType == GenType.TREE) {
+			if (crossoverMethod != CrossoverMethod.CROSSOVER_TREE) 
+				errors.add("This crossover method isn't available for the gen type tree");
+			
+		}
+		
 	}
 	
 	public Integer getPopulationAmount() {
@@ -167,6 +184,10 @@ public class Request {
 
 	public Double getMutationProbability() {
 		return mutationProbability;
+	}
+	
+	public GenType getGenType() {
+		return genType;
 	}
 
 	public TreeInitializerEnum getInitalizationMethod() {

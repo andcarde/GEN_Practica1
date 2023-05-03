@@ -19,7 +19,7 @@ public class TreeChromosome extends Chromosome {
 	
 	public TreeChromosome(TreeChromosome chromosome) {
 		super(chromosome);
-		this.raiz = chromosome.raiz.copy();
+		if (chromosome.raiz != null) this.raiz = chromosome.raiz.copy();
 	}
 	
 	public TreeChromosome copy() {

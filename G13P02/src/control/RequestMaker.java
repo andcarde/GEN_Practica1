@@ -14,6 +14,8 @@ public interface RequestMaker {
 	// Integer
 	String getMutationPercentage();
 	
+	String getGenType();
+	
 	String getInitializationMethod();
 	
 	String getSelectionMethod();
@@ -42,4 +44,6 @@ public interface RequestMaker {
 	String getSeed();
 
 	String getWraps();
+	
+	
 }

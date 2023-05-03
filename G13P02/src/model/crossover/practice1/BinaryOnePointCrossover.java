@@ -22,15 +22,15 @@ public class BinaryOnePointCrossover extends Crossover {
 		CodonChromosome son1 = new CodonChromosome(this.mold);
 		CodonChromosome son2 = new CodonChromosome(this.mold);
 		
-		List<Object> genomes1 = new ArrayList<>();
-		List<Object> genomes2 = new ArrayList<>();
+		List<List<Boolean>> genomes1 = new ArrayList<>();
+		List<List<Boolean>> genomes2 = new ArrayList<>();
 		
 		Integer cutPoint = RandomGenerator.createAleatoryInt(parent1.getSize() - 1) + 1;
 		List<Boolean> genome1, genome2;
 		BinaryGen binaryGen1, binaryGen2;
 		
 		Integer accumulated = 0;
-		for (int i = 0; i < parent1.getGenes().size(); i++) {
+		for (int i = 0; i < parent1.getGenes().size(); i++) {	
 			genome1 = new ArrayList<>();
 			genome2 = new ArrayList<>();
 			binaryGen1 = (BinaryGen) parent1.getGenes().get(i);

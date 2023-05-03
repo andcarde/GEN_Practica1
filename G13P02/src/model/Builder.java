@@ -28,23 +28,23 @@ public class Builder {
 		config.put("generation_amount", request.getGenerationAmount());
 		config.put("population_amount", request.getPopulationAmount());
 		config.put("elitism_amount", request.getElitismProbability());
-		MutationI mutation = buildMutation(request, GenType.TREE);
+		MutationI mutation = buildMutation(request, request.getGenType());
 		config.put("mutation", mutation);
 		mold = buildMold(request, mutation);
 		config.put("mold", mold);
 		config.put("selection", buildSelection(request));
 		config.put("crossover", buildCrossover(request, mold, mold.getFunction().getGenType()));
-		config.put("initialization", buildInitializer(request, mold));
+		config.put("initialization", request.getInitalizationMethod());
 		config.put("gen_type", mold.getFunction().getGenType());
 		config.put("bloating", mold.getBloating());
 		return config;
 	}
 	
+	
 	private static MoldI buildMold(Request request, MutationI mutation) {
-		boolean bloating = false;
 		int maxHeight = request.getMaxDepth();
 		int numWraps = request.getWraps();
-		Fitness function = FunctionBuilder.build(request.getFitnessFunction());
+		Fitness function = FunctionBuilder.build(request.getFitnessFunction(), request.getGenType());
 		return new Mold(function, request.isBloatingActive(), mutation, request.getPopulationAmount(), maxHeight,
 				numWraps);
 	}

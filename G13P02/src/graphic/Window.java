@@ -32,6 +32,7 @@ import control.Request;
 import control.RequestMaker;
 import model.crossover.CrossoverMethod;
 import model.fitness.FitnessFunction;
+import model.gen.practice3.GenType;
 import model.initialization.practice3.TreeInitializerEnum;
 import model.mutation.MutationMethod;
 import model.selection.SelectionMethod;
@@ -112,7 +113,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private MyPanel tournamentPanel, probabilisticTournamentPanel;
 	
 	private MyPanel methodPanel;
-	private JComboBox<String> initCB, crossCB, selectionCB, mutationCB;
+	private JComboBox<String> initCB, crossCB, selectionCB, mutationCB, genCB;
 	private JCheckBox bloating;
 	
 	private double[] gens;
@@ -131,11 +132,8 @@ public class Window extends JFrame implements RequestMaker, Client {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initSettings(contentPane);
-		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initMethodPanel(contentPane);
-		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initTournamentParameters(contentPane);
 		initGraphicPanel();
 		initResultTextArea();
@@ -233,7 +231,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 		createLabel("Function", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		functionCB = createComboBox(FitnessFunction.class, superPanel);
-		
+		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Gen Type", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		genCB = createComboBox(GenType.class, superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Truncation Rate (%)", superPanel);
 		labelTruncPos = superPanel.getComponentCount()-1;
@@ -265,7 +266,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private void initMethodPanel(MyPanel superPanel) {
 		methodPanel = new MyPanel(null, Window.LEFT_MARGIN);
 		methodPanel.setBorder(new LineBorder(Color.BLACK, Window.BORDER_THICKNESS, true));
-		methodPanel.addHeight(VERTICAL_MARGIN);
 		methodPanel.setLocation(superPanel.getInnerLeftMargin(), superPanel.getMyHeight());
 		superPanel.add(methodPanel);
 		
@@ -488,5 +488,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 	@Override
 	public String getWraps() {
 		return wrapsTF.getText();
+	}
+
+	@Override
+	public String getGenType() {
+		return genCB.getSelectedItem().toString();
 	}
 }

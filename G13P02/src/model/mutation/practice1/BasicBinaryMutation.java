@@ -18,7 +18,7 @@ public class BasicBinaryMutation implements MutationI {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Chromosome> T act(T chromosome) {
-		CodonChromosome cc = ((CodonChromosome) chromosome).copy();
+		CodonChromosome cc = (CodonChromosome) chromosome.copy();
 		for (List<Boolean> bits : cc.getBits())
 			for (Boolean bit : bits)
 				if (RandomGenerator.createAleatoryBoolean(mutationProbability))

@@ -326,4 +326,10 @@ public class StatisticGenerator implements RequestMaker, Client {
 	public String getWraps() {
 		return String.valueOf(WRAPS);
 	}
+
+	@Override
+	public String getGenType() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

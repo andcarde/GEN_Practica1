@@ -10,9 +10,11 @@ import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
 import model.fitness.practice3.AdaptationFunction;
-import model.initialization.practice3.TreePopulationInitializer;
+import model.gen.practice3.GenType;
+import model.initialization.Initializer;
+import model.initialization.practice3.TreeInitializerEnum;
+import model.mutation.MutationI;
 import model.selection.SelectionI;
-import model.util.Cast;
 import model.util.Covariance;
 import model.util.Variance;
 
@@ -27,7 +29,7 @@ public class Executor {
 	private final CrossoverI crossover;
 	/*private final GenType genType;
 	private final MutationI mutation;*/
-	private TreePopulationInitializer initialization;
+	private TreeInitializerEnum initialization;
 	// ------------------------------------------------------------------
 	
 	private List<ChromosomeI> population;
@@ -45,6 +47,8 @@ public class Executor {
 	
 	// COMPARATOR -------------------------------------------------------
 	private Comparator<ChromosomeI> comparator;
+	private GenType genType;
+	private MutationI mutation;
 	
 	// Not Used
 	// private Observer observer;
@@ -56,9 +60,9 @@ public class Executor {
 		this.mold = (MoldI) config.get("mold");
 		this.selection = (SelectionI) config.get("selection");
 		this.crossover = (CrossoverI) config.get("crossover");
-		/*this.genType = (GenType) config.get("gen_type");
-		this.mutation = (MutationI) config.get("mutation");*/
-		this.initialization = (TreePopulationInitializer) config.get("initialization");
+		this.genType = (GenType) config.get("gen_type");
+		this.mutation = (MutationI) config.get("mutation");
+		this.initialization = (TreeInitializerEnum) config.get("initialization");
 		// Not Used
 		// this.observer = (Observer) config.get("observer");
 		
@@ -105,7 +109,7 @@ public class Executor {
 	}
 	
 	private void initilize() {
-		population = Cast.castTreeToChromosome(initialization.initialize());
+		population = Initializer.act(mold.getFunction().getGenType(), POPULATION_AMOUNT, mold, mold.getMaxHeigth() , initialization);
 	}
 	
 	private void select() {

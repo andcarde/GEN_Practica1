@@ -20,9 +20,11 @@ public class AdaptationFunction extends Function {
 	private static double X_UPPER_LIMIT = 1;
 	private static double X_STEP = (X_UPPER_LIMIT - X_BELOW_LIMIT) / (DATASET_SIZE - 1);
 	private double[] xValues, targetFunction;
+	private GenType genType;
 	
-	public AdaptationFunction() {
+	public AdaptationFunction(GenType gen) {
 		super.isMaxim = false;
+		genType = gen;
 		xValues = new double[DATASET_SIZE];
 		targetFunction = new double[DATASET_SIZE];
 	}
@@ -56,7 +58,7 @@ public class AdaptationFunction extends Function {
 
 	@Override
 	public GenType getGenType() {
-		return GenType.TREE;
+		return genType;
 	}
 	
 	@Override

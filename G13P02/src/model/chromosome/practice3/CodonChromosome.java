@@ -60,12 +60,21 @@ public class CodonChromosome extends TreeChromosome {
 		
 	}
 
-	public void assimilate(List<Object> genomes) {
-		genes.clear();
+	public void assimilate(List<List<Boolean>> genomes) {
 		for (int i = 0; i < genomes.size(); i++) {
-			genes.add((BinaryGen) genomes.get(i));
+			BinaryGen gen = genes.get(i).copy();
+			gen.setBits(genomes.get(i));
+			genes.set(i,gen);
 		}
 		
+	}
+	
+	public Integer getSize() {
+		Integer num = 0;
+		for (BinaryGen gen : genes) {
+			num+=gen.getSize();
+		}
+		return num;
 	}
 }
 

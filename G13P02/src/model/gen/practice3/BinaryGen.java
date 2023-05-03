@@ -1,5 +1,6 @@
 package model.gen.practice3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.random.RandomGenerator;
@@ -10,10 +11,12 @@ public class BinaryGen {
 	private List<Boolean> bits;
 
 	public BinaryGen(int codon) {
+		bits = new ArrayList<>();
 		for (int i = 0; i < CODON_SIZE; i++)
 			bits.add(RandomGenerator.createAleatoryBoolean());
 	}
 	public BinaryGen(BinaryGen gen) {
+		bits = new ArrayList<>();
 		for (int i = 0; i < CODON_SIZE; i++)
 			bits.add(Boolean.valueOf(gen.bits.get(i)));
 	}
@@ -40,5 +43,12 @@ public class BinaryGen {
 		BinaryGen aux = (BinaryGen) genome1;
 		bits = aux.getBits();
 		return this;
+	}
+	
+	public void setBits(List<Boolean> bits) {
+		this.bits = bits;
+	}
+	public Integer getSize() {
+		return bits.size();
 	}
 }
