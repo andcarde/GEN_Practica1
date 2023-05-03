@@ -73,6 +73,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_CHAMPION_PROBABILITY = 50;
 	private static final boolean DEFAULT_BLOATING_CHECK = true;
 	private static final int DEFAULT_MAX_DEPTH = 4;
+	private static final int DEFAULT_WRAPS = 2;
 	
 	private static int OBTAIN_MAX_WIDTH() {
 		int[] widthArray = {LABEL_WIDTH, TEXT_FIELD_WIDTH, SPINNER_WIDTH, COMBO_BOX_WIDTH};
@@ -103,7 +104,8 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private MyPanel contentPane;
-	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF, seedTF;
+	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF,
+	seedTF, wrapsTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
@@ -134,7 +136,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
 		initMethodPanel(contentPane);
 		contentPane.addHeight(BIG_VERTICAL_MARGIN);
-		initTournamentParameters(contentPane);		
+		initTournamentParameters(contentPane);
 		initGraphicPanel();
 		initResultTextArea();
 		// initScrollPane();
@@ -204,6 +206,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		DepthTF = createTextField(String.valueOf(Window.DEFAULT_MAX_DEPTH), superPanel);
 		superPanel.addHeight(VERTICAL_MARGIN);
+		createLabel("Number of Wraps", superPanel);
+		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
+		wrapsTF = createTextField(String.valueOf(Window.DEFAULT_WRAPS), superPanel);
+		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Crossover Rate (%)", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		crossoverRateSpinner = createSpinner(Window.DEFAULT_CROSSOVER_RATE, superPanel);
@@ -235,7 +241,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 		truncationSpinner = createSpinner(Window.DEFAULT_TRUNCATION_AMOUNT, superPanel);
 		superPanel.getComponent(labelTruncPos).setVisible(false);
 		truncationSpinner.setVisible(false);
-		
 	}
 	
 	private void initGraphicPanel() {
@@ -471,12 +476,17 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 
 	@Override
-	public Integer getMaxDepth() {
-		return Integer.parseInt(DepthTF.getText());
+	public String getMaxDepth() {
+		return DepthTF.getText();
 	}
 
 	@Override
 	public String getSeed() {
 		return seedTF.getText();
+	}
+
+	@Override
+	public String getWraps() {
+		return wrapsTF.getText();
 	}
 }

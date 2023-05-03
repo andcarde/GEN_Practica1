@@ -18,7 +18,7 @@ public abstract class BinaryTreeInitializer implements TreeInitializer {
 	
 	@Override
 	public TreeChromosome initialize() {
-		TreeChromosome chromosome = new TreeChromosome(mold, mold.getMutation());
+		TreeChromosome chromosome = new TreeChromosome(mold);
 		chromosome.setRaiz(initNode());
 		return chromosome;
 	}

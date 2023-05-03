@@ -33,6 +33,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	private static FitnessFunction FITNESS_FUNCTION = FitnessFunction.ADAPTATION;
 	private static final boolean BLOATING_VALUE = true;
 	private static final int MAX_DEPTH = 5;
+	private static final int WRAPS = 2;
 	private static final TreeInitializerEnum initializationMethod = TreeInitializerEnum.RAMPED_AND_HALP;
 	
 	// -------------------------- PERMUTATIONS ----------------------------------------
@@ -299,10 +300,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	}
 
 	@Override
-	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void paintP3Graphics(double[] idealFunction, double[] obtainedFunction, double[] xvalues) {}
 
 	@Override
 	public boolean isBloatingActive() {
@@ -315,12 +313,17 @@ public class StatisticGenerator implements RequestMaker, Client {
 	}
 
 	@Override
-	public Integer getMaxDepth() {
-		return MAX_DEPTH;
+	public String getMaxDepth() {
+		return String.valueOf(MAX_DEPTH);
 	}
 
 	@Override
 	public String getSeed() {
 		return null;
+	}
+
+	@Override
+	public String getWraps() {
+		return String.valueOf(WRAPS);
 	}
 }

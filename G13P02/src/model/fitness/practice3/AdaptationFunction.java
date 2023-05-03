@@ -3,6 +3,8 @@ package model.fitness.practice3;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.chromosome.ChromosomeI;
+import model.chromosome.practice3.TreeChromosome;
 import model.fitness.CallbackInput;
 import model.fitness.Function;
 import model.fitness.Input;
@@ -58,7 +60,8 @@ public class AdaptationFunction extends Function {
 	}
 	
 	@Override
-	public double[] getFunction(ArithmeticNode node) { 
+	public double[] getFunction(ChromosomeI chromosome) {
+		ArithmeticNode node = ((TreeChromosome) chromosome).getRaiz();
 		double[] ret = new double[DATASET_SIZE];
 		IntervalIterator ii = new IntervalIterator(X_BELOW_LIMIT, X_UPPER_LIMIT, X_STEP);
 		for (int i = 0; i < DATASET_SIZE; i++)

@@ -37,7 +37,9 @@ public interface RequestMaker {
 	
 	boolean isBloatingActive();
 
-	Integer getMaxDepth();
+	String getMaxDepth();
 
 	String getSeed();
+
+	String getWraps();
 }

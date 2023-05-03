@@ -1,6 +1,7 @@
 package model.mutation;
 
 import model.gen.practice3.GenType;
+import model.mutation.practice1.BasicBinaryMutation;
 import model.mutation.practice3.ContractionTreeMutation;
 import model.mutation.practice3.FunctionalTreeMutation;
 import model.mutation.practice3.HoistTreeMutation;
@@ -20,7 +21,18 @@ public class MutationBuilder {
 						return new PermutationTreeMutation(mutationProbability);
 					case TERMINAL:
 						return new HoistTreeMutation(mutationProbability);
+					default:
+						break;
 				}
+				break;
+			case BINARY:
+				switch (mutationMethod) {
+					case BINARY:
+						return new BasicBinaryMutation(mutationProbability);
+					default:
+						break;
+				}
+				break;
 		}
 		return null;
 	}

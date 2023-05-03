@@ -1,8 +1,6 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import control.Request;
@@ -10,7 +8,6 @@ import model.crossover.CrossoverBuilder;
 import model.crossover.CrossoverI;
 import model.fitness.Fitness;
 import model.fitness.FunctionBuilder;
-import model.gen.practice3.GenI;
 import model.gen.practice3.GenType;
 import model.initialization.practice3.InitializerBuilder;
 import model.initialization.practice3.TreePopulationInitializer;
@@ -44,17 +41,23 @@ public class Builder {
 	}
 	
 	private static MoldI buildMold(Request request, MutationI mutation) {
+		boolean bloating = false;
+		int maxHeight = request.getMaxDepth();
+		int numWraps = request.getWraps();
 		Fitness function = FunctionBuilder.build(request.getFitnessFunction());
-		List<GenI> moldGenes = new ArrayList<>();
-		return new Mold(function, moldGenes, request.isBloatingActive(), mutation, request.getPopulationAmount());
+		return new Mold(function, request.isBloatingActive(), mutation, request.getPopulationAmount(), maxHeight,
+				numWraps);
 	}
 	
 	private static TreePopulationInitializer buildInitializer(Request request, MoldI mold) {
-		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(), request.getPopulationAmount());
+		return InitializerBuilder.build(request.getInitalizationMethod(), mold, request.getMaxDepth(),
+				request.getPopulationAmount());
+		
 	}
 	
 	private static SelectionI buildSelection(Request request) {
-		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(), mold.getFunction().isMaximization(),request.getTruncationAmount());
+		return SelectionBuilder.build(request.getSelectionMethod(), request.getTournamentRequest(),
+				mold.getFunction().isMaximization(),request.getTruncationAmount());
 	}
 
 	private static CrossoverI buildCrossover(Request request, MoldI mold, GenType genType) {

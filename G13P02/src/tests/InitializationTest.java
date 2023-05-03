@@ -8,7 +8,6 @@ import model.chromosome.ChromosomeI;
 import model.fitness.Fitness;
 import model.fitness.FitnessFunction;
 import model.fitness.FunctionBuilder;
-import model.gen.practice3.GenI;
 import model.gen.practice3.GenType;
 import model.initialization.Initializer;
 import model.initialization.practice3.TreeInitializerEnum;
@@ -35,10 +34,11 @@ public class InitializationTest {
 	
 	private static MoldI createMold(int populationAmount, GenType genType) {
 		Fitness function = createFitness();
-		List<GenI> moldGenes = null;
 		boolean bloating = false;
 		MutationI mutation = createMutation(genType);
-		return new Mold(function, moldGenes, bloating, mutation, populationAmount);
+		int maxHeight = 5;
+		int numWraps = 2;
+		return new Mold(function, bloating, mutation, populationAmount, maxHeight, numWraps);
 	}
 	
 	private static MutationI createMutation(GenType genType) {

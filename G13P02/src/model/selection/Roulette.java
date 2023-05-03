@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.PopulationTable;
-import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMax;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
@@ -18,7 +18,7 @@ public class Roulette implements SelectionI {
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
 		List<ChromosomeI> selection = new ArrayList<>();
-		if (isMaximization) population.sort(new ChromosomeComparator());
+		if (isMaximization) population.sort(new ChromosomeComparatorMax());
 		else population.sort(new ChromosomeComparatorMin());
 		Positivizer.positivizeFitness(population);
 		PopulationTable table = new PopulationTable(population);

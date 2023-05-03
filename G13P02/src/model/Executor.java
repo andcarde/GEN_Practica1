@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
-import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMax;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.crossover.CrossoverI;
@@ -63,7 +63,7 @@ public class Executor {
 		// this.observer = (Observer) config.get("observer");
 		
 		if (this.mold.getFunction().isMaximization())
-			this.comparator = new ChromosomeComparator();
+			this.comparator = new ChromosomeComparatorMax();
 		else
 			this.comparator = new ChromosomeComparatorMin();
 		
@@ -153,11 +153,11 @@ public class Executor {
 			}
 			//positivizeFitness();
 			
-			// Calculamos la media de la generación
+			// Calculamos la media de la generaciï¿½n
 			generationAverage[generation] = fitnessSum / population.size();
 			//this.observer.updateGenerationAverage(generationAverage);
 			
-			// Añadimos el mejor cromosoma de la generación a la lista
+			// Aï¿½adimos el mejor cromosoma de la generaciï¿½n a la lista
 			generationLeaders[generation] = leader.getValue();
 			
 			//this.observer.updateGenerationLeaders(generationLeaders);
@@ -166,13 +166,16 @@ public class Executor {
 			if (this.intergenerationLeader == null)
 				intergenerationLeader = leader.copy();
 			//this.observer.updateIntergenerationLeader(intergenerationLeader);
-			else if ((leader.getValue() > intergenerationLeader.getValue() && mold.getFunction().isMaximization()) || (leader.getValue() < intergenerationLeader.getValue() && !mold.getFunction().isMaximization())) {
+			else if ((leader.getValue() > intergenerationLeader.getValue() && mold.getFunction().isMaximization()) ||
+					(leader.getValue() < intergenerationLeader.getValue() && !mold.getFunction().isMaximization())) {
 				intergenerationLeader = leader.copy();
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
-			//Se añade el lider absoluto del momento
-			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getValue() && mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getValue() && !mold.getFunction().isMaximization())) {
+			//Se aï¿½ade el lider absoluto del momento
+			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getValue() &&
+					mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getValue()
+							&& !mold.getFunction().isMaximization())) {
 				generationsAbsoluteLeaders[generation] = leader.getValue();
 			}
 			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
@@ -192,7 +195,7 @@ public class Executor {
 
 	public String getBestChromosomeToString() {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
-			+ " con los parámetros: \n\r" + intergenerationLeader.getGenesToString();
+			+ " con los parï¿½metros: \n\r" + intergenerationLeader.getGenesToString();
 	}
 	
 	public double[] getIdealFunction() {
@@ -200,7 +203,7 @@ public class Executor {
 	}
 
 	public double[] getbestFunction() {
-		return mold.getFunction().getFunction(intergenerationLeader.getRaiz());
+		return mold.getFunction().getFunction(intergenerationLeader);
 	}
 	
 	public double[] getXValues() {

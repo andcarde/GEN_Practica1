@@ -5,21 +5,17 @@ import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.fitness.CallbackInput;
 import model.gen.practice3.ArithmeticNode;
-import model.mutation.MutationI;
 
 public class TreeChromosome extends Chromosome {
-
-	private final MutationI mutationMethod;
-	private ArithmeticNode raiz;
 	
-	public TreeChromosome(MoldI mold, MutationI mutationMethod) {
+	protected ArithmeticNode raiz;
+	
+	public TreeChromosome(MoldI mold) {
 		super(mold);
-		this.mutationMethod = mutationMethod;
 	}
 	
 	public TreeChromosome(TreeChromosome chromosome) {
 		super(chromosome);
-		this.mutationMethod = chromosome.mutationMethod;
 		this.raiz = chromosome.raiz.copy();
 	}
 	
@@ -42,7 +38,7 @@ public class TreeChromosome extends Chromosome {
 	
 	@Override
 	public Double getValue() {
-		// Necesario para corregir algún error inesperado
+		// Necesario para corregir algÃºn error inesperado
 		if (phenotype == null || Double.isNaN(phenotype)) 
 			evaluate();
 		return phenotype;
@@ -50,10 +46,6 @@ public class TreeChromosome extends Chromosome {
 
 	public String getGenesToString() {
 		return raiz.toString();
-	}
-	
-	public MutationI getMutation() {
-		return mutationMethod;
 	}
 
 	public ArithmeticNode getRaiz() {
@@ -66,14 +58,6 @@ public class TreeChromosome extends Chromosome {
 	
 	public Double getValue(Double x, ArithmeticNode node) {
 		return node.getValue(x);
-	}
-
-	@Override
-	public void initialize() {}
-
-	@Override
-	public int indexOf(int city) {
-		return 0;
 	}
 	
 	@Override

@@ -27,6 +27,7 @@ public class Request {
 	private TournamentRequest tournamentRequest;
 	private boolean bloating;
 	private Long seed;
+	private int wraps;
 	
 	public Request(RequestMaker requestMaker) throws InvalidInputException {
 		this.errors = new ArrayList<>();
@@ -41,9 +42,14 @@ public class Request {
 	private void initializeAttributes(RequestMaker requestMaker) {
 		this.bloating = requestMaker.isBloatingActive();
 		try {
-			maxDepth = requestMaker.getMaxDepth();
+			maxDepth = Integer.valueOf(requestMaker.getMaxDepth());
 		} catch (NumberFormatException nfe) {
 			this.errors.add("The population amount must be an integer.");
+		}
+		try {
+			wraps = Integer.valueOf(requestMaker.getWraps());
+		} catch (NumberFormatException nfe) {
+			this.errors.add("The population amount must be an integer between 1 and 3.");
 		}
 		try {
 			this.populationAmount = Integer.valueOf(requestMaker.getPopulationAmount());
@@ -110,7 +116,10 @@ public class Request {
 	}
 	
 	public void checkValidity() {
-		if (maxDepth < 2 || maxDepth > 5) errors.add("The maximun depth must be between 2 adn 5 (both included).");
+		if (maxDepth < 2 || maxDepth > 5)
+			errors.add("The maximun depth must be between 2 adn 5 (both included).");
+		if (wraps < 1 || maxDepth > 3)
+			errors.add("The population amount must be an integer between 1 and 3.");
 		if (this.populationAmount <= 0)
 			errors.add("The population amount must be a positive integer.");
 		if (this.generationAmount <= 0)
@@ -202,5 +211,9 @@ public class Request {
 
 	public Long getSeed() {
 		return seed;
+	}
+
+	public int getWraps() {
+		return wraps;
 	}
 }

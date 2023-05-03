@@ -5,6 +5,7 @@ import java.util.List;
 
 import model.MoldI;
 import model.chromosome.ChromosomeI;
+import model.chromosome.practice3.CodonChromosome;
 import model.chromosome.practice3.TreeChromosome;
 import model.gen.practice3.GenType;
 import model.initialization.practice3.FullPopulationInitializer;
@@ -29,6 +30,11 @@ public class Initializer {
 			int maxDepth, TreeInitializerEnum tie) {
 		List<ChromosomeI> population = new ArrayList<>();
 		switch (genType) {
+		case BINARY:
+			List<TreeChromosome> populationCodon = new ArrayList<>();
+			for (int i = 0; i < populationAmount; i++)
+				populationCodon.add(new CodonChromosome(mold));
+			return Cast.castTreeToChromosome(populationCodon);	
 		case TREE:
 			List<TreeChromosome> populationTree = null;
 			switch(tie) {

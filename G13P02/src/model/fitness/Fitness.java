@@ -2,7 +2,7 @@ package model.fitness;
 
 import java.util.List;
 
-import model.gen.practice3.ArithmeticNode;
+import model.chromosome.ChromosomeI;
 import model.gen.practice3.GenType;
 
 public interface Fitness {
@@ -13,5 +13,5 @@ public interface Fitness {
 	GenType getGenType();
 	double[] getXValues();
 	double[] getIdealFunction();
-	double[] getFunction(ArithmeticNode node);
+	double[] getFunction(ChromosomeI chromosome);
 }

@@ -3,7 +3,7 @@ package model.selection;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.chromosome.ChromosomeComparator;
+import model.chromosome.ChromosomeComparatorMax;
 import model.chromosome.ChromosomeComparatorMin;
 import model.chromosome.ChromosomeI;
 import model.random.RandomGenerator;
@@ -20,7 +20,7 @@ public class Ranking implements SelectionI {
 
 	@Override
 	public List<ChromosomeI> act(List<ChromosomeI> population) {
-		if (isMaxim) population.sort(new ChromosomeComparator());
+		if (isMaxim) population.sort(new ChromosomeComparatorMax());
 		else population.sort(new ChromosomeComparatorMin());
 		List<Pair<Double, Double>> aux = puntuacion(population);
 		return rouletteWithRanking(population, aux);
