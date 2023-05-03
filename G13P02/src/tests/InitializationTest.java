@@ -33,7 +33,7 @@ public class InitializationTest {
 	}
 	
 	private static MoldI createMold(int populationAmount, GenType genType) {
-		Fitness function = createFitness();
+		Fitness function = createFitness(genType);
 		boolean bloating = false;
 		MutationI mutation = createMutation(genType);
 		int maxHeight = 5;
@@ -47,8 +47,8 @@ public class InitializationTest {
 		return MutationBuilder.build(genType, mutationMethod, mutationProbability);
 	}
 
-	private static Fitness createFitness() {
+	private static Fitness createFitness(GenType genType) {
 		FitnessFunction fitnessFunction = FitnessFunction.ADAPTATION;
-		return FunctionBuilder.build(fitnessFunction);
+		return FunctionBuilder.build(fitnessFunction, genType);
 	}
 }
