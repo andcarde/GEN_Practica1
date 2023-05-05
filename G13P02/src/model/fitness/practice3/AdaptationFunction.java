@@ -42,7 +42,6 @@ public class AdaptationFunction extends Function {
 			xValues[i] = value;
 			targetFunction[i] = ObjetiveFunction.getValue(value);
 			d += Math.pow((callback.getValue(value) - ObjetiveFunction.getValue(value)), 2);
-			Math.pow(i, 2);
 		}
 		d /= DATASET_SIZE;
 		return Math.sqrt(d);
