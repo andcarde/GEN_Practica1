@@ -384,14 +384,13 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	public void paintResult(double[] generationAverage, double[] generationLeaders,
-			double[] bestAbsoluteValue, double[] selectivePressure, String bestResult) {
+			double[] bestAbsoluteValue, String bestResult) {
 		plot.resetMapData();
 		plot.setVisible(true);
 		plot.removeAllPlots();
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
 		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
-		plot.addLinePlot("presion selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}

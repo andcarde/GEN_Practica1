@@ -295,7 +295,7 @@ public class StatisticGenerator implements RequestMaker, Client {
 	 */
 	@Override
 	public void paintResult(double[] generationAverage, double[] generationLeaders,
-			double[] absoluteLeaders, double[] selectivePressure, String bestChromosomeToString) {
+			double[] absoluteLeaders, String bestChromosomeToString) {
 		average += absoluteLeaders[GENERATION_AMOUNT - 1];
 	}
 

@@ -41,7 +41,6 @@ public class Controller {
 				executor.getGenerationAverage(),
 				executor.getGenerationLeaders(),
 				executor.getAbsoluteLeaders(),
-				executor.getSelectivePressure(),
 				executor.getBestChromosomeToString()
 		);
 		if (isP3) {

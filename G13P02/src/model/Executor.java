@@ -134,11 +134,10 @@ public class Executor {
 			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
-			ChromosomeI leader = population.get(0);
+			ChromosomeI leader = population.get(0).copy();
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization())
-						|| (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
+				if (chromosome.getValue() < leader.getValue())
 					leader = chromosome.copy();
 			}
 			//positivizeFitness();
@@ -152,12 +151,11 @@ public class Executor {
 			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
-			ChromosomeI leader = population.get(0);
+			ChromosomeI leader = population.get(0).copy();
 			double fitnessSum = 0;
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization())
-						|| (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
+				if (chromosome.getValue() < leader.getValue())
 					leader = chromosome.copy();
 				fitnessSum += chromosome.getValue();
 			}
