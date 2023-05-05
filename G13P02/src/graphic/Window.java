@@ -114,6 +114,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private MyPanel methodPanel;
 	private JComboBox<String> initCB, crossCB, selectionCB, mutationCB, genCB;
 	private JCheckBox bloating;
+	private JTabbedPane generalPanel;
 	
 	private double[] gens;
 	private Plot2DPanel plot, plotP3;
@@ -244,7 +245,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private void initGraphicPanel() {
-		JTabbedPane generalPanel = new JTabbedPane();
+		generalPanel = new JTabbedPane();
 		generalPanel.setBackground(new Color(222, 221, 218));
 		generalPanel.setBounds(287, 41, 835, 450);
 		contentPane.add(generalPanel);
@@ -402,6 +403,9 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plotP3.addLinePlot("Funcion Objetivo", Color.red, xvalues, idealFunction);
 		plotP3.addLinePlot("Funcion Obtenida", Color.blue, xvalues, obtainedFunction);
 		plotP3.repaint();
+		generalPanel.setSelectedComponent(plot);
+		generalPanel.updateUI();
+		generalPanel.repaint();
 	}
 	
 	@Override

@@ -107,11 +107,19 @@ public class Executor {
 	}
 	
 	private void select() {
-		population = selection.act(population);
+		List<ChromosomeI> ret = selection.act(population);
+		population.clear();
+		for (ChromosomeI c : ret) {
+			population.add(c.copy());
+		}
 	}
 	
 	private void cross() {
-		population = crossover.act(population);
+		List<ChromosomeI> ret = crossover.act(population);
+		population.clear();
+		for (ChromosomeI c : ret) {
+			population.add(c.copy());
+		}
 	}
 	
 	private void mutate() {
@@ -121,13 +129,17 @@ public class Executor {
 	
 	private void basicEvaluation() {
 		if (population.size() >= 0) {
+			double k = Covariance.calculate(population) / Variance.calculate(population);
+			if (Double.isNaN(k)) k = 0;
+			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
 				chromosome.evaluate();
 			ChromosomeI leader = population.get(0);
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if (chromosome.getValue() > leader.getValue())
-					leader = chromosome;
+				if ((chromosome.getValue() > leader.getValue() && mold.getFunction().isMaximization())
+						|| (chromosome.getValue() < leader.getValue() && !mold.getFunction().isMaximization()))
+					leader = chromosome.copy();
 			}
 			//positivizeFitness();
 		}
@@ -193,7 +205,7 @@ public class Executor {
 
 	public String getBestChromosomeToString() {
 		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
-			+ " con los par�metros: \n\r" + intergenerationLeader.getGenesToString();
+			+ " con los parametros: \n\r" + intergenerationLeader.getGenesToString();
 	}
 	
 	public double[] getIdealFunction() {
