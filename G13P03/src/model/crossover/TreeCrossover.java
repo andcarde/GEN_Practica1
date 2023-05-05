@@ -12,6 +12,7 @@ import model.util.Cast;
 
 public class TreeCrossover extends Crossover {
 	
+	private double probability;
 	
 	public TreeCrossover(MoldI mold, double crossProbability) {
 		super(mold, crossProbability);
@@ -21,24 +22,15 @@ public class TreeCrossover extends Crossover {
 		TreeChromosome parent1 = (TreeChromosome) chrParent1;
 		TreeChromosome parent2 = (TreeChromosome) chrParent2;
 		List<TreeChromosome> list = new ArrayList<>();
-		int index1, index2;
-		try {
-			index1 = RandomGenerator.createAleatoryInt(parent1.getRaiz().getNumSons());
-		} catch(Exception e) {index1 = 0;}
-		try {
-			index2 = RandomGenerator.createAleatoryInt(parent2.getRaiz().getNumSons());
-		} catch(Exception e) {index2 = 0;}
-		ArithmeticNode aux = null, aux2 = null;
-		try {
-			aux = parent1.getRaiz().getNode(index1).copy();
-			aux2 = parent2.getRaiz().getNode(index2).copy();
-		} catch(Exception e) {
-			aux = parent1.getRaiz().getNode(index1);
-			aux2 = parent2.getRaiz().getNode(index2);
+		if (RandomGenerator.createAleatoryBoolean(probability)) {
+			int index1 = RandomGenerator.createAleatoryInt(parent1.getRaiz().getNumSons());
+			int index2 = RandomGenerator.createAleatoryInt(parent2.getRaiz().getNumSons());
+	
+			ArithmeticNode aux = parent1.getRaiz().getNode(index1).copy();
+			
+			parent1.getRaiz().setNode(index1, parent2.getRaiz().getNode(index2).copy());
+			parent2.getRaiz().setNode(index2, aux);
 		}
-		parent1.getRaiz().setNode(index1, aux2);
-		parent2.getRaiz().setNode(index2, aux);
-		
 		list.add(parent1);
 		list.add(parent2);
 		return Cast.castTreeToChromosome(list);
