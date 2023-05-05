@@ -103,12 +103,14 @@ public class ArithmeticNode implements Callback {
 	
 	public void updateSons() {
 		numSons = 0;
-		if (leftBranch != null)
+		if (leftBranch != null) {
+			leftBranch.updateSons();
 			numSons += leftBranch.numSons + 1;
-		if (rightBranch != null)
+		}
+		if (rightBranch != null) {
+			rightBranch.updateSons();
 			numSons += rightBranch.numSons + 1;
-		if (father != null)
-			father.updateSons();
+		}
 	}
 	
 	/***
@@ -120,6 +122,7 @@ public class ArithmeticNode implements Callback {
 	 */
 	public ArithmeticNode getNode(int n) {
 		int observedSons = 0;
+		updateSons();
 		if (n == 0)
 			return this;
 		if (n < 0 || n > numSons)

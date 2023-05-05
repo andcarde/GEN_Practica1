@@ -114,6 +114,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private MyPanel methodPanel;
 	private JComboBox<String> initCB, crossCB, selectionCB, mutationCB, genCB;
 	private JCheckBox bloating;
+	private JTabbedPane generalPanel;
 	
 	private double[] gens;
 	private Plot2DPanel plot, plotP3;
@@ -244,7 +245,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	private void initGraphicPanel() {
-		JTabbedPane generalPanel = new JTabbedPane();
+		generalPanel = new JTabbedPane();
 		generalPanel.setBackground(new Color(222, 221, 218));
 		generalPanel.setBounds(287, 41, 835, 450);
 		contentPane.add(generalPanel);
@@ -383,14 +384,13 @@ public class Window extends JFrame implements RequestMaker, Client {
 	}
 	
 	public void paintResult(double[] generationAverage, double[] generationLeaders,
-			double[] bestAbsoluteValue, double[] selectivePressure, String bestResult) {
+			double[] bestAbsoluteValue, String bestResult) {
 		plot.resetMapData();
 		plot.setVisible(true);
 		plot.removeAllPlots();
 		plot.addLinePlot("media", Color.green, gens, generationAverage);
 		plot.addLinePlot("mejor de la generacion", Color.red, gens, generationLeaders);
 		plot.addLinePlot("mejor absoluto", Color.blue, gens, bestAbsoluteValue);
-		plot.addLinePlot("presion selectiva", Color.black, gens, selectivePressure);
 		plot.repaint();
 		textValue.setText(bestResult);
 	}
@@ -402,6 +402,9 @@ public class Window extends JFrame implements RequestMaker, Client {
 		plotP3.addLinePlot("Funcion Objetivo", Color.red, xvalues, idealFunction);
 		plotP3.addLinePlot("Funcion Obtenida", Color.blue, xvalues, obtainedFunction);
 		plotP3.repaint();
+		generalPanel.setSelectedComponent(plot);
+		generalPanel.updateUI();
+		generalPanel.repaint();
 	}
 	
 	@Override
