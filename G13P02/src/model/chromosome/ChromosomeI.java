@@ -28,4 +28,8 @@ public interface ChromosomeI {
 	void mutate();
 	
 	List<BinaryGen> getGenes();
+
+	String pretty();
+
+	double getFunctionValue();
 }

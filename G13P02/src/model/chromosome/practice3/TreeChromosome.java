@@ -12,6 +12,7 @@ import model.gen.practice3.BinaryGen;
 public class TreeChromosome extends Chromosome {
 	
 	protected ArithmeticNode raiz;
+	private Double functionValue;
 	
 	public TreeChromosome(MoldI mold) {
 		super(mold);
@@ -31,8 +32,9 @@ public class TreeChromosome extends Chromosome {
 	}
 	
 	public double getBasicValue() {
-		if (phenotype == null || Double.isNaN(phenotype)) evaluate();
-		return phenotype;
+		if (functionValue == null || Double.isNaN(functionValue))
+			evaluate();
+		return functionValue;
 	}
 	
 	public ChromosomeI createMutatedCopy() {
@@ -48,7 +50,7 @@ public class TreeChromosome extends Chromosome {
 	}
 
 	public String getGenesToString() {
-		return raiz.toString();
+		return raiz.pretty();
 	}
 
 	public ArithmeticNode getRaiz() {
@@ -68,6 +70,7 @@ public class TreeChromosome extends Chromosome {
 		CallbackInput input = new CallbackInput();
 		input.put("tree", raiz);
 		this.phenotype = this.mold.getFunction().getValue(input);
+		this.functionValue = phenotype;
 		if (mold.getBloating())
 			this.phenotype += mold.getK() * raiz.getNumSons();
 	}
@@ -75,6 +78,11 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public String toString() {
 		return this.raiz.toString();
+	}
+	
+	@Override
+	public String pretty() {
+		return this.raiz.pretty();
 	}
 
 	@Override
@@ -85,5 +93,12 @@ public class TreeChromosome extends Chromosome {
 	@Override
 	public List<BinaryGen> getGenes() {
 		return null;
+	}
+
+	@Override
+	public double getFunctionValue() {
+		if (functionValue == null || Double.isNaN(functionValue))
+			evaluate();
+		return functionValue;
 	}
 }

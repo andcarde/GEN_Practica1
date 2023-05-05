@@ -41,7 +41,7 @@ public class AdaptationFunction extends Function {
 			double value = ii.next();
 			xValues[i] = value;
 			targetFunction[i] = ObjetiveFunction.getValue(value);
-			d += Math.pow((callback.getValue(value) - ObjetiveFunction.getValue(value)), 2);
+			d += Math.pow((Math.abs(callback.getValue(value) - ObjetiveFunction.getValue(value))), 2);
 		}
 		d /= DATASET_SIZE;
 		return Math.sqrt(d);

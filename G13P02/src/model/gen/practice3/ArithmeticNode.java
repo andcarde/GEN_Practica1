@@ -195,4 +195,28 @@ public class ArithmeticNode implements Callback {
 		} while (selectedNode.isLeaf());
 		return selectedNode;
 	}
+
+	public String pretty() {
+		if (isLeaf())
+			return TerminalEnum.toString(fruit);
+		String s = "";
+		if (leftBranch == null)
+			s += "null";
+		else if (knot != ArithmeticEnum.MUL || leftBranch.knot == ArithmeticEnum.MUL)
+			s += leftBranch.pretty();
+		else
+			s += addParentisis(leftBranch.pretty());
+		s += " " + knot.toString() + " ";
+		if (rightBranch == null)
+			s += "null";
+		else if (knot != ArithmeticEnum.MUL || rightBranch.knot == ArithmeticEnum.MUL)
+			s += rightBranch.pretty();
+		else
+			s += addParentisis(rightBranch.pretty());
+		return s;
+	}
+	
+	private String addParentisis(String string) {
+		return '(' + string + ')';
+	}
 }

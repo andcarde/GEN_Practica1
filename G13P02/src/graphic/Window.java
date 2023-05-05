@@ -44,9 +44,10 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final int DEFAULT_POPULATION_AMOUNT = 100;
 	private static final int DEFAULT_GENERATION_AMOUNT = 100;
 	private static final double DEFAULT_ELITISM_RATE = 0;
-	private static final TreeInitializerEnum DEFAULT_INITIALIZATION_METHOD = TreeInitializerEnum.GROW;
+	private static final TreeInitializerEnum DEFAULT_INITIALIZATION_METHOD = TreeInitializerEnum.FULL;
 	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CROSSOVER_TREE;
 	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.TERMINAL;
+	private static final GenType DEFAULT_GEN_TYPE = GenType.TREE;
 
 	
 	private static final long serialVersionUID = 8815627840243675666L;
@@ -105,7 +106,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	
 	private MyPanel contentPane;
 	private JTextField populationAmountTF, generationAmountTF, championPercentageTF, contestantsAmountTF, DepthTF,
-	seedTF, wrapsTF;
+			seedTF, wrapsTF;
 	private JSpinner crossoverRateSpinner, mutationRateSpinner, elitismRateSpinner, truncationSpinner;
 	private JComboBox<String> functionCB;
 	
@@ -189,7 +190,6 @@ public class Window extends JFrame implements RequestMaker, Client {
 		panel.add(checkBox);
 		return checkBox;
 	}
-	
 
 	public void initSettings(MyPanel superPanel) {
 		createLabel("Population Amount", superPanel);
@@ -235,6 +235,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 		createLabel("Gen Type", superPanel);
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		genCB = createComboBox(GenType.class, superPanel);
+		genCB.setSelectedItem(DEFAULT_GEN_TYPE.name());
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Truncation Rate (%)", superPanel);
 		labelTruncPos = superPanel.getComponentCount()-1;
@@ -293,7 +294,6 @@ public class Window extends JFrame implements RequestMaker, Client {
             		superPanel.getComponent(labelTruncPos).setVisible(false);
             		truncationSpinner.setVisible(false);
             	}
-
             }
         });
 		methodPanel.addHeight(SMALL_VERTICAL_MARGIN);

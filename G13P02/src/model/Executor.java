@@ -137,7 +137,7 @@ public class Executor {
 			ChromosomeI leader = population.get(0).copy();
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if (chromosome.getValue() < leader.getValue())
+				if (chromosome.getFunctionValue() < leader.getFunctionValue())
 					leader = chromosome.copy();
 			}
 			//positivizeFitness();
@@ -155,18 +155,18 @@ public class Executor {
 			double fitnessSum = 0;
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
-				if (chromosome.getValue() < leader.getValue())
+				if (chromosome.getFunctionValue() < leader.getFunctionValue())
 					leader = chromosome.copy();
-				fitnessSum += chromosome.getValue();
+				fitnessSum += chromosome.getFunctionValue();
 			}
 			//positivizeFitness();
 			
-			// Calculamos la media de la generaci�n
+			// Calculamos la media de la generación
 			generationAverage[generation] = fitnessSum / population.size();
 			//this.observer.updateGenerationAverage(generationAverage);
 			
-			// A�adimos el mejor cromosoma de la generaci�n a la lista
-			generationLeaders[generation] = leader.getValue();
+			// Añadimos el mejor cromosoma de la generación a la lista
+			generationLeaders[generation] = leader.getFunctionValue();
 			
 			//this.observer.updateGenerationLeaders(generationLeaders);
 			
@@ -174,17 +174,19 @@ public class Executor {
 			if (this.intergenerationLeader == null)
 				intergenerationLeader = leader.copy();
 			//this.observer.updateIntergenerationLeader(intergenerationLeader);
-			else if ((leader.getValue() > intergenerationLeader.getValue() && mold.getFunction().isMaximization()) ||
-					(leader.getValue() < intergenerationLeader.getValue() && !mold.getFunction().isMaximization())) {
+			else if ((leader.getFunctionValue() > intergenerationLeader.getFunctionValue()
+					&& mold.getFunction().isMaximization()) ||
+					(leader.getFunctionValue() < intergenerationLeader.getFunctionValue()
+					&& !mold.getFunction().isMaximization())) {
 				intergenerationLeader = leader.copy();
 				//this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
-			//Se a�ade el lider absoluto del momento
-			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getValue() &&
-					mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getValue()
+			//Se añade el lider absoluto del momento
+			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getFunctionValue() &&
+					mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getFunctionValue()
 							&& !mold.getFunction().isMaximization())) {
-				generationsAbsoluteLeaders[generation] = leader.getValue();
+				generationsAbsoluteLeaders[generation] = leader.getFunctionValue();
 			}
 			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
 			
@@ -202,8 +204,9 @@ public class Executor {
 	public double[] getSelectivePressure() { return selectivePressure; }
 
 	public String getBestChromosomeToString() {
-		return "El mejor cromosoma tiene un valor de " + intergenerationLeader.getValue()
-			+ " con los parametros: \n\r" + intergenerationLeader.getGenesToString();
+		return "El mejor cromosoma tiene un valor de " +
+				(Math.round(intergenerationLeader.getFunctionValue() * 10000.0) / 10000.0) +
+				" con los parámetros: \n\r" + intergenerationLeader.pretty() + '\n' + intergenerationLeader.toString();
 	}
 	
 	public double[] getIdealFunction() {

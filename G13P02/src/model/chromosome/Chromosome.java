@@ -47,9 +47,7 @@ public abstract class Chromosome implements ChromosomeI {
 	}
 	
 	@Override
-	public double getBasicValue() {
-		return 0;
-	}
+	public abstract double getBasicValue();
 	
 	public ArithmeticNode getRaiz() {
 		return null;
