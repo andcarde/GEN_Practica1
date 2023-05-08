@@ -10,7 +10,7 @@ public class CrossoverBuilder {
 	public static CrossoverI build(CrossoverMethod selectionMethod, Double crossoverProbability,
 			MoldI mold, GenType genType) {
 		switch (genType) {
-			case TREE:
+			case PROGRAMACION_EVOLUTIVA:
 				switch (selectionMethod) {
 					case CROSSOVER_TREE:
 						return new TreeCrossover(mold, crossoverProbability);
@@ -18,7 +18,7 @@ public class CrossoverBuilder {
 						break;
 				}
 				break;
-			case BINARY:
+			case GRAMATICA_EVOLUTIVA:
 				switch (selectionMethod) {
 				case ONE_POINT:
 					return new BinaryOnePointCrossover(mold, crossoverProbability);

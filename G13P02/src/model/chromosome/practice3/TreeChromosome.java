@@ -1,13 +1,10 @@
 package model.chromosome.practice3;
 
-import java.util.List;
-
 import model.MoldI;
 import model.chromosome.Chromosome;
 import model.chromosome.ChromosomeI;
 import model.fitness.CallbackInput;
 import model.gen.practice3.ArithmeticNode;
-import model.gen.practice3.BinaryGen;
 
 public class TreeChromosome extends Chromosome {
 	
@@ -20,7 +17,8 @@ public class TreeChromosome extends Chromosome {
 	
 	public TreeChromosome(TreeChromosome chromosome) {
 		super(chromosome);
-		if (chromosome.raiz != null) this.raiz = chromosome.raiz.copy();
+		if (chromosome.raiz != null)
+			this.raiz = chromosome.raiz.copy();
 	}
 	
 	public TreeChromosome copy() {
@@ -28,24 +26,21 @@ public class TreeChromosome extends Chromosome {
 	}
 	
 	public Integer getSize() {
-		return raiz.getNumSons()+1;
+		if (raiz == null)
+			return 0;
+		return raiz.getNumSons() + 1;
 	}
 	
-	public double getBasicValue() {
-		if (functionValue == null || Double.isNaN(functionValue))
-			evaluate();
-		return functionValue;
-	}
-	
+	@Override
 	public ChromosomeI createMutatedCopy() {
-		return this.mold.getMutation().act(this);
+		return this.mold.getMutation().act(this.copy());
 	}
 	
 	@Override
 	public Double getValue() {
 		// Necesario para corregir algún error inesperado
 		if (phenotype == null || Double.isNaN(phenotype)) 
-			evaluate();
+			evaluateFitness();
 		return phenotype;
 	}
 
@@ -58,47 +53,37 @@ public class TreeChromosome extends Chromosome {
 	}
 
 	public void setRaiz(ArithmeticNode raiz) {
-		this.raiz = raiz;
-	}
-	
-	public Double getValue(Double x, ArithmeticNode node) {
-		return node.getValue(x);
+		this.raiz = raiz.copy();
 	}
 	
 	@Override
-	public void evaluate() {
+	public void evaluateValue() {
 		CallbackInput input = new CallbackInput();
 		input.put("tree", raiz);
-		this.phenotype = this.mold.getFunction().getValue(input);
-		this.functionValue = phenotype;
+		functionValue = mold.getFunction().getValue(input);
+	}
+	
+	@Override
+	public void evaluateFitness() {
+		phenotype = functionValue;
 		if (mold.getBloating())
-			this.phenotype += mold.getK() * raiz.getNumSons();
+			phenotype += mold.getK() * (raiz.getNumSons() + 1);
 	}
 	
 	@Override
 	public String toString() {
-		return this.raiz.toString();
+		return raiz.toString();
 	}
 	
 	@Override
 	public String pretty() {
-		return this.raiz.pretty();
-	}
-
-	@Override
-	public void mutate() {
-		this.mold.getMutation().act(this);
-	}
-
-	@Override
-	public List<BinaryGen> getGenes() {
-		return null;
+		return raiz.pretty();
 	}
 
 	@Override
 	public double getFunctionValue() {
 		if (functionValue == null || Double.isNaN(functionValue))
-			evaluate();
+			evaluateValue();
 		return functionValue;
 	}
 }

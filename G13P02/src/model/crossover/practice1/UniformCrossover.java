@@ -17,21 +17,17 @@ public class UniformCrossover extends Crossover {
 
 	@Override
 	public List<ChromosomeI> cross(ChromosomeI parent1, ChromosomeI parent2) {
-		List<ChromosomeI> sons = new ArrayList<>();
-		CodonChromosome son1 = new CodonChromosome(this.mold);
-		CodonChromosome son2 = new CodonChromosome(this.mold);
+		CodonChromosome codonParent1 = (CodonChromosome) parent1;
+		CodonChromosome codonParent2 = (CodonChromosome) parent2;
 		
-		Object genome1, genome2;
-		for (int i = 0; i < parent1.getGenes().size(); i++) {
-			genome1 = parent1.getGenes().get(i);
-			genome2 = parent2.getGenes().get(i);
-			if (RandomGenerator.createAleatoryBoolean(0.5)) {
-				son1.setGen(i, son1.getGenes().get(i).copy().assimilate(genome1));
-				son2.setGen(i, son1.getGenes().get(i).copy().assimilate(genome2));
-			}
-			else {
-				son1.setGen(i, son1.getGenes().get(i).copy().assimilate(genome2));
-				son2.setGen(i, son1.getGenes().get(i).copy().assimilate(genome1));
+		List<ChromosomeI> sons = new ArrayList<>();
+		CodonChromosome son1 = codonParent1.copy();
+		CodonChromosome son2 = codonParent2.copy();
+		
+		for (int i = 0; i < son1.getCodonsNumber(); i++) {
+			if (RandomGenerator.createAleatoryBoolean()) {
+				son1.setCodon(i, codonParent2.getCodon(i));
+				son2.setCodon(i, codonParent1.getCodon(i));
 			}
 		}
 		

@@ -30,12 +30,12 @@ public class Initializer {
 			int maxDepth, TreeInitializerEnum tie) {
 		List<ChromosomeI> population = new ArrayList<>();
 		switch (genType) {
-		case BINARY:
+		case GRAMATICA_EVOLUTIVA:
 			List<TreeChromosome> populationCodon = new ArrayList<>();
 			for (int i = 0; i < populationAmount; i++)
 				populationCodon.add(new CodonChromosome(mold));
 			return Cast.castTreeToChromosome(populationCodon);	
-		case TREE:
+		case PROGRAMACION_EVOLUTIVA:
 			List<TreeChromosome> populationTree = null;
 			switch(tie) {
 				case FULL:

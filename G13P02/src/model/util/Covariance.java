@@ -10,7 +10,7 @@ public class Covariance {
 		double value = 0, averageSize = 0, averagefitness = 0;
 		
 		for (ChromosomeI tree : population) {
-			averagefitness += tree.getBasicValue();
+			averagefitness += tree.getFunctionValue();
 			averageSize += tree.getSize();
 		}
 		
@@ -19,7 +19,7 @@ public class Covariance {
 		
 		for (ChromosomeI tree : population) {
 			double v1 = tree.getSize() - averageSize;
-			double v2 = tree.getBasicValue() - averagefitness;
+			double v2 = tree.getFunctionValue() - averagefitness;
 			value += v1 * v2;
 		}	
 		return value / population.size();

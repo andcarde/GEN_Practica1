@@ -6,5 +6,5 @@ public enum MutationMethod {
 	TERMINAL, FUNCTIONAL, PERMUTATION, HOIST,
 	
 	// Affect the binary gene
-	BINARY;
+	REAL;
 }

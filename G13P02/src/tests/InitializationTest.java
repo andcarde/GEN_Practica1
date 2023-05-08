@@ -24,7 +24,7 @@ public class InitializationTest {
 	}
 	
 	private static List<ChromosomeI> createPopulation() {
-		GenType genType = GenType.TREE;
+		GenType genType = GenType.PROGRAMACION_EVOLUTIVA;
 		int populationAmount = 10;
 		MoldI mold = createMold(populationAmount, genType);
 		int maxDepth = 5;

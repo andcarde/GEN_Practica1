@@ -12,6 +12,7 @@ import model.crossover.CrossoverI;
 import model.fitness.practice3.AdaptationFunction;
 import model.initialization.Initializer;
 import model.initialization.practice3.TreeInitializerEnum;
+import model.mutation.PopulationMutation;
 import model.selection.SelectionI;
 import model.util.Covariance;
 import model.util.Variance;
@@ -25,8 +26,6 @@ public class Executor {
 	private final MoldI mold;
 	private final SelectionI selection;
 	private final CrossoverI crossover;
-	/*private final GenType genType;
-	private final MutationI mutation;*/
 	private TreeInitializerEnum initialization;
 	// ------------------------------------------------------------------
 	
@@ -107,50 +106,56 @@ public class Executor {
 	}
 	
 	private void select() {
-		List<ChromosomeI> ret = selection.act(population);
+		List<ChromosomeI> newPopulation = selection.act(population);
 		population.clear();
-		for (ChromosomeI c : ret) {
-			population.add(c.copy());
-		}
+		for (ChromosomeI chromosome : newPopulation)
+			population.add(chromosome.copy());
 	}
 	
 	private void cross() {
-		List<ChromosomeI> ret = crossover.act(population);
+		List<ChromosomeI> newPopulation = crossover.act(population);
 		population.clear();
-		for (ChromosomeI c : ret) {
-			population.add(c.copy());
-		}
+		for (ChromosomeI chromosome : newPopulation)
+			population.add(chromosome.copy());
 	}
 	
 	private void mutate() {
-		for (ChromosomeI chromosome : population)
-			chromosome.mutate();
+		List<ChromosomeI> newPopulation = PopulationMutation.act(population);
+		population.clear();
+		for (ChromosomeI chromosome : newPopulation)
+			population.add(chromosome.copy());
 	}
 	
 	private void basicEvaluation() {
 		if (population.size() >= 0) {
+			for (ChromosomeI chromosome : this.population)
+				chromosome.evaluateValue();
 			double k = Covariance.calculate(population) / Variance.calculate(population);
-			if (Double.isNaN(k)) k = 0;
+			if (Double.isNaN(k))
+				k = 0;
 			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
-				chromosome.evaluate();
+				chromosome.evaluateFitness();
 			ChromosomeI leader = population.get(0).copy();
 			for (int i = 0; i < population.size(); i++) {
 				ChromosomeI chromosome = population.get(i);
 				if (chromosome.getFunctionValue() < leader.getFunctionValue())
 					leader = chromosome.copy();
 			}
-			//positivizeFitness();
+			// positivizeFitness();
 		}
 	}
 
 	private void evaluate(int generation) {
 		if (population.size() >= 0) {
+			for (ChromosomeI chromosome : this.population)
+				chromosome.evaluateValue();
 			double k = Covariance.calculate(population) / Variance.calculate(population);
-			if (Double.isNaN(k)) k = 0;
+			if (Double.isNaN(k))
+				k = 0;
 			mold.setK(k);
 			for (ChromosomeI chromosome : this.population)
-				chromosome.evaluate();
+				chromosome.evaluateFitness();
 			ChromosomeI leader = population.get(0).copy();
 			double fitnessSum = 0;
 			for (int i = 0; i < population.size(); i++) {
@@ -159,7 +164,7 @@ public class Executor {
 					leader = chromosome.copy();
 				fitnessSum += chromosome.getFunctionValue();
 			}
-			//positivizeFitness();
+			// positivizeFitness();
 			
 			// Calculamos la media de la generación
 			generationAverage[generation] = fitnessSum / population.size();
@@ -168,41 +173,38 @@ public class Executor {
 			// Añadimos el mejor cromosoma de la generación a la lista
 			generationLeaders[generation] = leader.getFunctionValue();
 			
-			//this.observer.updateGenerationLeaders(generationLeaders);
+			// this.observer.updateGenerationLeaders(generationLeaders);
 			
 			// Comprobamos si el mejor cromosoma de la generacion es el mejor global
 			if (this.intergenerationLeader == null)
 				intergenerationLeader = leader.copy();
-			//this.observer.updateIntergenerationLeader(intergenerationLeader);
+			// this.observer.updateIntergenerationLeader(intergenerationLeader);
 			else if ((leader.getFunctionValue() > intergenerationLeader.getFunctionValue()
 					&& mold.getFunction().isMaximization()) ||
 					(leader.getFunctionValue() < intergenerationLeader.getFunctionValue()
 					&& !mold.getFunction().isMaximization())) {
 				intergenerationLeader = leader.copy();
-				//this.observer.updateIntergenerationLeader(intergenerationLeader);
+				// this.observer.updateIntergenerationLeader(intergenerationLeader);
 			}
 			
-			//Se añade el lider absoluto del momento
+			// Se añade el lider absoluto del momento
 			if (generation < 1 || (generationsAbsoluteLeaders[generation-1] < leader.getFunctionValue() &&
 					mold.getFunction().isMaximization()) || (generationsAbsoluteLeaders[generation-1] > leader.getFunctionValue()
 							&& !mold.getFunction().isMaximization())) {
 				generationsAbsoluteLeaders[generation] = leader.getFunctionValue();
 			}
-			else generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
+			else
+				generationsAbsoluteLeaders[generation] = generationsAbsoluteLeaders[generation-1];
 			
 			selectivePressure[generation] = generationLeaders[generation] / generationAverage[generation];
 		}
 	}
 	
-	public List<ChromosomeI> getPopulation() {
-		return population;
-	}
-
 	public double[] getGenerationAverage() { return generationAverage; }
 	public double[] getGenerationLeaders() { return generationLeaders; }
 	public double[] getAbsoluteLeaders() { return generationsAbsoluteLeaders; }
 	public double[] getSelectivePressure() { return selectivePressure; }
-
+	
 	public String getBestChromosomeToString() {
 		return "El mejor cromosoma tiene un valor de " +
 				(Math.round(intergenerationLeader.getFunctionValue() * 10000.0) / 10000.0) +
@@ -212,7 +214,7 @@ public class Executor {
 	public double[] getIdealFunction() {
 		return mold.getFunction().getIdealFunction();
 	}
-
+	
 	public double[] getbestFunction() {
 		return mold.getFunction().getFunction(intergenerationLeader);
 	}

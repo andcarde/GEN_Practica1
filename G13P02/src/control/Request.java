@@ -157,16 +157,16 @@ public class Request {
 					" is not available for the function " + fitnessFunction.name());
 		}
 		
-		if (genType == GenType.BINARY) {
-			if (mutationMethod != MutationMethod.BINARY) 
+		if (genType == GenType.GRAMATICA_EVOLUTIVA) {
+			if (mutationMethod != MutationMethod.REAL) 
 				errors.add("This mutation method isn't available for the gen type binary");
 			if (crossoverMethod == CrossoverMethod.CROSSOVER_TREE)
 				errors.add("This crossover method isn't available for the gen type binary");
 
 			
 		}
-		if (genType == GenType.TREE) {
-			if (mutationMethod == MutationMethod.BINARY) 
+		if (genType == GenType.PROGRAMACION_EVOLUTIVA) {
+			if (mutationMethod == MutationMethod.REAL) 
 				errors.add("This mutation method isn't available for the gen type tree");
 			if (crossoverMethod != CrossoverMethod.CROSSOVER_TREE) 
 				errors.add("This crossover method isn't available for the gen type tree");

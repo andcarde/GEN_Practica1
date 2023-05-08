@@ -19,7 +19,7 @@ public abstract class TreeMutation implements MutationI {
 	public <T extends Chromosome> T act(T chromosome) {
 		if (!RandomGenerator.createAleatoryBoolean(mutationProbability))
 			return chromosome;
-		TreeChromosome treeChromosome = new TreeChromosome((TreeChromosome) chromosome);
+		TreeChromosome treeChromosome = (TreeChromosome) chromosome;
 		mutateNode(treeChromosome.getRaiz());
 		return (T) treeChromosome;
 	}

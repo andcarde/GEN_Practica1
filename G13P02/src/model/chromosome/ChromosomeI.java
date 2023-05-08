@@ -1,9 +1,6 @@
 package model.chromosome;
 
-import java.util.List;
-
 import model.MoldI;
-import model.gen.practice3.BinaryGen;
 
 public interface ChromosomeI {
 
@@ -13,8 +10,6 @@ public interface ChromosomeI {
 	
 	MoldI getMold();
 	
-	void evaluate();
-	
 	String getGenesToString();
 	
 	ChromosomeI copy();
@@ -22,14 +17,14 @@ public interface ChromosomeI {
 	void displace(double toSum);
 	
 	Double getAlterValue();
-	
-	double getBasicValue();
-	
-	void mutate();
-	
-	List<BinaryGen> getGenes();
 
 	String pretty();
 
 	double getFunctionValue();
+
+	void evaluateValue();
+
+	void evaluateFitness();
+
+	ChromosomeI createMutatedCopy();
 }

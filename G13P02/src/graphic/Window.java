@@ -47,7 +47,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	private static final TreeInitializerEnum DEFAULT_INITIALIZATION_METHOD = TreeInitializerEnum.FULL;
 	private static final CrossoverMethod DEFAULT_CROSSOVER_METHOD = CrossoverMethod.CROSSOVER_TREE;
 	private static final MutationMethod DEFAULT_MUTATION_METHOD = MutationMethod.TERMINAL;
-	private static final GenType DEFAULT_GEN_TYPE = GenType.TREE;
+	private static final GenType DEFAULT_GEN_TYPE = GenType.PROGRAMACION_EVOLUTIVA;
 
 	
 	private static final long serialVersionUID = 8815627840243675666L;
@@ -128,7 +128,7 @@ public class Window extends JFrame implements RequestMaker, Client {
 	public Window() {
 		setTitle("Genetic Algoritm Runner [by Group 13] <Practice 03>");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1197, 703);
+		setBounds(150, 25, 1200, 775);
 		contentPane = new MyPanel(null, Window.OUTER_LEFT_MARGIN);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -236,6 +236,23 @@ public class Window extends JFrame implements RequestMaker, Client {
 		superPanel.addHeight(SMALL_VERTICAL_MARGIN);
 		genCB = createComboBox(GenType.class, superPanel);
 		genCB.setSelectedItem(DEFAULT_GEN_TYPE.name());
+		genCB.addItemListener(new ItemListener() {
+
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if (e.getStateChange() == ItemEvent.SELECTED) {
+					if (e.getItem().toString().equals(GenType.PROGRAMACION_EVOLUTIVA.name())) {
+						crossCB.setSelectedItem(CrossoverMethod.CROSSOVER_TREE.name());
+						mutationCB.setSelectedItem(MutationMethod.PERMUTATION.name());
+						initCB.setEnabled(true);
+					} else if (e.getItem().toString().equals(GenType.GRAMATICA_EVOLUTIVA.name())) {
+						crossCB.setSelectedItem(CrossoverMethod.ONE_POINT.name());
+						mutationCB.setSelectedItem(MutationMethod.REAL.name());
+						initCB.setEnabled(false);
+					}
+				}
+			}
+		});
 		superPanel.addHeight(VERTICAL_MARGIN);
 		createLabel("Truncation Rate (%)", superPanel);
 		labelTruncPos = superPanel.getComponentCount()-1;

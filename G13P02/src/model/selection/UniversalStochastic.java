@@ -78,9 +78,8 @@ public class UniversalStochastic implements SelectionI {
 	}
 	
 	private double abs(double val) {
-		if (val < 0) return -val;
+		if (val < 0)
+			return -val;
 		return val;
 	}
-
-
 }

@@ -4,46 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.MoldI;
-import model.gen.practice3.BinaryGen;
 import model.grammar.TreeBuilder;
 import model.random.RandomGenerator;
 
 public class CodonChromosome extends TreeChromosome {
 
 	private static final int CODON_VALUES = 256;
-	private List<BinaryGen> genes;
+	private List<Integer> codons;
 	
 	public CodonChromosome(MoldI mold) {
 		super(mold);
-		genes = new ArrayList<>();
+		codons = new ArrayList<>();
 		int codonsLength = TreeBuilder.obtainCodonsLength(mold.getMaxHeigth(), mold.getNumWraps());
 		for (int i = 0; i < codonsLength; i++) {
-			int codon = RandomGenerator.createAleatoryInt(CODON_VALUES);
-			genes.add(new BinaryGen(codon));
+			Integer codon = RandomGenerator.createAleatoryInt(CODON_VALUES);
+			codons.add(codon);
 		}
 	}
 	
 	public CodonChromosome(CodonChromosome cc) {
 		super(cc);
-		genes = new ArrayList<>();
-		for (BinaryGen gen : cc.genes)
-			genes.add(gen.copy());
-	}
-	
-	@Override
-	public void evaluate() {
-		List<Integer> codons = new ArrayList<>();
-		for (BinaryGen gen : genes)
-			codons.add(gen.toInteger());
-		this.raiz = TreeBuilder.buildTree(codons, this.mold.getMaxHeigth());
-		super.evaluate();
-	}
-	
-	public List<List<Boolean>> getBits() {
-		List<List<Boolean>> bits = new ArrayList<>();
-		for (BinaryGen gen : genes)
-			bits.add(gen.getBits());
-		return bits;
+		codons = new ArrayList<>();
+		for (Integer codon : cc.codons)
+			codons.add(Integer.valueOf(codon));
 	}
 	
 	public CodonChromosome copy() {
@@ -51,30 +34,32 @@ public class CodonChromosome extends TreeChromosome {
 	}
 	
 	@Override
-	public List<BinaryGen> getGenes() {
-		return genes;
+	public void evaluateValue() {
+		raiz = TreeBuilder.buildTree(getCodons(), mold.getMaxHeigth());
+		super.evaluateValue();
 	}
 	
-	public void setGen(int i, Object gen) {
-		genes.set(i, (BinaryGen) gen);
-		
+	private List<Integer> getCodons() {
+		List<Integer> codonsCopy = new ArrayList<>();
+		for (Integer codon : codons)
+			codonsCopy.add(Integer.valueOf(codon));
+		return codonsCopy;
+	}
+	
+	public void setCodon(int i, Integer codon) {
+		codons.set(i, Integer.valueOf(codon));
 	}
 
-	public void assimilate(List<List<Boolean>> genomes) {
-		for (int i = 0; i < genomes.size(); i++) {
-			BinaryGen gen = genes.get(i).copy();
-			gen.setBits(genomes.get(i));
-			genes.set(i,gen);
-		}
-		
+	public int getCodonsNumber() {
+		return codons.size();
 	}
-	
-	public Integer getSize() {
-		Integer num = 0;
-		for (BinaryGen gen : genes) {
-			num+=gen.getSize();
-		}
-		return num;
+
+	public void mutateCodon(int i) {
+		Integer codon = RandomGenerator.createAleatoryInt(CODON_VALUES);
+		codons.set(i, codon);
+	}
+
+	public Integer getCodon(int i) {
+		return codons.get(i);
 	}
 }
-

@@ -7,17 +7,19 @@ public class RandomGenerator {
 	private static Long seed;
 	private static Random random;
 	
-	
 	public static void setSeed(Long seed) {
 		RandomGenerator.seed = seed;
 	}
 	
 	private static Random getRandom() {
+		System.out.println(seed);
 		if (RandomGenerator.random == null)
 			if (seed == null)
 				RandomGenerator.random = new Random();
-			else
+			else {
 				RandomGenerator.random = new Random(RandomGenerator.seed);
+				System.out.println("Generando con seed: " + seed);
+			}
 		return RandomGenerator.random;
 	}
 	

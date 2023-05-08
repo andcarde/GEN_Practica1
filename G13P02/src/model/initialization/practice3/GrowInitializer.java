@@ -8,20 +8,22 @@ import model.random.RandomGenerator;
 
 public class GrowInitializer extends BinaryTreeInitializer {
 	
+	private boolean first;
+	
 	public GrowInitializer(MoldI mold, int maxDepth) {
 		super(mold, maxDepth);
+		first = true;
 	}
 	
 	protected ArithmeticNode initNode() {
 		if (depth < maxDepth) {
-			int aleatoryInt = RandomGenerator.createAleatoryInt(
-					ArithmeticEnum.values().length + TerminalEnum.values().length);
-			if (aleatoryInt < ArithmeticEnum.values().length) {
-				depth += 1;
+			if (first || RandomGenerator.createAleatoryBoolean()) {
+				first = false;
+				depth++;
 				ArithmeticEnum arithmeticEnum = ArithmeticEnum.getRandom();
 				ArithmeticNode leftBranch = initNode();
 				ArithmeticNode rightBranch = initNode();
-				depth -= 1;
+				depth--;
 				return new ArithmeticNode(arithmeticEnum, leftBranch, rightBranch);
 			}
 		}

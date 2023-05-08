@@ -1,7 +1,6 @@
 package model.chromosome;
 
 import model.MoldI;
-import model.gen.practice3.ArithmeticNode;
 
 public abstract class Chromosome implements ChromosomeI {
 	
@@ -14,20 +13,16 @@ public abstract class Chromosome implements ChromosomeI {
 	}
 	
 	protected Chromosome(Chromosome chromosome) {
-		this.phenotype = chromosome.phenotype;
-		this.copytype = chromosome.copytype;
+		if (chromosome.phenotype != null)
+			this.phenotype = Double.valueOf(chromosome.phenotype);
+		if (chromosome.copytype != null)
+			this.copytype = Double.valueOf(chromosome.copytype);
 		this.mold = chromosome.mold;
 	}
 
 	@Override
 	public MoldI getMold() {
-		return this.mold;
-	}
-
-	@Override
-	public Double getValue() {
-		if (phenotype == null) evaluate();
-		return this.phenotype;
+		return mold;
 	}
 	
 	@Override
@@ -43,13 +38,6 @@ public abstract class Chromosome implements ChromosomeI {
 
 	@Override
 	public void displace(double toSum) {
-		this.copytype = this.phenotype + toSum;
-	}
-	
-	@Override
-	public abstract double getBasicValue();
-	
-	public ArithmeticNode getRaiz() {
-		return null;
+		copytype = phenotype + toSum;
 	}
 }

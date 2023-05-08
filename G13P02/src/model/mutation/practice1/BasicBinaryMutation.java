@@ -1,7 +1,5 @@
 package model.mutation.practice1;
 
-import java.util.List;
-
 import model.chromosome.Chromosome;
 import model.chromosome.practice3.CodonChromosome;
 import model.mutation.MutationI;
@@ -18,11 +16,10 @@ public class BasicBinaryMutation implements MutationI {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T extends Chromosome> T act(T chromosome) {
-		CodonChromosome cc = (CodonChromosome) chromosome.copy();
-		for (List<Boolean> bits : cc.getBits())
-			for (Boolean bit : bits)
+		CodonChromosome cc = (CodonChromosome) chromosome;
+		for (int i = 0; i < cc.getCodonsNumber(); i++)
 				if (RandomGenerator.createAleatoryBoolean(mutationProbability))
-					bit = !bit;
+					cc.mutateCodon(i);
 		return (T) cc;
 	}
 }

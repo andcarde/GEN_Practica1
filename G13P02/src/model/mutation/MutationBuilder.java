@@ -11,7 +11,7 @@ public class MutationBuilder {
 
 	public static MutationI build(GenType gentype, MutationMethod mutationMethod, double mutationProbability) {
 		switch(gentype) {
-			case TREE:
+			case PROGRAMACION_EVOLUTIVA:
 				switch (mutationMethod) {
 					case FUNCTIONAL:
 						return new FunctionalTreeMutation(mutationProbability);
@@ -25,9 +25,9 @@ public class MutationBuilder {
 						break;
 				}
 				break;
-			case BINARY:
+			case GRAMATICA_EVOLUTIVA:
 				switch (mutationMethod) {
-					case BINARY:
+					case REAL:
 						return new BasicBinaryMutation(mutationProbability);
 					default:
 						break;
